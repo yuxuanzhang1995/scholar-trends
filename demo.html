@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scholar Trends — try it live</title>
+<meta name="description" content="Interactive demos of the Scholar Trends MCP tools — pick a journal, topic, or region and get real OpenAlex results in your browser.">
+<style>
+  :root{ --bg:#fbfbf9; --surface:#fff; --ink:#1b1b19; --muted:#5f5e5a; --faint:#8a8980; --line:#e7e6e0; --teal:#0f6e56; --teal2:#1d9e75; --chip:#f1efe8; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:860px; margin:0 auto; padding:0 20px; }
+  a{ color:var(--teal); text-decoration:none; } a:hover{ text-decoration:underline; }
+  .mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  header.top{ padding:30px 0 8px; display:flex; align-items:baseline; gap:14px; }
+  header.top a.back{ font-size:13px; color:var(--muted); }
+  h1{ font-size:30px; font-weight:600; margin:14px 0 8px; letter-spacing:-0.02em; }
+  .sub{ font-size:16px; color:var(--muted); margin:0 0 6px; max-width:620px; }
+  .tabs{ display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 16px; }
+  .tab{ font-size:14px; padding:8px 15px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); cursor:pointer; }
+  .tab:hover{ border-color:#cfcec7; }
+  .tab.active{ background:var(--teal); color:#fff; border-color:var(--teal); }
+  .panel{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 20px; }
+  .desc{ font-size:13.5px; color:var(--muted); margin:0 0 14px; }
+  .controls{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:8px; }
+  label.lab{ font-size:12.5px; color:var(--muted); }
+  select{ font-size:14px; padding:8px 10px; border-radius:9px; border:1px solid var(--line); background:var(--surface); color:var(--ink); min-width:150px; }
+  .seg{ display:inline-flex; border:1px solid var(--line); border-radius:9px; overflow:hidden; }
+  .seg button{ font-size:13px; padding:8px 12px; border:0; background:var(--surface); color:var(--ink); cursor:pointer; }
+  .seg button.on{ background:var(--chip); font-weight:500; }
+  button.run{ font-size:14px; padding:8px 18px; border-radius:9px; border:0; background:var(--teal); color:#fff; cursor:pointer; font-weight:500; }
+  button.run:hover{ background:#0c5a47; } button.run:disabled{ opacity:.6; cursor:default; }
+  .result{ margin-top:16px; min-height:60px; }
+  .hint{ font-size:13.5px; color:var(--faint); }
+  .err{ font-size:13.5px; color:#993c1d; }
+  .chartbox{ position:relative; height:280px; }
+  .cards{ display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; }
+  .stat{ background:var(--bg); border:1px solid var(--line); border-radius:11px; padding:13px 15px; }
+  .stat .v{ font-size:21px; font-weight:600; color:var(--teal); } .stat .l{ font-size:12px; color:var(--muted); margin-top:4px; }
+  .note{ font-size:12px; color:var(--faint); margin-top:12px; }
+  footer{ padding:26px 0 50px; margin-top:24px; border-top:1px solid var(--line); font-size:13px; color:var(--faint); }
+  @media(max-width:680px){ .cards{ grid-template-columns:repeat(2,1fr); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="back" href="./">&larr; Scholar Trends</a></header>
+  <h1>Try it live</h1>
+  <p class="sub">Pick the options — each demo runs a real OpenAlex query in your browser. No install, no key.</p>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-d="trends">journal keyword trends</button>
+    <button class="tab" data-d="impact">topic impact</button>
+    <button class="tab" data-d="who">who works on it</button>
+    <button class="tab" data-d="venue">venue stats</button>
+  </div>
+
+  <div class="panel">
+    <div class="desc" id="desc"></div>
+    <div class="controls" id="controls"></div>
+    <div class="result" id="result"><div class="hint">pick options and press run.</div></div>
+    <div class="note" id="note"></div>
+  </div>
+
+  <footer>Live data from <a href="https://openalex.org">OpenAlex</a> · part of <a href="./">Scholar Trends</a> · the same logic the MCP tools run.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  var MAIL = "yuxuanzhang@utexas.edu";
+  var JOURNALS = {"PRX Quantum":"S4210195673","npj Quantum Information":"S2738600312","Quantum":"S4210226432","Nature Physics":"S156274416","Physical Review Letters":"S24807848","Physical Review A":"S4210182288","Nature Communications":"S64187185","Science Advances":"S2737427234"};
+  var TOPICS = {"quantum error correction":"C51003876","machine learning":"C119857082","quantum entanglement":"C121040770","superconductivity":"C54101563","topological insulators":"C128911142","Bose-Einstein condensate":"C37589322","superconducting quantum computing":"C119382340"};
+  var TIERS = {"PRX Quantum":{f:11.0,t:"T2"},"npj Quantum Information":{f:8.3,t:"T2"},"Quantum":{f:5.7,t:"T2"},"Nature Physics":{f:18.4,t:"T1"},"Physical Review Letters":{f:9.0,t:"T1"},"Physical Review A":{f:2.9,t:"T3"},"Nature Communications":{f:15.7,t:"T1"},"Science Advances":{f:12.5,t:"T1"}};
+  var CONT = {US:'North America',CA:'North America',MX:'North America',CN:'Asia',JP:'Asia',KR:'Asia',IN:'Asia',SG:'Asia',TW:'Asia',HK:'Asia',IR:'Asia',IL:'Asia',TR:'Asia',GB:'Europe',DE:'Europe',FR:'Europe',IT:'Europe',ES:'Europe',CH:'Europe',NL:'Europe',RU:'Europe',SE:'Europe',PL:'Europe',AT:'Europe',BE:'Europe',DK:'Europe',FI:'Europe',NO:'Europe',IE:'Europe',PT:'Europe',CZ:'Europe',GR:'Europe',AU:'Oceania',NZ:'Oceania',BR:'South America',AR:'South America',CL:'South America',ZA:'Africa',EG:'Africa'};
+  var YEARS=[2020,2021,2022,2023,2024,2025], COLORS=['#1d9e75','#d85a30','#888780'];
+  var dark = matchMedia('(prefers-color-scheme: dark)').matches;
+  var txt = dark?'#b4b2a9':'#5f5e5a', grid = dark?'rgba(255,255,255,.07)':'rgba(0,0,0,.06)';
+  var chart=null, descEl=document.getElementById('desc'), ctrl=document.getElementById('controls'),
+      res=document.getElementById('result'), note=document.getElementById('note');
+
+  function oa(path, params){
+    var parts=[]; for(var k in params){ parts.push(k+'='+encodeURIComponent(params[k]).replace(/%3A/g,':').replace(/%2C/g,',')); }
+    parts.push('mailto='+MAIL);
+    return fetch('https://api.openalex.org/'+path+'?'+parts.join('&')).then(function(r){ if(!r.ok) throw new Error('OpenAlex '+r.status); return r.json(); });
+  }
+  function sel(items){ var s=document.createElement('select'); items.forEach(function(o){ var e=document.createElement('option'); e.value=o; e.textContent=o; s.appendChild(e); }); return s; }
+  function runBtn(fn){ var b=document.createElement('button'); b.className='run'; b.textContent='run'; b.onclick=function(){ b.disabled=true; b.textContent='running…'; res.innerHTML='<div class="hint">querying OpenAlex…</div>'; Promise.resolve(fn()).catch(function(e){ res.innerHTML='<div class="err">'+e.message+' — OpenAlex may be busy, try again.</div>'; }).then(function(){ b.disabled=false; b.textContent='run'; }); }; return b; }
+  function short(n){ return n.replace('Quantum Computing Algorithms and Architecture','QC algorithms').replace('Quantum Information and Cryptography','quantum info / crypto').replace('Quantum many-body systems','many-body').replace('Quantum and electron transport phenomena','electron transport').replace('Cold Atom Physics and Bose-Einstein Condensates','cold atoms / BEC').replace('Physics of Superconductivity and Magnetism','superconductivity').replace('Topological Materials and Phenomena','topological materials').replace('Particle physics theoretical and experimental studies','particle physics').replace('Quantum Mechanics and Applications','QM applications').replace('Quantum optics and atomic interactions','quantum optics').replace('Semiconductor Lasers and Optical Devices','semiconductor lasers').replace('Photonic and Optical Devices','photonics'); }
+  function map(o){ var m={}; (o.group_by||[]).forEach(function(g){ if(/^\d+$/.test(g.key)) m[+g.key]=g.count; }); return m; }
+  function drawChart(cfg){ res.innerHTML='<div class="chartbox"><canvas id="cv"></canvas></div>'; if(chart) chart.destroy(); chart=new Chart(document.getElementById('cv'), cfg); }
+
+  function runTrends(){
+    var name=ctrl.querySelector('select').value, sid=JOURNALS[name];
+    return oa('works',{filter:'primary_location.source.id:'+sid,group_by:'publication_year',per_page:200}).then(function(t){
+      var tot=map(t);
+      return oa('works',{filter:'primary_location.source.id:'+sid,group_by:'primary_topic.id',per_page:6}).then(function(tp){
+        var top=tp.group_by.slice(0,3);
+        return Promise.all(top.map(function(g){ var tid=g.key.split('/').pop();
+          return oa('works',{filter:'primary_location.source.id:'+sid+',primary_topic.id:'+tid,group_by:'publication_year',per_page:200}).then(function(yd){
+            var ym=map(yd); return {label:short(g.key_display_name), data:YEARS.map(function(y){ return tot[y]?+(100*(ym[y]||0)/tot[y]).toFixed(1):0; })};
+          }); })).then(function(ds){
+          drawChart({ type:'line', data:{ labels:YEARS, datasets:ds.map(function(d,i){ return {label:d.label,data:d.data,borderColor:COLORS[i],backgroundColor:COLORS[i],tension:.3,pointRadius:0,borderWidth:2}; }) },
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top',labels:{color:txt,boxWidth:10,font:{size:11}}}}, scales:{x:{ticks:{color:txt},grid:{display:false}},y:{ticks:{color:txt,callback:function(v){return v+'%';}},grid:{color:grid}}} } });
+          note.textContent='Top-3 topics in '+name+', share of its papers per year (venue_trends).';
+        });
+      });
+    });
+  }
+  function stat(ids){ var f=ids.map(function(i){return 'concepts.id:'+i;}).join(',')+',from_publication_date:2019-01-01,to_publication_date:2022-12-31';
+    return oa('works',{filter:f,per_page:1,select:'id'}).then(function(c){ return oa('works',{filter:f,sample:50,seed:7,per_page:50,select:'cited_by_count'}).then(function(s){
+      var a=s.results.map(function(w){return w.cited_by_count||0;}); return {n:c.meta.count, mean:a.length?+(a.reduce(function(x,y){return x+y;},0)/a.length).toFixed(1):0}; }); }); }
+  function runImpact(){
+    var ss=ctrl.querySelectorAll('select'), an=ss[0].value, bn=ss[1].value;
+    return Promise.all([stat([TOPICS[an]]),stat([TOPICS[bn]]),stat([TOPICS[an],TOPICS[bn]])]).then(function(r){
+      drawChart({ type:'bar', data:{ labels:[an,bn,an+' × '+bn], datasets:[{data:[r[0].mean,r[1].mean,r[2].mean],backgroundColor:['#888780','#888780','#1d9e75'],borderRadius:4}] },
+        options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, layout:{padding:{right:30}}, plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw+' mean citations';}}}}, scales:{x:{beginAtZero:true,ticks:{color:txt},grid:{color:grid}},y:{ticks:{color:txt},grid:{display:false}}} } });
+      var lift=r[2].mean&&Math.max(r[0].mean,r[1].mean)?(r[2].mean/Math.max(r[0].mean,r[1].mean)).toFixed(1):'—';
+      note.textContent='Mean citations, 2019–2022 sample (combo_impact). Intersection has '+r[2].n+' papers; lift vs best single part: '+lift+'×.';
+    });
+  }
+  function runWho(){
+    var tn=ctrl.querySelector('select').value, dim=ctrl.querySelector('.seg button.on').dataset.dim, tid=TOPICS[tn];
+    return oa('works',{filter:'concepts.id:'+tid+',from_publication_date:2021-01-01',group_by:'authorships.institutions.country_code',per_page:200}).then(function(d){
+      var items;
+      if(dim==='continent'){ var ta={}; d.group_by.forEach(function(g){ var c=CONT[(g.key||'').split('/').pop().toUpperCase()]||'Other'; ta[c]=(ta[c]||0)+g.count; }); items=Object.keys(ta).map(function(k){return [k,ta[k]];}).sort(function(a,b){return b[1]-a[1];}); }
+      else { items=d.group_by.slice(0,10).map(function(g){return [g.key_display_name,g.count];}); }
+      drawChart({ type:'bar', data:{ labels:items.map(function(i){return i[0];}), datasets:[{data:items.map(function(i){return i[1];}),backgroundColor:'#1d9e75',borderRadius:4}] },
+        options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw.toLocaleString()+' papers';}}}}, scales:{x:{beginAtZero:true,ticks:{color:txt},grid:{color:grid}},y:{ticks:{color:txt,font:{size:11}},grid:{display:false}}} } });
+      note.textContent='Works on "'+tn+'" since 2021, by '+dim+' (segment_focus).';
+    });
+  }
+  function runVenue(){
+    var name=ctrl.querySelector('select').value, sid=JOURNALS[name];
+    return oa('sources/'+sid,{}).then(function(s){
+      var ss=s.summary_stats||{}, tr=TIERS[name]||{};
+      res.innerHTML='<div class="cards">'
+        +'<div class="stat"><div class="v">'+(tr.t||'—')+' · '+(tr.f||'—')+'</div><div class="l">tier · JCR impact factor</div></div>'
+        +'<div class="stat"><div class="v">'+(ss.h_index||'—')+'</div><div class="l">h-index</div></div>'
+        +'<div class="stat"><div class="v">'+(s.is_oa?'open':'closed')+'</div><div class="l">access</div></div>'
+        +'<div class="stat"><div class="v">'+(s.works_count||0).toLocaleString()+'</div><div class="l">total works</div></div></div>';
+      note.textContent='OpenAlex 2-yr mean-citedness (IF proxy): '+(ss['2yr_mean_citedness']||0).toFixed(1)+' — under-reads front-matter-heavy journals vs real JCR (venue_info).';
+    });
+  }
+
+  var DEMOS={
+    trends:{ desc:'How a journal’s leading topics shift over time.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runTrends)); } },
+    impact:{ desc:'Average citations of two topics and their intersection — spot synergy.', build:function(){ ctrl.appendChild(label('topic A')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(label('topic B')); var b=sel(Object.keys(TOPICS)); b.selectedIndex=1; ctrl.appendChild(b); ctrl.appendChild(runBtn(runImpact)); } },
+    who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
+    venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } }
+  };
+  function label(t){ var l=document.createElement('label'); l.className='lab'; l.textContent=t; return l; }
+  function seg(){ var d=document.createElement('div'); d.className='seg'; ['continent','country'].forEach(function(x,i){ var b=document.createElement('button'); b.textContent=x; b.dataset.dim=x; if(i===0)b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; }; d.appendChild(b); }); return d; }
+  function show(name){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.dataset.d===name); });
+    ctrl.innerHTML=''; res.innerHTML='<div class="hint">pick options and press run.</div>'; note.textContent='';
+    if(chart){ chart.destroy(); chart=null; }
+    descEl.textContent=DEMOS[name].desc; DEMOS[name].build();
+  }
+  document.getElementById('tabs').addEventListener('click', function(e){ if(e.target.dataset.d) show(e.target.dataset.d); });
+  show('trends');
+})();
+</script>
+</body>
+</html>
