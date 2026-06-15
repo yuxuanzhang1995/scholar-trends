@@ -50,6 +50,7 @@
 
   <div class="tabs" id="tabs">
     <button class="tab active" data-d="trends">keyword &times; journals</button>
+    <button class="tab" data-d="topic">topic trend</button>
     <button class="tab" data-d="impact">topic impact</button>
     <button class="tab" data-d="who">who works on it</button>
     <button class="tab" data-d="venue">venue stats</button>
@@ -122,6 +123,20 @@
     note.textContent='"'+kw+'" as a fuzzy text match — share of each journal’s papers per year.';
     return build(null);
   }
+  function runTopicTrend(){
+    var kw=ctrl.querySelector('input.kw').value.trim();
+    if(!kw){ res.innerHTML='<div class="err">type a keyword first.</div>'; return; }
+    var mode=ctrl.querySelector('.seg button.on').dataset.mode, years=[]; for(var y=2015;y<=2025;y++) years.push(y);
+    function draw(filt,label){
+      return oa('works',{filter:filt+',from_publication_date:2015-01-01,to_publication_date:2025-12-31',group_by:'publication_year',per_page:200}).then(function(d){
+        var ym=map(d);
+        drawChart({type:'line',data:{labels:years,datasets:[{data:years.map(function(y){return ym[y]||0;}),borderColor:'#1d9e75',backgroundColor:'rgba(29,158,117,.12)',fill:true,tension:0.3,pointRadius:0,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw.toLocaleString()+' papers';}}}},scales:{x:{ticks:{color:txt},grid:{display:false}},y:{beginAtZero:true,ticks:{color:txt,callback:function(v){return v>=1000?(v/1000)+'k':v;}},grid:{color:grid}}}}});
+        note.textContent=label+' — papers per year across all of OpenAlex (arXiv + journals).';
+      });
+    }
+    if(mode==='concept'){ return oa('concepts',{search:kw,per_page:1}).then(function(c){ var r=c.results&&c.results[0]; if(!r){ res.innerHTML='<div class="err">no concept matched "'+kw+'" — try text mode.</div>'; return; } return draw('concepts.id:'+r.id.split('/').pop(),'concept: "'+r.display_name+'"'); }); }
+    return draw('title_and_abstract.search:'+kw,'"'+kw+'" (text match)');
+  }
   function stat(ids){ var f=ids.map(function(i){return 'concepts.id:'+i;}).join(',')+',from_publication_date:2019-01-01,to_publication_date:2022-12-31';
     return oa('works',{filter:f,per_page:1,select:'id'}).then(function(c){ return oa('works',{filter:f,sample:50,seed:7,per_page:50,select:'cited_by_count'}).then(function(s){
       var a=s.results.map(function(w){return w.cited_by_count||0;}); return {n:c.meta.count, mean:a.length?+(a.reduce(function(x,y){return x+y;},0)/a.length).toFixed(1):0}; }); }); }
@@ -177,6 +192,7 @@
   function winSeg(){ var d=document.createElement('div'); d.className='seg'; [['today','today'],['week','this week'],['month','this month'],['year','this year']].forEach(function(x){ var b=document.createElement('button'); b.textContent=x[1]; b.dataset.win=x[0]; if(x[0]==='month')b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; renderTrending(x[0]); }; d.appendChild(b); }); return d; }
   var DEMOS={
     trends:{ desc:'Track any keyword across journals over time — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(runBtn(runTrends)); } },
+    topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over the past decade.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(runBtn(runTopicTrend)); } },
     impact:{ desc:'Average citations of two topics and their intersection — spot synergy.', build:function(){ ctrl.appendChild(label('topic A')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(label('topic B')); var b=sel(Object.keys(TOPICS)); b.selectedIndex=1; ctrl.appendChild(b); ctrl.appendChild(runBtn(runImpact)); } },
     who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
     venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } },
