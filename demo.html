@@ -38,6 +38,17 @@
   .stat{ background:var(--bg); border:1px solid var(--line); border-radius:11px; padding:13px 15px; }
   .stat .v{ font-size:21px; font-weight:600; color:var(--teal); } .stat .l{ font-size:12px; color:var(--muted); margin-top:4px; }
   .note{ font-size:12px; color:var(--faint); margin-top:12px; }
+  .prob{ border:1px solid var(--line); border-radius:13px; padding:14px 16px; margin-bottom:11px; background:var(--bg); }
+  .prob h4{ font-size:15px; font-weight:600; margin:0 0 5px; line-height:1.35; }
+  .prob .meta{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:7px; }
+  .prob p{ font-size:12.8px; color:var(--muted); margin:5px 0 0; }
+  .prob .src{ font-size:12px; margin-top:8px; }
+  .badge{ display:inline-block; font-size:10.5px; font-weight:700; padding:2px 9px; border-radius:999px; letter-spacing:.02em; }
+  .b-open{ background:#e3f2ec; color:#0f6e56; } .b-adv{ background:#fbeede; color:#9a6212; }
+  .tag2{ display:inline-block; font-size:11px; color:var(--muted); background:var(--chip); padding:2px 9px; border-radius:999px; }
+  .ty{ display:inline-block; font-size:10px; font-weight:700; padding:1px 7px; border-radius:5px; margin-right:3px; text-transform:uppercase; letter-spacing:.03em; }
+  .ty-the{ background:#ece9fb; color:#534ab7; } .ty-num{ background:#fbeede; color:#9a6212; } .ty-exp{ background:#e3f2ec; color:#0f6e56; }
+  .grphead{ font-size:11px; font-weight:700; color:var(--faint); text-transform:uppercase; letter-spacing:.05em; width:100%; margin:7px 0 -3px; }
   footer{ padding:26px 0 50px; margin-top:24px; border-top:1px solid var(--line); font-size:13px; color:var(--faint); }
   @media(max-width:680px){ .cards{ grid-template-columns:repeat(2,1fr); } }
 </style>
@@ -55,6 +66,7 @@
     <button class="tab" data-d="who">who works on it</button>
     <button class="tab" data-d="venue">venue stats</button>
     <button class="tab" data-d="trending">trending · Scirate</button>
+    <button class="tab" data-d="problems">open problems</button>
   </div>
 
   <div class="panel">
@@ -71,9 +83,10 @@
 <script>
 (function(){
   var MAIL = "yuxuanzhang@utexas.edu";
-  var JOURNALS = {"PRX Quantum":"S4210195673","npj Quantum Information":"S2738600312","Quantum":"S4210226432","Nature Physics":"S156274416","Physical Review Letters":"S24807848","Physical Review A":"S4210182288","Nature Communications":"S64187185","Science Advances":"S2737427234"};
+  var JOURNALS = {"PRX Quantum":"S4210195673","npj Quantum Information":"S2738600312","Quantum":"S4210226432","Quantum Science and Technology":"S4210177720","IEEE Trans. Quantum Engineering":"S4210182817","Nature Physics":"S156274416","Physical Review Letters":"S24807848","Physical Review X":"S137042341","Physical Review A":"S4210182288","Physical Review B":"S4210237713","Physical Review Research":"S4210240247","New Journal of Physics":"S148121101","Communications Physics":"S4210200995","Nature":"S137773608","Science":"S3880285","Nature Communications":"S64187185","Science Advances":"S2737427234","Nature Reviews Physics":"S4210234670","Reviews of Modern Physics":"S73260565","NeurIPS":"S4306420609","STOC":"S4306421003","FOCS":"S4306418447"};
+  var VGRP = {"PRX Quantum":"Quantum","npj Quantum Information":"Quantum","Quantum":"Quantum","Quantum Science and Technology":"Quantum","IEEE Trans. Quantum Engineering":"Quantum","Nature Physics":"Physics","Physical Review Letters":"Physics","Physical Review X":"Physics","Physical Review A":"Physics","Physical Review B":"Physics","Physical Review Research":"Physics","New Journal of Physics":"Physics","Communications Physics":"Physics","Nature":"Multidisciplinary","Science":"Multidisciplinary","Nature Communications":"Multidisciplinary","Science Advances":"Multidisciplinary","Nature Reviews Physics":"Reviews","Reviews of Modern Physics":"Reviews","NeurIPS":"Conferences","STOC":"Conferences","FOCS":"Conferences"};
   var TOPICS = {"quantum error correction":"C51003876","machine learning":"C119857082","quantum entanglement":"C121040770","superconductivity":"C54101563","topological insulators":"C128911142","Bose-Einstein condensate":"C37589322","superconducting quantum computing":"C119382340","quantum information":"C169699857"};
-  var TIERS = {"PRX Quantum":{f:11.0,t:"T2"},"npj Quantum Information":{f:8.3,t:"T2"},"Quantum":{f:5.7,t:"T2"},"Nature Physics":{f:18.4,t:"T1"},"Physical Review Letters":{f:9.0,t:"T1"},"Physical Review A":{f:2.9,t:"T3"},"Nature Communications":{f:15.7,t:"T1"},"Science Advances":{f:12.5,t:"T1"}};
+  var TIERS = {"PRX Quantum":{f:11.0,t:"T2"},"npj Quantum Information":{f:8.3,t:"T2"},"Quantum":{f:5.7,t:"T2"},"Quantum Science and Technology":{f:5.6,t:"T2"},"Nature Physics":{f:18.4,t:"T1"},"Physical Review Letters":{f:9.0,t:"T1"},"Physical Review X":{f:11.6,t:"T1"},"Physical Review A":{f:2.9,t:"T3"},"Physical Review B":{f:3.2,t:"T3"},"Physical Review Research":{f:3.5,t:"T3"},"New Journal of Physics":{f:2.8,t:"T3"},"Communications Physics":{f:5.4,t:"T2"},"Nature":{f:50.5,t:"T1"},"Science":{f:44.7,t:"T1"},"Nature Communications":{f:15.7,t:"T1"},"Science Advances":{f:12.5,t:"T1"},"Nature Reviews Physics":{f:30.0,t:"T1"},"Reviews of Modern Physics":{f:44.0,t:"T1"}};
   var CONT = {US:'North America',CA:'North America',MX:'North America',CN:'Asia',JP:'Asia',KR:'Asia',IN:'Asia',SG:'Asia',TW:'Asia',HK:'Asia',IR:'Asia',IL:'Asia',TR:'Asia',GB:'Europe',DE:'Europe',FR:'Europe',IT:'Europe',ES:'Europe',CH:'Europe',NL:'Europe',RU:'Europe',SE:'Europe',PL:'Europe',AT:'Europe',BE:'Europe',DK:'Europe',FI:'Europe',NO:'Europe',IE:'Europe',PT:'Europe',CZ:'Europe',GR:'Europe',AU:'Oceania',NZ:'Oceania',BR:'South America',AR:'South America',CL:'South America',ZA:'Africa',EG:'Africa'};
   var YEARS=[2020,2021,2022,2023,2024,2025], COLORS=['#1d9e75','#d85a30','#888780'];
   var PALETTE=['#1d9e75','#d85a30','#534ab7','#185fa5','#ba7517','#993556','#0f6e56','#888780'];
@@ -86,6 +99,63 @@
     topicYears:[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],
     topic:[8675,8881,9432,11755,11600,11321,11357,11728,13689,15173,23401]
   };
+  // Open problems — each VERIFIED against 2024–2026 literature for still-open status (2026-06-15).
+  var PROBLEMS=[
+    {q:"Low-overhead fault tolerance with quantum LDPC codes",area:"Error correction",status:"adv",types:["the","num","exp"],
+     why:"qLDPC codes promise ~10× fewer physical qubits than the surface code — the biggest lever for buildable fault tolerance.",
+     open:"First on-device qLDPC <i>memories</i> were shown in 2025 and IBM targets the [[144,12,12]] code by 2029, but a hardware-validated low-overhead <i>universal logical gate set</i> is still missing.",
+     src:[["arXiv:2505.09684","https://arxiv.org/abs/2505.09684"],["IBM FTQC roadmap","https://www.ibm.com/quantum/blog/large-scale-ftqc"]]},
+    {q:"Real-time decoding at utility scale",area:"Error correction",status:"adv",types:["num","exp","the"],
+     why:"If the decoder can't keep pace with ~1µs syndrome cycles, error data backs up exponentially (the backlog problem).",
+     open:"Real-time decoding now works for one logical qubit (Google 2024) and the gross code on FPGAs (IBM 2025); million-qubit, lattice-surgery-scale latency is unsolved.",
+     src:[["arXiv:2408.13687","https://arxiv.org/abs/2408.13687"],["arXiv:2510.21600","https://arxiv.org/abs/2510.21600"]]},
+    {q:"Useful quantum advantage — a valuable problem, not sampling",area:"Quantum advantage",status:"open",types:["exp","the","num"],
+     why:"Sampling “supremacy” has no application; a verified speedup on a useful problem would be quantum computing's first real payoff.",
+     open:"The strongest candidate — D-Wave's 2025 spin-glass simulation (Science) — is being classically challenged (tensor networks, t-VMC); corporate advantage claims haven't survived scrutiny.",
+     src:[["Science 10.1126/science.ado6285","https://doi.org/10.1126/science.ado6285"],["arXiv:2503.08247","https://arxiv.org/abs/2503.08247"]]},
+    {q:"The boundary of classical simulability for noisy circuits",area:"Quantum advantage",status:"open",types:["the","num"],
+     why:"This boundary defines exactly which experiments could ever show advantage.",
+     open:"Pauli-path and tensor-network methods keep absorbing claimed advantages (IBM's 127-qubit “utility” run was reproduced on a laptop); worst-case hardness isn't closed and the simulable region keeps growing.",
+     src:[["arXiv:2306.16372","https://arxiv.org/abs/2306.16372"],["arXiv:2306.14887","https://arxiv.org/abs/2306.14887"]]},
+    {q:"Quantum machine-learning advantage on classical data",area:"Quantum ML",status:"open",types:["the"],
+     why:"Decides whether quantum computers can ever beat classical ML on the data people actually have.",
+     open:"Dequantization (random Fourier features) keeps reproducing quantum models on classical data; provable advantages exist only for engineered / quantum-structured tasks.",
+     src:[["arXiv:2505.15902","https://arxiv.org/abs/2505.15902"],["arXiv:2203.01340","https://arxiv.org/abs/2203.01340"]]},
+    {q:"End-to-end quantum speedup for combinatorial optimization",area:"Algorithms",status:"adv",types:["the","num"],
+     why:"Optimization (logistics, scheduling, finance) is the most-pursued near-term commercial case.",
+     open:"QAOA shows numerical scaling advantage on LABS (2024) and DQI a superpolynomial speedup on a structured problem (Nature 2025) — both contested, with no fault-tolerant end-to-end win on a practical problem.",
+     src:[["arXiv:2308.02342","https://arxiv.org/abs/2308.02342"],["arXiv:2408.08292","https://arxiv.org/abs/2408.08292"]]},
+    {q:"From below-threshold memory to sustained logical computation",area:"Error correction",status:"adv",types:["exp","the","num"],
+     why:"Crossing from a protected memory to large-scale logical computation gates any useful fault-tolerant algorithm.",
+     open:"Below-threshold memory (Google 2024), logical magic-state distillation (QuEra/Harvard 2024) and 48–96 logical qubits with universal FT gates (2025) are in; sustained deep logical circuits at scale are not.",
+     src:[["arXiv:2408.13687","https://arxiv.org/abs/2408.13687"],["arXiv:2412.15165","https://arxiv.org/abs/2412.15165"]]},
+    {q:"Resource theory of magic (non-stabilizerness)",area:"Foundations",status:"adv",types:["the","num","exp"],
+     why:"Magic sets both the classical-simulation frontier and the dominant fault-tolerant cost (magic-state overhead).",
+     open:"The stabilizer entropy now has operational meaning and is measurable, but magic is provably necessary-not-sufficient — the exact advantage criterion is unsettled.",
+     src:[["arXiv:2507.22883","https://arxiv.org/abs/2507.22883"],["arXiv:2508.20252","https://arxiv.org/abs/2508.20252"]]},
+    {q:"Long-distance quantum repeaters / the quantum internet",area:"Networking",status:"open",types:["exp","the","num"],
+     why:"A repeater network is the prerequisite for a quantum internet (secure comms, distributed QC, networked sensors).",
+     open:"A 2026 single-link milestone: ion–ion entanglement over 10 km fibre surviving longer than it takes to make (USTC, Nature). No multi-hop chain with swapping + purification yet exists.",
+     src:[["Nature 10.1038/s41586-026-10177-4","https://doi.org/10.1038/s41586-026-10177-4"],["arXiv:2502.01653","https://arxiv.org/abs/2502.01653"]]},
+    {q:"Fundamental limits of quantum error mitigation",area:"Near-term methods",status:"open",types:["the","num","exp"],
+     why:"Mitigation is the bridge before fault tolerance; knowing where it provably breaks dictates near-term advantage claims.",
+     open:"Worst-case exponential sampling lower bounds are proven (Nature Physics 2024); the boundary of useful regimes and the mitigation→correction crossover remain open.",
+     src:[["arXiv:2210.11505","https://arxiv.org/abs/2210.11505"],["arXiv:2208.09178","https://arxiv.org/abs/2208.09178"]]},
+    {q:"TLS defects limiting superconducting-qubit coherence",area:"Materials",status:"open",types:["exp","the","num"],
+     why:"Two-level-system loss worsens as processors scale, capping reproducible high-coherence devices and inflating QEC overhead.",
+     open:"Individual TLS can now be localized / imaged on chips (2025) and Ta-on-Si transmons passed T1 > 1 ms, but their chemical identity and a systematic suppression route are unsolved.",
+     src:[["arXiv:2511.05365","https://arxiv.org/abs/2511.05365"],["arXiv:2405.09842","https://arxiv.org/abs/2405.09842"]]}
+  ];
+  var TYPEMETA={the:["theory","ty-the"],num:["numerical","ty-num"],exp:["experiment","ty-exp"]};
+  // Heuristic contribution-type guess from a (short) paper title — best-effort, may be blank.
+  function contribGuess(title){
+    var t=' '+(title||'').toLowerCase()+' ', o=[];
+    if(/\b(theorem|proof|we prove|proving|rigorous|analytic\w*|no-go|complexity|lower bound|upper bound|conjecture|bounds?)\b/.test(t)) o.push('the');
+    if(/\b(numeric\w*|simulat\w*|tensor network|monte carlo|dmrg|ab initio|benchmark\w*|neural|machine learning|variational)\b/.test(t)) o.push('num');
+    if(/\b(experiment\w*|demonstrat\w*|measured|measurement|observ\w*|device|chip|fabricat\w*|hardware|processor|trapped[- ]ion|neutral atom|superconducting|photonic|in situ|cryogenic)\b/.test(t)) o.push('exp');
+    return o;
+  }
+  function typeBadges(types){ return types.map(function(k){ var m=TYPEMETA[k]; return '<span class="ty '+m[1]+'">'+m[0]+'</span>'; }).join(''); }
   var dark = matchMedia('(prefers-color-scheme: dark)').matches;
   var txt = dark?'#b4b2a9':'#5f5e5a', grid = dark?'rgba(255,255,255,.07)':'rgba(0,0,0,.06)';
   var chart=null, descEl=document.getElementById('desc'), ctrl=document.getElementById('controls'),
@@ -227,8 +297,8 @@
     loadTrending().then(function(j){
       var w=(j.windows||{})[win]||{papers:[],keywords:[]}, kws=w.keywords||[], ps=(w.papers||[]).slice(0,5);
       note.textContent='Scirate scites · '+win+' · snapshot '+(j.generated||'')+' · auto-refreshed daily';
-      var papers='<div style="margin-top:14px"><div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">top-scited papers</div>'+
-        ps.map(function(p){return '<div style="font-size:13px;margin:5px 0;display:flex;gap:8px"><span style="min-width:34px;color:var(--teal);font-weight:600;text-align:right">'+p.scites+'</span><a href="https://arxiv.org/abs/'+p.id+'" target="_blank" rel="noopener">'+esc(p.title||p.id)+'</a></div>';}).join('')+'</div>';
+      var papers='<div style="margin-top:14px"><div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">top-scited papers · <span style="opacity:.75">type = heuristic guess from title</span></div>'+
+        ps.map(function(p){var g=contribGuess(p.title);return '<div style="font-size:13px;margin:5px 0;display:flex;gap:8px;align-items:baseline"><span style="min-width:34px;color:var(--teal);font-weight:600;text-align:right">'+p.scites+'</span><span><a href="https://arxiv.org/abs/'+p.id+'" target="_blank" rel="noopener">'+esc(p.title||p.id)+'</a> '+(g.length?typeBadges(g):'')+'</span></div>';}).join('')+'</div>';
       res.innerHTML='<div class="chartbox" style="height:'+(40+kws.length*26)+'px"><canvas id="cv"></canvas></div>'+papers;
       if(chart)chart.destroy();
       chart=new Chart(document.getElementById('cv'),{type:'bar',data:{labels:kws.map(function(k){return k.word;}),datasets:[{data:kws.map(function(k){return k.score;}),backgroundColor:'#1d9e75',borderRadius:4,barThickness:15}]},
@@ -236,13 +306,36 @@
     }).catch(function(e){ res.innerHTML='<div class="err">'+e.message+' — the daily snapshot may not have generated yet.</div>'; });
   }
   function winSeg(){ var d=document.createElement('div'); d.className='seg'; [['today','today'],['week','this week'],['month','this month'],['year','this year']].forEach(function(x){ var b=document.createElement('button'); b.textContent=x[1]; b.dataset.win=x[0]; if(x[0]==='month')b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; renderTrending(x[0]); }; d.appendChild(b); }); return d; }
+  function renderProblems(filter){
+    var list = filter==='all' ? PROBLEMS : PROBLEMS.filter(function(p){ return p.types.indexOf(filter)>=0; });
+    note.textContent='Recommended directions — each checked against 2024–2026 literature for still-open status (verified 2026-06-15). “ADVANCING” = major recent progress, core question still stands.';
+    res.innerHTML = list.map(function(p){
+      var badge = p.status==='open' ? '<span class="badge b-open">OPEN</span>' : '<span class="badge b-adv">ADVANCING</span>';
+      var srcs = p.src.map(function(s){ return '<a href="'+s[1]+'" target="_blank" rel="noopener">'+esc(s[0])+'</a>'; }).join(' · ');
+      return '<div class="prob"><div class="meta">'+badge+' <span class="tag2">'+esc(p.area)+'</span> '+typeBadges(p.types)+'</div>'
+        + '<h4>'+esc(p.q)+'</h4>'
+        + '<p>'+p.why+'</p>'
+        + '<p style="color:var(--ink)">'+p.open+'</p>'
+        + '<div class="src">📄 '+srcs+'</div></div>';
+    }).join('') || '<div class="hint">no problems match that filter.</div>';
+  }
+  function problemFilter(){
+    var d=document.createElement('div'); d.className='seg';
+    [['all','all'],['the','theory'],['num','numerical'],['exp','experiment']].forEach(function(x,i){
+      var b=document.createElement('button'); b.textContent=x[1]; b.dataset.f=x[0]; if(i===0)b.className='on';
+      b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; renderProblems(x[0]); };
+      d.appendChild(b);
+    });
+    return d;
+  }
   var DEMOS={
     trends:{ desc:'Track any keyword across journals over time — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(runBtn(runTrends)); runTrends(); } },
     topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over the past decade.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(runBtn(runTopicTrend)); runTopicTrend(); } },
     impact:{ desc:'Average citations of two topics and their intersection — spot synergy.', build:function(){ ctrl.appendChild(label('topic A')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(label('topic B')); var b=sel(Object.keys(TOPICS)); b.selectedIndex=1; ctrl.appendChild(b); ctrl.appendChild(runBtn(runImpact)); } },
     who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
     venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } },
-    trending:{ desc:"What's trending on arXiv right now by Scirate scites — a composite of paper count × community upvotes.", build:function(){ ctrl.appendChild(label('window')); ctrl.appendChild(winSeg()); renderTrending('month'); } }
+    trending:{ desc:"What's trending on arXiv right now by Scirate scites — a composite of paper count × community upvotes.", build:function(){ ctrl.appendChild(label('window')); ctrl.appendChild(winSeg()); renderTrending('month'); } },
+    problems:{ desc:"Open problems & research directions the field is chasing — each verified against 2024–2026 literature for whether it's still open. Filter by the kind of work that drives progress.", build:function(){ ctrl.appendChild(label('needs')); ctrl.appendChild(problemFilter()); renderProblems('all'); } }
   };
   function label(t){ var l=document.createElement('label'); l.className='lab'; l.textContent=t; return l; }
   function seg(){ var d=document.createElement('div'); d.className='seg'; ['continent','country'].forEach(function(x,i){ var b=document.createElement('button'); b.textContent=x; b.dataset.dim=x; if(i===0)b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; }; d.appendChild(b); }); return d; }
@@ -256,9 +349,15 @@
     d.appendChild(top); d.appendChild(chips); return d;
   }
   function modeSeg(){ var d=document.createElement('div'); d.className='seg'; [['text','text (fuzzy)'],['concept','concept (synonyms)']].forEach(function(x,i){ var b=document.createElement('button'); b.textContent=x[1]; b.dataset.mode=x[0]; if(i===0)b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; }; d.appendChild(b); }); return d; }
-  function journalChecks(def){ var d=document.createElement('div'); d.style.cssText='display:flex;gap:12px;flex-wrap:wrap;width:100%;margin-top:2px';
-    Object.keys(JOURNALS).forEach(function(name){ var lab=document.createElement('label'); lab.style.cssText='font-size:12.5px;color:var(--muted);display:flex;gap:5px;align-items:center;cursor:pointer';
-      var cb=document.createElement('input'); cb.type='checkbox'; cb.className='jr'; cb.value=name; if(def.indexOf(name)>=0)cb.checked=true; lab.appendChild(cb); lab.appendChild(document.createTextNode(name)); d.appendChild(lab); }); return d;
+  function journalChecks(def){ var d=document.createElement('div'); d.style.cssText='display:flex;gap:9px 12px;flex-wrap:wrap;width:100%;margin-top:2px';
+    var order=['Quantum','Physics','Multidisciplinary','Reviews','Conferences'], byGrp={};
+    Object.keys(JOURNALS).forEach(function(n){ var g=VGRP[n]||'Other'; (byGrp[g]=byGrp[g]||[]).push(n); });
+    order.forEach(function(g){ if(!byGrp[g]) return;
+      var h=document.createElement('div'); h.className='grphead'; h.textContent=g; d.appendChild(h);
+      byGrp[g].forEach(function(name){ var lab=document.createElement('label'); lab.style.cssText='font-size:12.5px;color:var(--muted);display:flex;gap:5px;align-items:center;cursor:pointer';
+        var cb=document.createElement('input'); cb.type='checkbox'; cb.className='jr'; cb.value=name; if(def.indexOf(name)>=0)cb.checked=true; lab.appendChild(cb); lab.appendChild(document.createTextNode(name)); d.appendChild(lab); });
+    });
+    return d;
   }
   function show(name){
     document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.dataset.d===name); });
