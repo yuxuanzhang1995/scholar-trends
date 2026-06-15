@@ -2,19 +2,21 @@
 
 Curated open problems, each **verified against the 2024–2026 literature** for whether it is still open (verification pass: 2026-06-15). "Status" is honest: *open* = no demonstrated resolution; *advancing* = major recent progress but the core question stands. "Type" = the kind of work that drives progress (theory / numerical / experiment).
 
-| # | Problem | Area | Status | Type |
+"Type" is **lead-first**: the first tag is the kind of work that would most move the problem now; the rest are secondary.
+
+| # | Problem | Area | Status | Lead · also |
 |---|---------|------|--------|------|
-| 1 | Low-overhead fault tolerance with quantum LDPC codes | Error correction | advancing | the·num·exp |
-| 2 | Real-time decoding at utility scale | Error correction | advancing | num·exp·the |
-| 3 | Useful quantum advantage (a valuable problem, not sampling) | Quantum advantage | open | exp·the·num |
-| 4 | The boundary of classical simulability for noisy circuits | Quantum advantage | open | the·num |
-| 5 | Quantum machine-learning advantage on classical data | Quantum ML | open | the |
-| 6 | End-to-end quantum speedup for combinatorial optimization | Algorithms | advancing | the·num |
-| 7 | From below-threshold memory to sustained logical computation | Error correction / HW | advancing | exp·the·num |
-| 8 | Resource theory of magic (non-stabilizerness) | Foundations | advancing | the·num·exp |
-| 9 | Long-distance quantum repeaters / the quantum internet | Networking | open | exp·the·num |
-| 10 | Fundamental limits of quantum error mitigation | Near-term methods | open | the·num·exp |
-| 11 | TLS defects limiting superconducting-qubit coherence | Materials / HW | open | exp·the·num |
+| 1 | Low-overhead fault tolerance with quantum LDPC codes | Error correction | advancing | **exp** · the · num |
+| 2 | Real-time decoding at utility scale | Error correction | advancing | **num** · exp · the |
+| 3 | Useful quantum advantage (a valuable problem, not sampling) | Quantum advantage | open | **exp** · the · num |
+| 4 | The boundary of classical simulability for noisy circuits | Quantum advantage | open | **the** · num |
+| 5 | Quantum machine-learning advantage on classical data | Quantum ML | open | **the** |
+| 6 | End-to-end quantum speedup for combinatorial optimization | Algorithms | advancing | **num** · the |
+| 7 | From below-threshold memory to sustained logical computation | Error correction / HW | advancing | **exp** · the · num |
+| 8 | Resource theory of magic (non-stabilizerness) | Foundations | advancing | **the** · num |
+| 9 | Long-distance quantum repeaters / the quantum internet | Networking | open | **exp** · the · num |
+| 10 | Fundamental limits of quantum error mitigation | Near-term methods | open | **the** · num |
+| 11 | TLS defects limiting superconducting-qubit coherence | Materials / HW | open | **exp** · the · num |
 
 ---
 

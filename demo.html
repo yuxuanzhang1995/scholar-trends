@@ -48,6 +48,8 @@
   .tag2{ display:inline-block; font-size:11px; color:var(--muted); background:var(--chip); padding:2px 9px; border-radius:999px; }
   .ty{ display:inline-block; font-size:10px; font-weight:700; padding:1px 7px; border-radius:5px; margin-right:3px; text-transform:uppercase; letter-spacing:.03em; }
   .ty-the{ background:#ece9fb; color:#534ab7; } .ty-num{ background:#fbeede; color:#9a6212; } .ty-exp{ background:#e3f2ec; color:#0f6e56; }
+  .tysec{ font-size:10.5px; color:var(--faint); margin-left:6px; }
+  .prob .ask{ font-size:13.5px; color:var(--ink); font-weight:600; margin:3px 0 5px; line-height:1.45; }
   .grphead{ font-size:11px; font-weight:700; color:var(--faint); text-transform:uppercase; letter-spacing:.05em; width:100%; margin:7px 0 -3px; }
   footer{ padding:26px 0 50px; margin-top:24px; border-top:1px solid var(--line); font-size:13px; color:var(--faint); }
   @media(max-width:680px){ .cards{ grid-template-columns:repeat(2,1fr); } }
@@ -100,48 +102,60 @@
     topic:[8675,8881,9432,11755,11600,11321,11357,11728,13689,15173,23401]
   };
   // Open problems — each VERIFIED against 2024–2026 literature for still-open status (2026-06-15).
+  // types[] is LEAD-FIRST: types[0] = the kind of work that would most move the problem now.
   var PROBLEMS=[
-    {q:"Low-overhead fault tolerance with quantum LDPC codes",area:"Error correction",status:"adv",types:["the","num","exp"],
+    {q:"Low-overhead fault tolerance with quantum LDPC codes",area:"Error correction",status:"adv",types:["exp","the","num"],
+     ask:"Can a bivariate-bicycle / balanced-product code run a <b>universal</b> fault-tolerant gate set on real hardware at under ~10% of the surface code's qubit cost?",
      why:"qLDPC codes promise ~10× fewer physical qubits than the surface code — the biggest lever for buildable fault tolerance.",
-     open:"First on-device qLDPC <i>memories</i> were shown in 2025 and IBM targets the [[144,12,12]] code by 2029, but a hardware-validated low-overhead <i>universal logical gate set</i> is still missing.",
+     open:"On-device qLDPC <i>memories</i> arrived in 2025 (a distance-4 bicycle code on a 32-qubit chip) and IBM targets the [[144,12,12]] code by 2029 — but a hardware-validated low-overhead universal gate set is still missing.",
      src:[["arXiv:2505.09684","https://arxiv.org/abs/2505.09684"],["IBM FTQC roadmap","https://www.ibm.com/quantum/blog/large-scale-ftqc"]]},
     {q:"Real-time decoding at utility scale",area:"Error correction",status:"adv",types:["num","exp","the"],
-     why:"If the decoder can't keep pace with ~1µs syndrome cycles, error data backs up exponentially (the backlog problem).",
-     open:"Real-time decoding now works for one logical qubit (Google 2024) and the gross code on FPGAs (IBM 2025); million-qubit, lattice-surgery-scale latency is unsolved.",
+     ask:"Can a parallel / windowed decoder hold sub-µs latency across thousands of lattice-surgery patches without an accuracy cliff?",
+     why:"If the decoder can't keep pace with ~1 µs syndrome cycles, error data backs up exponentially (the backlog problem).",
+     open:"Real-time decoding is solved for one logical qubit (Google 2024) and the gross code on FPGAs (IBM 2025, ~24 ns/iteration); million-qubit, lattice-surgery-scale latency is not.",
      src:[["arXiv:2408.13687","https://arxiv.org/abs/2408.13687"],["arXiv:2510.21600","https://arxiv.org/abs/2510.21600"]]},
     {q:"Useful quantum advantage — a valuable problem, not sampling",area:"Quantum advantage",status:"open",types:["exp","the","num"],
+     ask:"Is there a regime of D-Wave's 2025 spin-glass quench that provably resists <i>both</i> tensor-network and neural-network classical simulation?",
      why:"Sampling “supremacy” has no application; a verified speedup on a useful problem would be quantum computing's first real payoff.",
-     open:"The strongest candidate — D-Wave's 2025 spin-glass simulation (Science) — is being classically challenged (tensor networks, t-VMC); corporate advantage claims haven't survived scrutiny.",
+     open:"The strongest candidate — D-Wave's 2025 spin-glass simulation (Science) — is being narrowed by classical tensor-network and t-VMC methods; corporate advantage claims haven't survived scrutiny.",
      src:[["Science 10.1126/science.ado6285","https://doi.org/10.1126/science.ado6285"],["arXiv:2503.08247","https://arxiv.org/abs/2503.08247"]]},
     {q:"The boundary of classical simulability for noisy circuits",area:"Quantum advantage",status:"open",types:["the","num"],
+     ask:"Is there a sharp depth / noise threshold where Pauli-propagation & tensor-network methods stop tracking a noisy circuit — or does the simulable region keep growing?",
      why:"This boundary defines exactly which experiments could ever show advantage.",
-     open:"Pauli-path and tensor-network methods keep absorbing claimed advantages (IBM's 127-qubit “utility” run was reproduced on a laptop); worst-case hardness isn't closed and the simulable region keeps growing.",
+     open:"Classical methods keep absorbing claimed advantages (IBM's 127-qubit “utility” run was reproduced on a laptop); worst-case, fixed-circuit hardness is not closed.",
      src:[["arXiv:2306.16372","https://arxiv.org/abs/2306.16372"],["arXiv:2306.14887","https://arxiv.org/abs/2306.14887"]]},
     {q:"Quantum machine-learning advantage on classical data",area:"Quantum ML",status:"open",types:["the"],
+     ask:"Is there a <i>real-world</i> classical dataset on which a quantum model provably beats every random-Fourier-feature (dequantized) classical method?",
      why:"Decides whether quantum computers can ever beat classical ML on the data people actually have.",
-     open:"Dequantization (random Fourier features) keeps reproducing quantum models on classical data; provable advantages exist only for engineered / quantum-structured tasks.",
+     open:"Dequantization keeps reproducing quantum models on classical data; provable advantages exist only for engineered / quantum-structured tasks.",
      src:[["arXiv:2505.15902","https://arxiv.org/abs/2505.15902"],["arXiv:2203.01340","https://arxiv.org/abs/2203.01340"]]},
-    {q:"End-to-end quantum speedup for combinatorial optimization",area:"Algorithms",status:"adv",types:["the","num"],
+    {q:"End-to-end quantum speedup for combinatorial optimization",area:"Algorithms",status:"adv",types:["num","the"],
+     ask:"Does DQI's superpolynomial speedup survive the best tailored classical solvers — and does any quantum method beat classical on a <i>practical</i> optimization problem end-to-end?",
      why:"Optimization (logistics, scheduling, finance) is the most-pursued near-term commercial case.",
-     open:"QAOA shows numerical scaling advantage on LABS (2024) and DQI a superpolynomial speedup on a structured problem (Nature 2025) — both contested, with no fault-tolerant end-to-end win on a practical problem.",
+     open:"QAOA shows numerical scaling advantage on LABS (2024) and DQI a superpolynomial speedup on a structured problem (Nature 2025) — both contested, no fault-tolerant end-to-end win yet.",
      src:[["arXiv:2308.02342","https://arxiv.org/abs/2308.02342"],["arXiv:2408.08292","https://arxiv.org/abs/2408.08292"]]},
     {q:"From below-threshold memory to sustained logical computation",area:"Error correction",status:"adv",types:["exp","the","num"],
+     ask:"Can a processor run a <i>deep</i> logical circuit (many logical qubits, thousands of gates) with real-time decoding and error <i>still</i> dropping as it scales?",
      why:"Crossing from a protected memory to large-scale logical computation gates any useful fault-tolerant algorithm.",
      open:"Below-threshold memory (Google 2024), logical magic-state distillation (QuEra/Harvard 2024) and 48–96 logical qubits with universal FT gates (2025) are in; sustained deep logical circuits at scale are not.",
      src:[["arXiv:2408.13687","https://arxiv.org/abs/2408.13687"],["arXiv:2412.15165","https://arxiv.org/abs/2412.15165"]]},
-    {q:"Resource theory of magic (non-stabilizerness)",area:"Foundations",status:"adv",types:["the","num","exp"],
+    {q:"Resource theory of magic (non-stabilizerness)",area:"Foundations",status:"adv",types:["the","num"],
+     ask:"Is there a single magic monotone that <i>simultaneously</i> bounds simulation cost, distillation cost, and computational advantage?",
      why:"Magic sets both the classical-simulation frontier and the dominant fault-tolerant cost (magic-state overhead).",
      open:"The stabilizer entropy now has operational meaning and is measurable, but magic is provably necessary-not-sufficient — the exact advantage criterion is unsettled.",
      src:[["arXiv:2507.22883","https://arxiv.org/abs/2507.22883"],["arXiv:2508.20252","https://arxiv.org/abs/2508.20252"]]},
     {q:"Long-distance quantum repeaters / the quantum internet",area:"Networking",status:"open",types:["exp","the","num"],
+     ask:"Can two quantum memories stay entangled across ≥3 hops with on-the-fly purification faster than the link decoheres?",
      why:"A repeater network is the prerequisite for a quantum internet (secure comms, distributed QC, networked sensors).",
      open:"A 2026 single-link milestone: ion–ion entanglement over 10 km fibre surviving longer than it takes to make (USTC, Nature). No multi-hop chain with swapping + purification yet exists.",
      src:[["Nature 10.1038/s41586-026-10177-4","https://doi.org/10.1038/s41586-026-10177-4"],["arXiv:2502.01653","https://arxiv.org/abs/2502.01653"]]},
-    {q:"Fundamental limits of quantum error mitigation",area:"Near-term methods",status:"open",types:["the","num","exp"],
+    {q:"Fundamental limits of quantum error mitigation",area:"Near-term methods",status:"open",types:["the","num"],
+     ask:"For which circuit families can mitigation recover expectation values at <i>sub-exponential</i> sampling cost — and where is the mitigation→correction crossover?",
      why:"Mitigation is the bridge before fault tolerance; knowing where it provably breaks dictates near-term advantage claims.",
-     open:"Worst-case exponential sampling lower bounds are proven (Nature Physics 2024); the boundary of useful regimes and the mitigation→correction crossover remain open.",
+     open:"Worst-case exponential sampling lower bounds are proven (Nature Physics 2024); the boundary of useful regimes remains open.",
      src:[["arXiv:2210.11505","https://arxiv.org/abs/2210.11505"],["arXiv:2208.09178","https://arxiv.org/abs/2208.09178"]]},
     {q:"TLS defects limiting superconducting-qubit coherence",area:"Materials",status:"open",types:["exp","the","num"],
+     ask:"What is the microscopic chemical identity of the dominant two-level-system defects, and which materials suppress them to reproducible >1 ms T1 at scale?",
      why:"Two-level-system loss worsens as processors scale, capping reproducible high-coherence devices and inflating QEC overhead.",
      open:"Individual TLS can now be localized / imaged on chips (2025) and Ta-on-Si transmons passed T1 > 1 ms, but their chemical identity and a systematic suppression route are unsolved.",
      src:[["arXiv:2511.05365","https://arxiv.org/abs/2511.05365"],["arXiv:2405.09842","https://arxiv.org/abs/2405.09842"]]}
@@ -192,8 +206,17 @@
   function map(o){ var m={}; (o.group_by||[]).forEach(function(g){ if(/^\d+$/.test(g.key)) m[+g.key]=g.count; }); return m; }
   function drawChart(cfg){ res.innerHTML='<div class="chartbox"><canvas id="cv"></canvas></div>'; if(chart) chart.destroy(); chart=new Chart(document.getElementById('cv'), cfg); }
 
-  function drawTrends(ds){
-    drawChart({ type:'line', data:{ labels:YEARS, datasets:ds.map(function(d,i){ var c=PALETTE[i%PALETTE.length]; return {label:d.label,data:d.data,borderColor:c,backgroundColor:c,tension:.3,pointRadius:2,borderWidth:2}; }) },
+  function yearRange(fromD,toD){
+    var d=document.createElement('div'); d.style.cssText='display:flex;gap:6px;align-items:center;flex-wrap:wrap';
+    function ysel(cls,val){ var s=document.createElement('select'); s.className=cls; s.style.minWidth='84px';
+      for(var y=2010;y<=2026;y++){ var o=document.createElement('option'); o.value=y; o.textContent=y; if(y===val)o.selected=true; s.appendChild(o); } return s; }
+    d.appendChild(label('years')); d.appendChild(ysel('yrf',fromD));
+    var dash=document.createElement('span'); dash.textContent='–'; dash.style.cssText='color:var(--faint)'; d.appendChild(dash);
+    d.appendChild(ysel('yrt',toD)); return d;
+  }
+  function rangeYears(){ var f=+ctrl.querySelector('.yrf').value, t=+ctrl.querySelector('.yrt').value; if(t<f){var x=f;f=t;t=x;} var a=[]; for(var y=f;y<=t;y++)a.push(y); return a; }
+  function drawTrends(ds,years){
+    drawChart({ type:'line', data:{ labels:years, datasets:ds.map(function(d,i){ var c=PALETTE[i%PALETTE.length]; return {label:d.label,data:d.data,borderColor:c,backgroundColor:c,tension:.3,pointRadius:2,borderWidth:2}; }) },
       options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top',labels:{color:txt,boxWidth:10,font:{size:11}}},tooltip:{callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw+'%';}}}}, scales:{x:{ticks:{color:txt},grid:{display:false}},y:{beginAtZero:true,ticks:{color:txt,callback:function(v){return v+'%';}},grid:{color:grid}}} } });
   }
   function sameSet(a,b){ if(a.length!==b.length) return false; var s={}; a.forEach(function(x){s[x]=1;}); return b.every(function(x){return s[x];}); }
@@ -203,11 +226,12 @@
     var mode=ctrl.querySelector('.seg button.on').dataset.mode;
     var picked=Array.prototype.slice.call(ctrl.querySelectorAll('input.jr:checked')).map(function(c){return c.value;});
     if(!picked.length){ res.innerHTML='<div class="err">pick at least one journal.</div>'; return; }
-    if(mode==='text' && kw.toLowerCase()===BAKED.kw && sameSet(picked, BAKED.journals)){
-      note.textContent='“error correction” across the three default quantum journals — saved snapshot, loads instantly. Edit any input and press run for a live OpenAlex query.';
-      drawTrends(BAKED.trends); return Promise.resolve();
+    var years=rangeYears(), yf=years[0], yt=years[years.length-1];
+    if(mode==='text' && kw.toLowerCase()===BAKED.kw && sameSet(picked, BAKED.journals) && yf===2020 && yt===2025){
+      note.textContent='“error correction” across the three default quantum journals — saved snapshot, loads instantly. Edit any input (keyword, journals, or year range) and press run for a live OpenAlex query.';
+      drawTrends(BAKED.trends, YEARS); return Promise.resolve();
     }
-    var win=',from_publication_date:2020-01-01,to_publication_date:2025-12-31';
+    var win=',from_publication_date:'+yf+'-01-01,to_publication_date:'+yt+'-12-31';
     function build(cid){
       var concept = mode==='concept' && cid;   // cid null => fall through to text match
       return Promise.all(picked.map(function(name){
@@ -215,9 +239,9 @@
         var totP=oa('works',{filter:base+win,group_by:'publication_year',per_page:200}).then(map);
         var kwP = concept
           ? oa('works',{filter:base+',concepts.id:'+cid+win,group_by:'publication_year',per_page:200}).then(map)
-          : countsByYear(base+',title_and_abstract.search:'+kw, YEARS);
-        return Promise.all([totP,kwP]).then(function(r){ var tot=r[0], km=r[1]; return {label:name, data:YEARS.map(function(y){ return tot[y]?+(100*(km[y]||0)/tot[y]).toFixed(1):0; })}; });
-      })).then(drawTrends);
+          : countsByYear(base+',title_and_abstract.search:'+kw, years);
+        return Promise.all([totP,kwP]).then(function(r){ var tot=r[0], km=r[1]; return {label:name, data:years.map(function(y){ return tot[y]?+(100*(km[y]||0)/tot[y]).toFixed(1):0; })}; });
+      })).then(function(ds){ drawTrends(ds, years); });
     }
     if(mode==='concept'){
       return oa('concepts',{search:kw,per_page:1},1,2).then(function(c){
@@ -233,14 +257,14 @@
   function runTopicTrend(){
     var kw=ctrl.querySelector('input.kw').value.trim();
     if(!kw){ res.innerHTML='<div class="err">type a keyword first.</div>'; return; }
-    var mode=ctrl.querySelector('.seg button.on').dataset.mode, years=[]; for(var y=2015;y<=2025;y++) years.push(y);
+    var mode=ctrl.querySelector('.seg button.on').dataset.mode, years=rangeYears(), yf=years[0], yt=years[years.length-1];
     function render(ym,label){
       drawChart({type:'line',data:{labels:years,datasets:[{data:years.map(function(y){return ym[y]||0;}),borderColor:'#1d9e75',backgroundColor:'rgba(29,158,117,.12)',fill:true,tension:0.3,pointRadius:0,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw.toLocaleString()+' papers';}}}},scales:{x:{ticks:{color:txt},grid:{display:false}},y:{beginAtZero:true,ticks:{color:txt,callback:function(v){return v>=1000?(v/1000)+'k':v;}},grid:{color:grid}}}}});
       note.textContent=label+' — papers per year across all of OpenAlex (arXiv + journals).';
     }
     // text search+group_by times out — count per year instead
     function textTopic(){ return countsByYear('title_and_abstract.search:'+kw, years).then(function(ym){ render(ym,'"'+kw+'" (text match)'); }); }
-    if(mode==='text' && kw.toLowerCase()===BAKED.kw){
+    if(mode==='text' && kw.toLowerCase()===BAKED.kw && yf===2015 && yt===2025){
       var bym={}; BAKED.topicYears.forEach(function(y,i){ bym[y]=BAKED.topic[i]; });
       render(bym,'“error correction” (saved snapshot)'); return Promise.resolve();
     }
@@ -248,7 +272,7 @@
       return oa('concepts',{search:kw,per_page:1},1,2).then(function(c){
         var r=c.results&&c.results[0];
         if(!r) return textTopic();
-        return oa('works',{filter:'concepts.id:'+r.id.split('/').pop()+',from_publication_date:2015-01-01,to_publication_date:2025-12-31',group_by:'publication_year',per_page:200}).then(function(d){ render(map(d),'concept: "'+r.display_name+'"'); });
+        return oa('works',{filter:'concepts.id:'+r.id.split('/').pop()+',from_publication_date:'+yf+'-01-01,to_publication_date:'+yt+'-12-31',group_by:'publication_year',per_page:200}).then(function(d){ render(map(d),'concept: "'+r.display_name+'"'); });
       }, function(){ return textTopic(); });
     }
     return textTopic();
@@ -307,17 +331,19 @@
   }
   function winSeg(){ var d=document.createElement('div'); d.className='seg'; [['today','today'],['week','this week'],['month','this month'],['year','this year']].forEach(function(x){ var b=document.createElement('button'); b.textContent=x[1]; b.dataset.win=x[0]; if(x[0]==='month')b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; renderTrending(x[0]); }; d.appendChild(b); }); return d; }
   function renderProblems(filter){
-    var list = filter==='all' ? PROBLEMS : PROBLEMS.filter(function(p){ return p.types.indexOf(filter)>=0; });
-    note.textContent='Recommended directions — each checked against 2024–2026 literature for still-open status (verified 2026-06-15). “ADVANCING” = major recent progress, core question still stands.';
+    var list = filter==='all' ? PROBLEMS : PROBLEMS.filter(function(p){ return p.types[0]===filter; });
+    note.textContent='Each is anchored to a specific recent result and checked against 2024–2026 literature for still-open status (verified 2026-06-15). The bold tag is the work that would move it most; “ADVANCING” = major recent progress, core question still stands.';
     res.innerHTML = list.map(function(p){
       var badge = p.status==='open' ? '<span class="badge b-open">OPEN</span>' : '<span class="badge b-adv">ADVANCING</span>';
+      var lead=TYPEMETA[p.types[0]], typ='<span class="ty '+lead[1]+'">'+lead[0]+'</span>'+(p.types.length>1?'<span class="tysec">also '+p.types.slice(1).map(function(k){return TYPEMETA[k][0];}).join(' · ')+'</span>':'');
       var srcs = p.src.map(function(s){ return '<a href="'+s[1]+'" target="_blank" rel="noopener">'+esc(s[0])+'</a>'; }).join(' · ');
-      return '<div class="prob"><div class="meta">'+badge+' <span class="tag2">'+esc(p.area)+'</span> '+typeBadges(p.types)+'</div>'
+      return '<div class="prob"><div class="meta">'+badge+' <span class="tag2">'+esc(p.area)+'</span> '+typ+'</div>'
         + '<h4>'+esc(p.q)+'</h4>'
+        + '<p class="ask">'+p.ask+'</p>'
         + '<p>'+p.why+'</p>'
         + '<p style="color:var(--ink)">'+p.open+'</p>'
         + '<div class="src">📄 '+srcs+'</div></div>';
-    }).join('') || '<div class="hint">no problems match that filter.</div>';
+    }).join('') || '<div class="hint">no problems primarily need that.</div>';
   }
   function problemFilter(){
     var d=document.createElement('div'); d.className='seg';
@@ -329,8 +355,8 @@
     return d;
   }
   var DEMOS={
-    trends:{ desc:'Track any keyword across journals over time — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(runBtn(runTrends)); runTrends(); } },
-    topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over the past decade.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(runBtn(runTopicTrend)); runTopicTrend(); } },
+    trends:{ desc:'Track any keyword across journals over a chosen window — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(yearRange(2020,2025)); ctrl.appendChild(runBtn(runTrends)); runTrends(); } },
+    topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over a chosen window.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(yearRange(2015,2025)); ctrl.appendChild(runBtn(runTopicTrend)); runTopicTrend(); } },
     impact:{ desc:'Average citations of two topics and their intersection — spot synergy.', build:function(){ ctrl.appendChild(label('topic A')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(label('topic B')); var b=sel(Object.keys(TOPICS)); b.selectedIndex=1; ctrl.appendChild(b); ctrl.appendChild(runBtn(runImpact)); } },
     who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
     venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } },
