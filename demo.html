@@ -77,57 +77,85 @@
   var CONT = {US:'North America',CA:'North America',MX:'North America',CN:'Asia',JP:'Asia',KR:'Asia',IN:'Asia',SG:'Asia',TW:'Asia',HK:'Asia',IR:'Asia',IL:'Asia',TR:'Asia',GB:'Europe',DE:'Europe',FR:'Europe',IT:'Europe',ES:'Europe',CH:'Europe',NL:'Europe',RU:'Europe',SE:'Europe',PL:'Europe',AT:'Europe',BE:'Europe',DK:'Europe',FI:'Europe',NO:'Europe',IE:'Europe',PT:'Europe',CZ:'Europe',GR:'Europe',AU:'Oceania',NZ:'Oceania',BR:'South America',AR:'South America',CL:'South America',ZA:'Africa',EG:'Africa'};
   var YEARS=[2020,2021,2022,2023,2024,2025], COLORS=['#1d9e75','#d85a30','#888780'];
   var PALETTE=['#1d9e75','#d85a30','#534ab7','#185fa5','#ba7517','#993556','#0f6e56','#888780'];
+  // Baked DEFAULT results (harvested via the same per-year method the live path uses) so the
+  // demo opens with a real chart and the default query is instant even when OpenAlex search is congested.
+  var BAKED = {
+    kw:"error correction",
+    journals:["PRX Quantum","npj Quantum Information","Quantum"],
+    trends:[{label:"PRX Quantum",data:[2.5,8.0,6.8,7.8,9.1,15.7]},{label:"npj Quantum Information",data:[4.8,3.5,4.6,8.8,9.6,8.2]},{label:"Quantum",data:[6.8,4.3,5.8,7.3,8.8,8.7]}],
+    topicYears:[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],
+    topic:[8675,8881,9432,11755,11600,11321,11357,11728,13689,15173,23401]
+  };
   var dark = matchMedia('(prefers-color-scheme: dark)').matches;
   var txt = dark?'#b4b2a9':'#5f5e5a', grid = dark?'rgba(255,255,255,.07)':'rgba(0,0,0,.06)';
   var chart=null, descEl=document.getElementById('desc'), ctrl=document.getElementById('controls'),
       res=document.getElementById('result'), note=document.getElementById('note');
 
   function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
-  function oa(path, params, n){
-    n = n || 1;
+  function oa(path, params, n, maxN){
+    n = n || 1; maxN = maxN || 6;
     var parts=[]; for(var k in params){ parts.push(k+'='+encodeURIComponent(params[k]).replace(/%3A/g,':').replace(/%2C/g,',')); }
     parts.push('mailto='+MAIL);
     var url='https://api.openalex.org/'+path+'?'+parts.join('&');
-    return fetch(url).then(function(r){
+    // OpenAlex's search tier occasionally hangs; without a timeout the fetch spins forever.
+    var ctl=('AbortController' in window)?new AbortController():null;
+    var timer=ctl?setTimeout(function(){ ctl.abort(); }, 9000):null;
+    return fetch(url, ctl?{signal:ctl.signal}:undefined).then(function(r){
+      if(timer) clearTimeout(timer);
       if(!r.ok){
-        if((r.status>=500 || r.status===429) && n<6) return wait(500*n).then(function(){ return oa(path, params, n+1); });
+        if((r.status>=500 || r.status===429) && n<maxN) return wait(400*n).then(function(){ return oa(path, params, n+1, maxN); });
         throw new Error('OpenAlex '+r.status);
       }
       return r.json();
-    }, function(err){ if(n<6) return wait(500*n).then(function(){ return oa(path, params, n+1); }); throw err; });
+    }, function(err){ if(timer) clearTimeout(timer); if(n<maxN) return wait(400*n).then(function(){ return oa(path, params, n+1, maxN); }); throw new Error('OpenAlex search timed out'); });
+  }
+  // Per-year counts via meta.count — search WITHOUT group_by (the fast/reliable path;
+  // search+group_by faceting is what times out). years→{year:count}.
+  function countsByYear(baseFilter, years){
+    return Promise.all(years.map(function(y){
+      return oa('works',{filter:baseFilter+',publication_year:'+y, per_page:1, select:'id'}).then(function(d){ return d.meta.count; });
+    })).then(function(cs){ var m={}; years.forEach(function(y,i){ m[y]=cs[i]; }); return m; });
   }
   function sel(items){ var s=document.createElement('select'); items.forEach(function(o){ var e=document.createElement('option'); e.value=o; e.textContent=o; s.appendChild(e); }); return s; }
-  function runBtn(fn){ var b=document.createElement('button'); b.className='run'; b.textContent='run'; b.onclick=function(){ b.disabled=true; b.textContent='running…'; res.innerHTML='<div class="hint">querying OpenAlex…</div>'; Promise.resolve(fn()).catch(function(e){ res.innerHTML='<div class="err">'+e.message+' — OpenAlex is flaky today; auto-retried 5×. Give it a few seconds and run again.</div>'; }).then(function(){ b.disabled=false; b.textContent='run'; }); }; return b; }
+  function runBtn(fn){ var b=document.createElement('button'); b.className='run'; b.textContent='run'; b.onclick=function(){ b.disabled=true; b.textContent='running…'; res.innerHTML='<div class="hint">querying OpenAlex…</div>'; Promise.resolve(fn()).catch(function(e){ res.innerHTML='<div class="err"><b>OpenAlex’s live search is congested right now.</b> This demo queries the free OpenAlex API live; its search index has occasional rough patches — the tool itself is fine. Try again in a moment, or browse the <a href="gallery.html" style="color:var(--teal);font-weight:600">baked Examples →</a> which always load instantly.</div>'; }).then(function(){ b.disabled=false; b.textContent='run'; }); }; return b; }
   function short(n){ return n.replace('Quantum Computing Algorithms and Architecture','QC algorithms').replace('Quantum Information and Cryptography','quantum info / crypto').replace('Quantum many-body systems','many-body').replace('Quantum and electron transport phenomena','electron transport').replace('Cold Atom Physics and Bose-Einstein Condensates','cold atoms / BEC').replace('Physics of Superconductivity and Magnetism','superconductivity').replace('Topological Materials and Phenomena','topological materials').replace('Particle physics theoretical and experimental studies','particle physics').replace('Quantum Mechanics and Applications','QM applications').replace('Quantum optics and atomic interactions','quantum optics').replace('Semiconductor Lasers and Optical Devices','semiconductor lasers').replace('Photonic and Optical Devices','photonics'); }
   function map(o){ var m={}; (o.group_by||[]).forEach(function(g){ if(/^\d+$/.test(g.key)) m[+g.key]=g.count; }); return m; }
   function drawChart(cfg){ res.innerHTML='<div class="chartbox"><canvas id="cv"></canvas></div>'; if(chart) chart.destroy(); chart=new Chart(document.getElementById('cv'), cfg); }
 
+  function drawTrends(ds){
+    drawChart({ type:'line', data:{ labels:YEARS, datasets:ds.map(function(d,i){ var c=PALETTE[i%PALETTE.length]; return {label:d.label,data:d.data,borderColor:c,backgroundColor:c,tension:.3,pointRadius:2,borderWidth:2}; }) },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top',labels:{color:txt,boxWidth:10,font:{size:11}}},tooltip:{callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw+'%';}}}}, scales:{x:{ticks:{color:txt},grid:{display:false}},y:{beginAtZero:true,ticks:{color:txt,callback:function(v){return v+'%';}},grid:{color:grid}}} } });
+  }
+  function sameSet(a,b){ if(a.length!==b.length) return false; var s={}; a.forEach(function(x){s[x]=1;}); return b.every(function(x){return s[x];}); }
   function runTrends(){
     var kw=ctrl.querySelector('input.kw').value.trim();
     if(!kw){ res.innerHTML='<div class="err">type a keyword first.</div>'; return; }
     var mode=ctrl.querySelector('.seg button.on').dataset.mode;
     var picked=Array.prototype.slice.call(ctrl.querySelectorAll('input.jr:checked')).map(function(c){return c.value;});
     if(!picked.length){ res.innerHTML='<div class="err">pick at least one journal.</div>'; return; }
+    if(mode==='text' && kw.toLowerCase()===BAKED.kw && sameSet(picked, BAKED.journals)){
+      note.textContent='“error correction” across the three default quantum journals — saved snapshot, loads instantly. Edit any input and press run for a live OpenAlex query.';
+      drawTrends(BAKED.trends); return Promise.resolve();
+    }
     var win=',from_publication_date:2020-01-01,to_publication_date:2025-12-31';
     function build(cid){
+      var concept = mode==='concept' && cid;   // cid null => fall through to text match
       return Promise.all(picked.map(function(name){
-        var sid=JOURNALS[name];
-        var kwf = mode==='concept' ? 'concepts.id:'+cid : 'title_and_abstract.search:'+kw;
-        return Promise.all([
-          oa('works',{filter:'primary_location.source.id:'+sid+win,group_by:'publication_year',per_page:200}),
-          oa('works',{filter:'primary_location.source.id:'+sid+','+kwf+win,group_by:'publication_year',per_page:200})
-        ]).then(function(r){ var tot=map(r[0]), km=map(r[1]); return {label:name, data:YEARS.map(function(y){ return tot[y]?+(100*(km[y]||0)/tot[y]).toFixed(1):0; })}; });
-      })).then(function(ds){
-        drawChart({ type:'line', data:{ labels:YEARS, datasets:ds.map(function(d,i){ var c=PALETTE[i%PALETTE.length]; return {label:d.label,data:d.data,borderColor:c,backgroundColor:c,tension:.3,pointRadius:2,borderWidth:2}; }) },
-          options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top',labels:{color:txt,boxWidth:10,font:{size:11}}},tooltip:{callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw+'%';}}}}, scales:{x:{ticks:{color:txt},grid:{display:false}},y:{beginAtZero:true,ticks:{color:txt,callback:function(v){return v+'%';}},grid:{color:grid}}} } });
-      });
+        var sid=JOURNALS[name], base='primary_location.source.id:'+sid;
+        var totP=oa('works',{filter:base+win,group_by:'publication_year',per_page:200}).then(map);
+        var kwP = concept
+          ? oa('works',{filter:base+',concepts.id:'+cid+win,group_by:'publication_year',per_page:200}).then(map)
+          : countsByYear(base+',title_and_abstract.search:'+kw, YEARS);
+        return Promise.all([totP,kwP]).then(function(r){ var tot=r[0], km=r[1]; return {label:name, data:YEARS.map(function(y){ return tot[y]?+(100*(km[y]||0)/tot[y]).toFixed(1):0; })}; });
+      })).then(drawTrends);
     }
     if(mode==='concept'){
-      return oa('concepts',{search:kw,per_page:1}).then(function(c){
-        var r=c.results&&c.results[0]; if(!r){ res.innerHTML='<div class="err">no concept matched "'+kw+'" — switch to text (fuzzy) mode.</div>'; return; }
+      return oa('concepts',{search:kw,per_page:1},1,2).then(function(c){
+        var r=c.results&&c.results[0];
+        if(!r){ note.textContent='concept lookup found nothing — showing "'+kw+'" as a fuzzy text match.'; return build(null); }
         note.textContent='matched concept: "'+r.display_name+'" — share of each journal’s papers per year (synonym-aware).';
         return build(r.id.split('/').pop());
-      });
+      }, function(){ note.textContent='concept lookup is slow right now — showing "'+kw+'" as a fuzzy text match instead.'; return build(null); });
     }
     note.textContent='"'+kw+'" as a fuzzy text match — share of each journal’s papers per year.';
     return build(null);
@@ -136,15 +164,24 @@
     var kw=ctrl.querySelector('input.kw').value.trim();
     if(!kw){ res.innerHTML='<div class="err">type a keyword first.</div>'; return; }
     var mode=ctrl.querySelector('.seg button.on').dataset.mode, years=[]; for(var y=2015;y<=2025;y++) years.push(y);
-    function draw(filt,label){
-      return oa('works',{filter:filt+',from_publication_date:2015-01-01,to_publication_date:2025-12-31',group_by:'publication_year',per_page:200}).then(function(d){
-        var ym=map(d);
-        drawChart({type:'line',data:{labels:years,datasets:[{data:years.map(function(y){return ym[y]||0;}),borderColor:'#1d9e75',backgroundColor:'rgba(29,158,117,.12)',fill:true,tension:0.3,pointRadius:0,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw.toLocaleString()+' papers';}}}},scales:{x:{ticks:{color:txt},grid:{display:false}},y:{beginAtZero:true,ticks:{color:txt,callback:function(v){return v>=1000?(v/1000)+'k':v;}},grid:{color:grid}}}}});
-        note.textContent=label+' — papers per year across all of OpenAlex (arXiv + journals).';
-      });
+    function render(ym,label){
+      drawChart({type:'line',data:{labels:years,datasets:[{data:years.map(function(y){return ym[y]||0;}),borderColor:'#1d9e75',backgroundColor:'rgba(29,158,117,.12)',fill:true,tension:0.3,pointRadius:0,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw.toLocaleString()+' papers';}}}},scales:{x:{ticks:{color:txt},grid:{display:false}},y:{beginAtZero:true,ticks:{color:txt,callback:function(v){return v>=1000?(v/1000)+'k':v;}},grid:{color:grid}}}}});
+      note.textContent=label+' — papers per year across all of OpenAlex (arXiv + journals).';
     }
-    if(mode==='concept'){ return oa('concepts',{search:kw,per_page:1}).then(function(c){ var r=c.results&&c.results[0]; if(!r){ res.innerHTML='<div class="err">no concept matched "'+kw+'" — try text mode.</div>'; return; } return draw('concepts.id:'+r.id.split('/').pop(),'concept: "'+r.display_name+'"'); }); }
-    return draw('title_and_abstract.search:'+kw,'"'+kw+'" (text match)');
+    // text search+group_by times out — count per year instead
+    function textTopic(){ return countsByYear('title_and_abstract.search:'+kw, years).then(function(ym){ render(ym,'"'+kw+'" (text match)'); }); }
+    if(mode==='text' && kw.toLowerCase()===BAKED.kw){
+      var bym={}; BAKED.topicYears.forEach(function(y,i){ bym[y]=BAKED.topic[i]; });
+      render(bym,'“error correction” (saved snapshot)'); return Promise.resolve();
+    }
+    if(mode==='concept'){
+      return oa('concepts',{search:kw,per_page:1},1,2).then(function(c){
+        var r=c.results&&c.results[0];
+        if(!r) return textTopic();
+        return oa('works',{filter:'concepts.id:'+r.id.split('/').pop()+',from_publication_date:2015-01-01,to_publication_date:2025-12-31',group_by:'publication_year',per_page:200}).then(function(d){ render(map(d),'concept: "'+r.display_name+'"'); });
+      }, function(){ return textTopic(); });
+    }
+    return textTopic();
   }
   function stat(ids){ var f=ids.map(function(i){return 'concepts.id:'+i;}).join(',')+',from_publication_date:2019-01-01,to_publication_date:2022-12-31';
     return oa('works',{filter:f,per_page:1,select:'id'}).then(function(c){ return oa('works',{filter:f,sample:50,seed:7,per_page:50,select:'cited_by_count'}).then(function(s){
@@ -200,8 +237,8 @@
   }
   function winSeg(){ var d=document.createElement('div'); d.className='seg'; [['today','today'],['week','this week'],['month','this month'],['year','this year']].forEach(function(x){ var b=document.createElement('button'); b.textContent=x[1]; b.dataset.win=x[0]; if(x[0]==='month')b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; renderTrending(x[0]); }; d.appendChild(b); }); return d; }
   var DEMOS={
-    trends:{ desc:'Track any keyword across journals over time — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(runBtn(runTrends)); } },
-    topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over the past decade.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(runBtn(runTopicTrend)); } },
+    trends:{ desc:'Track any keyword across journals over time — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(runBtn(runTrends)); runTrends(); } },
+    topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over the past decade.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(runBtn(runTopicTrend)); runTopicTrend(); } },
     impact:{ desc:'Average citations of two topics and their intersection — spot synergy.', build:function(){ ctrl.appendChild(label('topic A')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(label('topic B')); var b=sel(Object.keys(TOPICS)); b.selectedIndex=1; ctrl.appendChild(b); ctrl.appendChild(runBtn(runImpact)); } },
     who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
     venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } },
