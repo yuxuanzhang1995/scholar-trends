@@ -1,5 +1,5 @@
 {
- "generated": "2026-06-15 12:38Z",
+ "generated": "2026-06-15 13:49Z",
  "source": "scirate.com",
  "windows": {
   "today": {
@@ -7,12 +7,17 @@
     {
      "id": "2606.13779",
      "title": "Computational regimes in matrix-product-state-based quantum trajectory simulations",
-     "scites": 25
+     "scites": 26
     },
     {
      "id": "2606.14204",
      "title": "Simultaneous Estimation of Partial-Transpose Moments with Active Memory Independent of the Moment Order",
      "scites": 16
+    },
+    {
+     "id": "2606.14034",
+     "title": "All about quantum error correction: distillation, mitigation, self-correction and beyond",
+     "scites": 13
     },
     {
      "id": "2606.14455",
@@ -22,11 +27,6 @@
     {
      "id": "2606.14365",
      "title": "Certification of the genuine resolution of photon number resolving detectors",
-     "scites": 12
-    },
-    {
-     "id": "2606.14034",
-     "title": "All about quantum error correction: distillation, mitigation, self-correction and beyond",
      "scites": 12
     },
     {
@@ -45,64 +45,22 @@
      "scites": 7
     },
     {
-     "id": "2606.14677",
-     "title": "Quasilinear Equivalence Checking for Detector Error Models",
-     "scites": 5
-    },
-    {
      "id": "2606.14613",
      "title": "Tensor network manifolds and Riemannian fundamental theorem for tensor networks",
+     "scites": 6
+    },
+    {
+     "id": "2606.14677",
+     "title": "Quasilinear Equivalence Checking for Detector Error Models",
      "scites": 5
     }
    ],
    "keywords": [
     {
-     "word": "quantum",
-     "papers": 16,
-     "scites": 82,
+     "word": "quantum computing",
+     "papers": 2,
+     "scites": 13,
      "score": 100
-    },
-    {
-     "word": "beyond",
-     "papers": 3,
-     "scites": 15,
-     "score": 19
-    },
-    {
-     "word": "resolving",
-     "papers": 2,
-     "scites": 20,
-     "score": 18
-    },
-    {
-     "word": "memory",
-     "papers": 2,
-     "scites": 17,
-     "score": 17
-    },
-    {
-     "word": "error",
-     "papers": 2,
-     "scites": 17,
-     "score": 17
-    },
-    {
-     "word": "estimation",
-     "papers": 2,
-     "scites": 16,
-     "score": 16
-    },
-    {
-     "word": "active",
-     "papers": 2,
-     "scites": 16,
-     "score": 16
-    },
-    {
-     "word": "codes",
-     "papers": 2,
-     "scites": 14,
-     "score": 15
     }
    ]
   },
@@ -111,7 +69,7 @@
     {
      "id": "2606.11484",
      "title": "Handbook of Error-Correcting Codes",
-     "scites": 176
+     "scites": 177
     },
     {
      "id": "2606.12363",
@@ -161,52 +119,46 @@
    ],
    "keywords": [
     {
-     "word": "quantum",
-     "papers": 24,
-     "scites": 569,
+     "word": "quantum error",
+     "papers": 5,
+     "scites": 111,
      "score": 100
     },
     {
-     "word": "codes",
-     "papers": 7,
-     "scites": 320,
+     "word": "unitary channels",
+     "papers": 2,
+     "scites": 108,
+     "score": 69
+    },
+    {
+     "word": "error correction",
+     "papers": 4,
+     "scites": 59,
+     "score": 67
+    },
+    {
+     "word": "heisenberg limit",
+     "papers": 2,
+     "scites": 79,
+     "score": 56
+    },
+    {
+     "word": "quantum circuits",
+     "papers": 2,
+     "scites": 52,
      "score": 43
     },
     {
-     "word": "error",
-     "papers": 6,
-     "scites": 146,
-     "score": 25
+     "word": "pauli strings",
+     "papers": 2,
+     "scites": 49,
+     "score": 42
     },
     {
-     "word": "estimation",
-     "papers": 4,
-     "scites": 146,
-     "score": 21
-    },
-    {
-     "word": "channels",
-     "papers": 3,
-     "scites": 125,
-     "score": 17
-    },
-    {
-     "word": "unitary",
-     "papers": 3,
-     "scites": 120,
-     "score": 17
-    },
-    {
-     "word": "gates",
-     "papers": 3,
-     "scites": 111,
-     "score": 16
-    },
-    {
-     "word": "logical",
-     "papers": 3,
-     "scites": 107,
-     "score": 16
+     "word": "decoder quantum",
+     "papers": 2,
+     "scites": 30,
+     "score": 34
     }
    ]
   },
@@ -225,7 +177,7 @@
     {
      "id": "2606.11484",
      "title": "Handbook of Error-Correcting Codes",
-     "scites": 176
+     "scites": 177
     },
     {
      "id": "2605.21898",
@@ -265,52 +217,52 @@
    ],
    "keywords": [
     {
-     "word": "quantum",
-     "papers": 28,
-     "scites": 2112,
+     "word": "quantum error",
+     "papers": 6,
+     "scites": 484,
      "score": 100
     },
     {
-     "word": "codes",
-     "papers": 11,
-     "scites": 941,
-     "score": 42
-    },
-    {
-     "word": "error",
-     "papers": 6,
-     "scites": 484,
-     "score": 22
-    },
-    {
-     "word": "correction",
+     "word": "error correction",
      "papers": 5,
      "scites": 432,
-     "score": 19
+     "score": 86
     },
     {
-     "word": "efficient",
-     "papers": 4,
-     "scites": 301,
-     "score": 14
+     "word": "fault tolerance",
+     "papers": 2,
+     "scites": 223,
+     "score": 40
     },
     {
-     "word": "clifford",
-     "papers": 4,
-     "scites": 253,
-     "score": 13
+     "word": "quantum ldpc",
+     "papers": 2,
+     "scites": 202,
+     "score": 38
     },
     {
-     "word": "logical",
-     "papers": 4,
-     "scites": 214,
-     "score": 12
+     "word": "ldpc codes",
+     "papers": 2,
+     "scites": 202,
+     "score": 38
     },
     {
-     "word": "code",
-     "papers": 3,
-     "scites": 222,
-     "score": 11
+     "word": "differential equations",
+     "papers": 2,
+     "scites": 195,
+     "score": 37
+    },
+    {
+     "word": "quantum low-density",
+     "papers": 2,
+     "scites": 184,
+     "score": 36
+    },
+    {
+     "word": "low-density parity-check",
+     "papers": 2,
+     "scites": 184,
+     "score": 36
     }
    ]
   },
@@ -369,52 +321,52 @@
    ],
    "keywords": [
     {
-     "word": "quantum",
-     "papers": 27,
-     "scites": 5019,
+     "word": "quantum advantage",
+     "papers": 6,
+     "scites": 1337,
      "score": 100
     },
     {
-     "word": "advantage",
-     "papers": 7,
-     "scites": 1518,
-     "score": 28
-    },
-    {
-     "word": "classical",
-     "papers": 6,
-     "scites": 1158,
-     "score": 23
-    },
-    {
-     "word": "qubits",
-     "papers": 4,
-     "scites": 925,
-     "score": 17
-    },
-    {
-     "word": "codes",
-     "papers": 4,
-     "scites": 709,
-     "score": 14
-    },
-    {
-     "word": "exponential",
-     "papers": 3,
-     "scites": 673,
-     "score": 12
-    },
-    {
-     "word": "state",
-     "papers": 3,
-     "scites": 588,
-     "score": 11
-    },
-    {
-     "word": "correction",
+     "word": "error correction",
      "papers": 3,
      "scites": 528,
-     "score": 11
+     "score": 45
+    },
+    {
+     "word": "quantum ldpc",
+     "papers": 2,
+     "scites": 393,
+     "score": 31
+    },
+    {
+     "word": "ldpc codes",
+     "papers": 2,
+     "scites": 393,
+     "score": 31
+    },
+    {
+     "word": "fewer gates",
+     "papers": 2,
+     "scites": 350,
+     "score": 30
+    },
+    {
+     "word": "logical qubits",
+     "papers": 2,
+     "scites": 368,
+     "score": 30
+    },
+    {
+     "word": "trapped-ion quantum",
+     "papers": 2,
+     "scites": 335,
+     "score": 29
+    },
+    {
+     "word": "quantum computer",
+     "papers": 2,
+     "scites": 335,
+     "score": 29
     }
    ]
   }

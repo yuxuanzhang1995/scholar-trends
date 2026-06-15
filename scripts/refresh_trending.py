@@ -9,7 +9,7 @@ many recent papers AND strong community upvotes.
 """
 import urllib.request, re, html, collections, json, datetime
 
-WINDOWS = [("today", 1, 2), ("week", 7, 2), ("month", 30, 3), ("year", 365, 3)]
+WINDOWS = [("today", 1, 2), ("week", 7, 2), ("month", 30, 2), ("year", 365, 2)]
 STOP = set((
     "the of for and to in on with via using from at is are we our new a an as by that this can be it its "
     "their towards toward between over under into more most general scite scites comment comments abstract "
@@ -38,14 +38,20 @@ def scrape(rng):
 
 
 def keywords(papers, minp, top=8):
-    kw = collections.defaultdict(lambda: [0, 0])
+    # Phrase (bigram) extraction: single words split multi-word topics
+    # ("error"+"correction") and let trivial words ("quantum") dominate.
+    bg = collections.defaultdict(lambda: [0, 0])
     for p in papers:
-        for w in set(re.findall(r"[a-z][a-z\-]{3,}", p["title"].lower())):
-            if w in STOP:
+        toks = [w for w in re.findall(r"[a-z][a-z\-]{2,}", p["title"].lower()) if w not in STOP]
+        seen = set()
+        for i in range(len(toks) - 1):
+            phrase = toks[i] + " " + toks[i + 1]
+            if phrase in seen:  # count each phrase once per paper
                 continue
-            kw[w][0] += 1
-            kw[w][1] += p["scites"]
-    rows = [{"word": w, "papers": n, "scites": s} for w, (n, s) in kw.items() if n >= minp]
+            seen.add(phrase)
+            bg[phrase][0] += 1
+            bg[phrase][1] += p["scites"]
+    rows = [{"word": w, "papers": n, "scites": s} for w, (n, s) in bg.items() if n >= minp]
     if not rows:
         return []
     mn = max(r["papers"] for r in rows) or 1
