@@ -53,6 +53,7 @@
     <button class="tab" data-d="impact">topic impact</button>
     <button class="tab" data-d="who">who works on it</button>
     <button class="tab" data-d="venue">venue stats</button>
+    <button class="tab" data-d="trending">trending · Scirate</button>
   </div>
 
   <div class="panel">
@@ -157,11 +158,29 @@
     });
   }
 
+  function esc(s){ return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  var trendingData=null;
+  function loadTrending(){ return trendingData?Promise.resolve(trendingData):fetch('trending.json?cb='+Date.now()).then(function(r){if(!r.ok)throw new Error('snapshot '+r.status);return r.json();}).then(function(j){trendingData=j;return j;}); }
+  function renderTrending(win){
+    res.innerHTML='<div class="hint">loading snapshot…</div>';
+    loadTrending().then(function(j){
+      var w=(j.windows||{})[win]||{papers:[],keywords:[]}, kws=w.keywords||[], ps=(w.papers||[]).slice(0,5);
+      note.textContent='Scirate scites · '+win+' · snapshot '+(j.generated||'')+' · auto-refreshed daily';
+      var papers='<div style="margin-top:14px"><div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">top-scited papers</div>'+
+        ps.map(function(p){return '<div style="font-size:13px;margin:5px 0;display:flex;gap:8px"><span style="min-width:34px;color:var(--teal);font-weight:600;text-align:right">'+p.scites+'</span><a href="https://arxiv.org/abs/'+p.id+'" target="_blank" rel="noopener">'+esc(p.title||p.id)+'</a></div>';}).join('')+'</div>';
+      res.innerHTML='<div class="chartbox" style="height:'+(40+kws.length*26)+'px"><canvas id="cv"></canvas></div>'+papers;
+      if(chart)chart.destroy();
+      chart=new Chart(document.getElementById('cv'),{type:'bar',data:{labels:kws.map(function(k){return k.word;}),datasets:[{data:kws.map(function(k){return k.score;}),backgroundColor:'#1d9e75',borderRadius:4,barThickness:15}]},
+        options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,layout:{padding:{right:8}},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){var k=kws[c.dataIndex];return ' score '+k.score+'  ('+k.papers+' papers · '+k.scites+' scites)';}}}},scales:{x:{beginAtZero:true,max:100,ticks:{color:txt},grid:{color:grid}},y:{ticks:{color:txt,font:{size:11}},grid:{display:false}}}}});
+    }).catch(function(e){ res.innerHTML='<div class="err">'+e.message+' — the daily snapshot may not have generated yet.</div>'; });
+  }
+  function winSeg(){ var d=document.createElement('div'); d.className='seg'; [['today','today'],['week','this week'],['month','this month'],['year','this year']].forEach(function(x){ var b=document.createElement('button'); b.textContent=x[1]; b.dataset.win=x[0]; if(x[0]==='month')b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; renderTrending(x[0]); }; d.appendChild(b); }); return d; }
   var DEMOS={
     trends:{ desc:'Track any keyword across journals over time — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(runBtn(runTrends)); } },
     impact:{ desc:'Average citations of two topics and their intersection — spot synergy.', build:function(){ ctrl.appendChild(label('topic A')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(label('topic B')); var b=sel(Object.keys(TOPICS)); b.selectedIndex=1; ctrl.appendChild(b); ctrl.appendChild(runBtn(runImpact)); } },
     who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
-    venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } }
+    venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } },
+    trending:{ desc:"What's trending on arXiv right now by Scirate scites — a composite of paper count × community upvotes.", build:function(){ ctrl.appendChild(label('window')); ctrl.appendChild(winSeg()); renderTrending('month'); } }
   };
   function label(t){ var l=document.createElement('label'); l.className='lab'; l.textContent=t; return l; }
   function seg(){ var d=document.createElement('div'); d.className='seg'; ['continent','country'].forEach(function(x,i){ var b=document.createElement('button'); b.textContent=x; b.dataset.dim=x; if(i===0)b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; }; d.appendChild(b); }); return d; }

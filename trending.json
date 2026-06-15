@@ -1,0 +1,422 @@
+{
+ "generated": "2026-06-15 12:38Z",
+ "source": "scirate.com",
+ "windows": {
+  "today": {
+   "papers": [
+    {
+     "id": "2606.13779",
+     "title": "Computational regimes in matrix-product-state-based quantum trajectory simulations",
+     "scites": 25
+    },
+    {
+     "id": "2606.14204",
+     "title": "Simultaneous Estimation of Partial-Transpose Moments with Active Memory Independent of the Moment Order",
+     "scites": 16
+    },
+    {
+     "id": "2606.14455",
+     "title": "Optimal Decoding of Small Codes by Density Matrix Propagation",
+     "scites": 12
+    },
+    {
+     "id": "2606.14365",
+     "title": "Certification of the genuine resolution of photon number resolving detectors",
+     "scites": 12
+    },
+    {
+     "id": "2606.14034",
+     "title": "All about quantum error correction: distillation, mitigation, self-correction and beyond",
+     "scites": 12
+    },
+    {
+     "id": "2606.14456",
+     "title": "QCI Connect: A Modular Full-Stack Quantum Computing Platform",
+     "scites": 10
+    },
+    {
+     "id": "2606.14698",
+     "title": "Resolving the Edge of a Quantum Pyramid",
+     "scites": 8
+    },
+    {
+     "id": "2606.14522",
+     "title": "Quantum gates with parametrically driven multi-qubit couplers",
+     "scites": 7
+    },
+    {
+     "id": "2606.14677",
+     "title": "Quasilinear Equivalence Checking for Detector Error Models",
+     "scites": 5
+    },
+    {
+     "id": "2606.14613",
+     "title": "Tensor network manifolds and Riemannian fundamental theorem for tensor networks",
+     "scites": 5
+    }
+   ],
+   "keywords": [
+    {
+     "word": "quantum",
+     "papers": 16,
+     "scites": 82,
+     "score": 100
+    },
+    {
+     "word": "beyond",
+     "papers": 3,
+     "scites": 15,
+     "score": 19
+    },
+    {
+     "word": "resolving",
+     "papers": 2,
+     "scites": 20,
+     "score": 18
+    },
+    {
+     "word": "memory",
+     "papers": 2,
+     "scites": 17,
+     "score": 17
+    },
+    {
+     "word": "error",
+     "papers": 2,
+     "scites": 17,
+     "score": 17
+    },
+    {
+     "word": "estimation",
+     "papers": 2,
+     "scites": 16,
+     "score": 16
+    },
+    {
+     "word": "active",
+     "papers": 2,
+     "scites": 16,
+     "score": 16
+    },
+    {
+     "word": "codes",
+     "papers": 2,
+     "scites": 14,
+     "score": 15
+    }
+   ]
+  },
+  "week": {
+   "papers": [
+    {
+     "id": "2606.11484",
+     "title": "Handbook of Error-Correcting Codes",
+     "scites": 176
+    },
+    {
+     "id": "2606.12363",
+     "title": "Fermions are fundamentally more nonlocal than Bosons",
+     "scites": 98
+    },
+    {
+     "id": "2606.08349",
+     "title": "Quantum algorithms for stochastic nonlinear differential equations",
+     "scites": 96
+    },
+    {
+     "id": "2606.13638",
+     "title": "Optimal classical shadow estimation of unitary channels at Heisenberg limit",
+     "scites": 70
+    },
+    {
+     "id": "2606.10430",
+     "title": "Efficient Magic State Cultivation for $\\sqrt{T}$ Gates",
+     "scites": 63
+    },
+    {
+     "id": "2606.07734",
+     "title": "Exploring the landscape of compact magic-state distillation factories",
+     "scites": 58
+    },
+    {
+     "id": "2606.13521",
+     "title": "Quantum Logic Codes: Complete Transversal Logical Clifford Instruction Sets for High-Rate Stabilizer Quantum Error Correcting Codes",
+     "scites": 52
+    },
+    {
+     "id": "2606.09588",
+     "title": "Probabilistically Checking Quantum Proofs, with Interaction",
+     "scites": 45
+    },
+    {
+     "id": "2606.09988",
+     "title": "Absence of poor local minima in matrix product states",
+     "scites": 40
+    },
+    {
+     "id": "2606.09678",
+     "title": "The dynamic 4.8.8 Floquet code",
+     "scites": 39
+    }
+   ],
+   "keywords": [
+    {
+     "word": "quantum",
+     "papers": 24,
+     "scites": 569,
+     "score": 100
+    },
+    {
+     "word": "codes",
+     "papers": 7,
+     "scites": 320,
+     "score": 43
+    },
+    {
+     "word": "error",
+     "papers": 6,
+     "scites": 146,
+     "score": 25
+    },
+    {
+     "word": "estimation",
+     "papers": 4,
+     "scites": 146,
+     "score": 21
+    },
+    {
+     "word": "channels",
+     "papers": 3,
+     "scites": 125,
+     "score": 17
+    },
+    {
+     "word": "unitary",
+     "papers": 3,
+     "scites": 120,
+     "score": 17
+    },
+    {
+     "word": "gates",
+     "papers": 3,
+     "scites": 111,
+     "score": 16
+    },
+    {
+     "word": "logical",
+     "papers": 3,
+     "scites": 107,
+     "score": 16
+    }
+   ]
+  },
+  "month": {
+   "papers": [
+    {
+     "id": "2605.21457",
+     "title": "An Exponential Sample-Complexity Advantage for Coherent Quantum Inference",
+     "scites": 181
+    },
+    {
+     "id": "2605.29137",
+     "title": "Quantum error correction and fault tolerance: A comprehensive tutorial",
+     "scites": 180
+    },
+    {
+     "id": "2606.11484",
+     "title": "Handbook of Error-Correcting Codes",
+     "scites": 176
+    },
+    {
+     "id": "2605.21898",
+     "title": "Concatenating Algebraic Codes over High-Rate Quantum LDPC Codes",
+     "scites": 126
+    },
+    {
+     "id": "2606.06455",
+     "title": "Breakeven demonstration of quantum low-density parity-check codes",
+     "scites": 121
+    },
+    {
+     "id": "2605.30455",
+     "title": "A Denser Planar Surface Code",
+     "scites": 108
+    },
+    {
+     "id": "2605.16195",
+     "title": "Efficient quantum algorithm for linear matrix differential equations and applications to open quantum systems",
+     "scites": 99
+    },
+    {
+     "id": "2605.31544",
+     "title": "More efficient Clifford+T synthesis for small-angle rotations and application to Trotterization",
+     "scites": 99
+    },
+    {
+     "id": "2606.12363",
+     "title": "Fermions are fundamentally more nonlocal than Bosons",
+     "scites": 98
+    },
+    {
+     "id": "2606.08349",
+     "title": "Quantum algorithms for stochastic nonlinear differential equations",
+     "scites": 96
+    }
+   ],
+   "keywords": [
+    {
+     "word": "quantum",
+     "papers": 28,
+     "scites": 2112,
+     "score": 100
+    },
+    {
+     "word": "codes",
+     "papers": 11,
+     "scites": 941,
+     "score": 42
+    },
+    {
+     "word": "error",
+     "papers": 6,
+     "scites": 484,
+     "score": 22
+    },
+    {
+     "word": "correction",
+     "papers": 5,
+     "scites": 432,
+     "score": 19
+    },
+    {
+     "word": "efficient",
+     "papers": 4,
+     "scites": 301,
+     "score": 14
+    },
+    {
+     "word": "clifford",
+     "papers": 4,
+     "scites": 253,
+     "score": 13
+    },
+    {
+     "word": "logical",
+     "papers": 4,
+     "scites": 214,
+     "score": 12
+    },
+    {
+     "word": "code",
+     "papers": 3,
+     "scites": 222,
+     "score": 11
+    }
+   ]
+  },
+  "year": {
+   "papers": [
+    {
+     "id": "2604.07639",
+     "title": "Exponential quantum advantage in processing massive classical data",
+     "scites": 352
+    },
+    {
+     "id": "2603.28627",
+     "title": "Shor's algorithm is possible with as few as 10,000 reconfigurable atomic qubits",
+     "scites": 351
+    },
+    {
+     "id": "2507.11536",
+     "title": "Understanding Quantum Information and Computation",
+     "scites": 279
+    },
+    {
+     "id": "2605.10943",
+     "title": "A passive self-correcting quantum memory in three dimensions",
+     "scites": 277
+    },
+    {
+     "id": "2510.19928",
+     "title": "Mind the gaps: The fraught road to quantum advantage",
+     "scites": 241
+    },
+    {
+     "id": "2508.05720",
+     "title": "The vast world of quantum advantage",
+     "scites": 235
+    },
+    {
+     "id": "2511.15806",
+     "title": "Mixed state tomography reduces to pure state tomography",
+     "scites": 224
+    },
+    {
+     "id": "2510.05262",
+     "title": "Peaked quantum advantage using error correction",
+     "scites": 215
+    },
+    {
+     "id": "2602.11457",
+     "title": "The Pinnacle Architecture: Reducing the cost of breaking RSA-2048 to 100 000 physical qubits using quantum LDPC codes",
+     "scites": 206
+    },
+    {
+     "id": "2509.07255",
+     "title": "Demonstrating an unconditional separation between quantum and classical information resources",
+     "scites": 205
+    }
+   ],
+   "keywords": [
+    {
+     "word": "quantum",
+     "papers": 27,
+     "scites": 5019,
+     "score": 100
+    },
+    {
+     "word": "advantage",
+     "papers": 7,
+     "scites": 1518,
+     "score": 28
+    },
+    {
+     "word": "classical",
+     "papers": 6,
+     "scites": 1158,
+     "score": 23
+    },
+    {
+     "word": "qubits",
+     "papers": 4,
+     "scites": 925,
+     "score": 17
+    },
+    {
+     "word": "codes",
+     "papers": 4,
+     "scites": 709,
+     "score": 14
+    },
+    {
+     "word": "exponential",
+     "papers": 3,
+     "scites": 673,
+     "score": 12
+    },
+    {
+     "word": "state",
+     "papers": 3,
+     "scites": 588,
+     "score": 11
+    },
+    {
+     "word": "correction",
+     "papers": 3,
+     "scites": 528,
+     "score": 11
+    }
+   ]
+  }
+ }
+}
