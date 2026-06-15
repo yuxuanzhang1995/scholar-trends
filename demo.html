@@ -82,13 +82,22 @@
   var chart=null, descEl=document.getElementById('desc'), ctrl=document.getElementById('controls'),
       res=document.getElementById('result'), note=document.getElementById('note');
 
-  function oa(path, params){
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+  function oa(path, params, n){
+    n = n || 1;
     var parts=[]; for(var k in params){ parts.push(k+'='+encodeURIComponent(params[k]).replace(/%3A/g,':').replace(/%2C/g,',')); }
     parts.push('mailto='+MAIL);
-    return fetch('https://api.openalex.org/'+path+'?'+parts.join('&')).then(function(r){ if(!r.ok) throw new Error('OpenAlex '+r.status); return r.json(); });
+    var url='https://api.openalex.org/'+path+'?'+parts.join('&');
+    return fetch(url).then(function(r){
+      if(!r.ok){
+        if((r.status>=500 || r.status===429) && n<6) return wait(500*n).then(function(){ return oa(path, params, n+1); });
+        throw new Error('OpenAlex '+r.status);
+      }
+      return r.json();
+    }, function(err){ if(n<6) return wait(500*n).then(function(){ return oa(path, params, n+1); }); throw err; });
   }
   function sel(items){ var s=document.createElement('select'); items.forEach(function(o){ var e=document.createElement('option'); e.value=o; e.textContent=o; s.appendChild(e); }); return s; }
-  function runBtn(fn){ var b=document.createElement('button'); b.className='run'; b.textContent='run'; b.onclick=function(){ b.disabled=true; b.textContent='running…'; res.innerHTML='<div class="hint">querying OpenAlex…</div>'; Promise.resolve(fn()).catch(function(e){ res.innerHTML='<div class="err">'+e.message+' — OpenAlex may be busy, try again.</div>'; }).then(function(){ b.disabled=false; b.textContent='run'; }); }; return b; }
+  function runBtn(fn){ var b=document.createElement('button'); b.className='run'; b.textContent='run'; b.onclick=function(){ b.disabled=true; b.textContent='running…'; res.innerHTML='<div class="hint">querying OpenAlex…</div>'; Promise.resolve(fn()).catch(function(e){ res.innerHTML='<div class="err">'+e.message+' — OpenAlex is flaky today; auto-retried 5×. Give it a few seconds and run again.</div>'; }).then(function(){ b.disabled=false; b.textContent='run'; }); }; return b; }
   function short(n){ return n.replace('Quantum Computing Algorithms and Architecture','QC algorithms').replace('Quantum Information and Cryptography','quantum info / crypto').replace('Quantum many-body systems','many-body').replace('Quantum and electron transport phenomena','electron transport').replace('Cold Atom Physics and Bose-Einstein Condensates','cold atoms / BEC').replace('Physics of Superconductivity and Magnetism','superconductivity').replace('Topological Materials and Phenomena','topological materials').replace('Particle physics theoretical and experimental studies','particle physics').replace('Quantum Mechanics and Applications','QM applications').replace('Quantum optics and atomic interactions','quantum optics').replace('Semiconductor Lasers and Optical Devices','semiconductor lasers').replace('Photonic and Optical Devices','photonics'); }
   function map(o){ var m={}; (o.group_by||[]).forEach(function(g){ if(/^\d+$/.test(g.key)) m[+g.key]=g.count; }); return m; }
   function drawChart(cfg){ res.innerHTML='<div class="chartbox"><canvas id="cv"></canvas></div>'; if(chart) chart.destroy(); chart=new Chart(document.getElementById('cv'), cfg); }
