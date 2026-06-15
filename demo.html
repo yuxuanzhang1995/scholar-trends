@@ -354,6 +354,80 @@
     });
     return d;
   }
+  function abstractText(inv){ if(!inv) return ''; var a=[],mx=0,w; for(w in inv){ inv[w].forEach(function(p){ a[p]=w; if(p>mx)mx=p; }); } var o=[]; for(var i=0;i<=mx;i++){ if(a[i])o.push(a[i]); } return o.join(' '); }
+  var CUES_STRONG=/(open (question|problem|challenge)|remains? (open|unclear|unknown|elusive|unsolved)|unresolved|unsolved|(important|major|key|central|fundamental|outstanding|long-standing) (open )?(question|challenge|problem)|an open (question|problem|challenge)|yet to be (understood|determined|established|demonstrated|achieved|shown|resolved)|remains? a (major|key|central|fundamental|significant) (challenge|question|problem))/i;
+  var CUES_WEAK=/(future (work|direction|research)|would be (interesting|important|valuable) to|requires? further|calls? for|left (for|to) (future|further)|not yet been|still (lacking|unknown|unclear|elusive))/i;
+  var NEG=/^(finally,?\s+)?(we|in this|here we|the present|this (paper|work|article|review|study|letter))\b|we (will |hereby |now |then )?(present|review|introduce|propose|show|demonstrate|report|describe|provide|discuss|study|investigate|consider|outline|summari[sz]e)|is organized as|overview of (the|this)/i;
+  function extractDirections(works, fieldId){
+    var seen={}, out=[];
+    works.forEach(function(w){
+      if(fieldId && w.primary_topic && w.primary_topic.field && w.primary_topic.field.id!==fieldId) return; // drop off-field citers
+      var txt=abstractText(w.abstract_inverted_index); if(!txt) return;
+      (txt.match(/[^.!?]+[.!?]+/g)||[]).forEach(function(s){
+        s=s.trim(); if(s.length<45 || s.length>300) return;
+        var strong=CUES_STRONG.test(s), weak=!strong && CUES_WEAK.test(s);
+        if((!strong && !weak) || NEG.test(s)) return; // need a cue, reject meta/self-description
+        var key=s.slice(0,55).toLowerCase(); if(seen[key]) return; seen[key]=1;
+        out.push({sentence:s, title:w.title||'', year:w.publication_year||0, wid:(w.id||'').split('/').pop(), doi:w.doi||'', cites:w.cited_by_count||0, str:strong?2:1});
+      });
+    });
+    out.sort(function(a,b){ return (b.str-a.str)||(b.year-a.year)||(b.cites-a.cites); }); // real open-problems first, then recent
+    return out.slice(0,12);
+  }
+  function dirWorks(filter,sort,n){ return oa('works',{filter:filter,sort:sort,per_page:n||25,select:'id,title,publication_year,abstract_inverted_index,cited_by_count,doi,primary_topic'}); }
+  function runDirections(){
+    var q=ctrl.querySelector('.dq').value.trim(); if(!q){ renderProblems('all'); return Promise.resolve(); }
+    var kind=ctrl.querySelector('.dk').value;
+    note.textContent='resolving…'; res.innerHTML='<div class="hint">querying OpenAlex…</div>';
+    var isDoi=/^10\.\d{4,}\//.test(q) || /doi\.org/.test(q) || kind==='doi';
+    var P;
+    if(isDoi){
+      var doi=q.replace(/^https?:\/\/(dx\.)?doi\.org\//i,'').replace(/^doi:/i,'').trim();
+      P=oa('works/https://doi.org/'+doi,{select:'id,title,publication_year,abstract_inverted_index,cited_by_count,doi,primary_topic'}).then(function(w){
+        return dirWorks('cites:'+(w.id||'').split('/').pop(),'publication_date:desc',50).then(function(c){ return {focal:w, fid:((w.primary_topic||{}).field||{}).id, list:[w].concat(c.results||[])}; });
+      });
+    } else if(kind==='author'){
+      P=oa('authors',{search:q,per_page:1}).then(function(a){
+        var au=a.results&&a.results[0]; if(!au) throw new Error('no author matched');
+        return dirWorks('author.id:'+(au.id||'').split('/').pop(),'publication_date:desc',50).then(function(c){ return {who:au.display_name, list:c.results||[]}; });
+      });
+    } else if(kind==='keyword'){
+      P=dirWorks('title_and_abstract.search:'+q,'publication_date:desc',50).then(function(c){ return {kw:q, list:c.results||[]}; });
+    } else {
+      P=dirWorks('title.search:'+q,'cited_by_count:desc',1).then(function(c){
+        var w=c.results&&c.results[0]; if(!w) throw new Error('no paper matched that title');
+        return dirWorks('cites:'+(w.id||'').split('/').pop(),'publication_date:desc',50).then(function(cc){ return {focal:w, fid:((w.primary_topic||{}).field||{}).id, list:[w].concat(cc.results||[])}; });
+      });
+    }
+    return P.then(function(r){ renderDirections(q,r,extractDirections(r.list, r.fid)); })
+            .catch(function(e){ note.textContent=''; res.innerHTML='<div class="err">couldn’t resolve that — '+esc(e.message||'error')+'. Try a DOI, an exact paper title, an author name, or a keyword. (OpenAlex search can also be briefly congested — retry in a moment.)</div>'; });
+  }
+  function renderDirections(q,r,dirs){
+    var head = r.focal ? ('Open questions flagged by recent papers citing <b>“'+esc((r.focal.title||q).slice(0,90))+'”</b>'+(r.focal.publication_year?' ('+r.focal.publication_year+')':''))
+             : r.who ? ('Open questions flagged in recent papers by <b>'+esc(r.who)+'</b>')
+             : ('Open questions flagged in recent papers on <b>“'+esc(q)+'”</b>');
+    note.textContent='Sentences extracted verbatim from paper abstracts (OpenAlex) — real statements of open questions, not AI-generated. Newest first.';
+    if(!dirs.length){ res.innerHTML='<p style="font-size:13px;color:var(--muted)">'+head+'</p><div class="hint">No explicit “open question / future work” sentence was found in the available abstracts (many publishers don’t expose abstracts, and not every paper states one). Try a review/survey article or a broader keyword — reviews flag the most open problems.</div>'; return; }
+    res.innerHTML='<p style="font-size:13px;color:var(--muted);margin:0 0 12px">'+head+' — '+dirs.length+' found:</p>'+dirs.map(function(x){
+      var g=contribGuess(x.sentence+' '+x.title), link=x.doi||('https://openalex.org/'+x.wid);
+      return '<div class="prob"><div class="meta"><span class="tag2">'+(x.year||'—')+'</span>'+(g.length?' '+typeBadges(g):'')+(x.cites?' <span class="tysec">'+x.cites+' cites</span>':'')+'</div>'
+        + '<p class="ask">“'+esc(x.sentence)+'”</p>'
+        + '<div class="src">📄 <a href="'+link+'" target="_blank" rel="noopener">'+esc((x.title||'source').slice(0,95))+'</a></div></div>';
+    }).join('');
+  }
+  function problemQuery(){
+    var d=document.createElement('div'); d.style.cssText='display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%';
+    var inp=document.createElement('input'); inp.className='dq'; inp.type='text'; inp.placeholder='paper title, DOI, author, or keyword…';
+    inp.style.cssText='font-size:14px;padding:8px 11px;border-radius:9px;border:1px solid var(--line);min-width:230px;flex:1;background:var(--surface);color:var(--ink)';
+    var k=document.createElement('select'); k.className='dk'; [['paper','paper title'],['doi','DOI'],['author','author'],['keyword','keyword']].forEach(function(x){ var o=document.createElement('option'); o.value=x[0]; o.textContent=x[1]; k.appendChild(o); });
+    var find=document.createElement('button'); find.className='run'; find.textContent='find directions';
+    find.onclick=function(){ find.disabled=true; find.textContent='searching…'; Promise.resolve(runDirections()).then(function(){ find.disabled=false; find.textContent='find directions'; }); };
+    inp.addEventListener('keydown',function(e){ if(e.key==='Enter') find.click(); });
+    var cur=document.createElement('button'); cur.textContent='curated'; cur.style.cssText='font-size:13px;padding:8px 12px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer';
+    cur.onclick=function(){ inp.value=''; renderProblems('all'); };
+    d.appendChild(inp); d.appendChild(k); d.appendChild(find); d.appendChild(cur);
+    return d;
+  }
   var DEMOS={
     trends:{ desc:'Track any keyword across journals over a chosen window — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(yearRange(2020,2025)); ctrl.appendChild(runBtn(runTrends)); runTrends(); } },
     topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over a chosen window.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(yearRange(2015,2025)); ctrl.appendChild(runBtn(runTopicTrend)); runTopicTrend(); } },
@@ -361,7 +435,7 @@
     who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
     venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } },
     trending:{ desc:"What's trending on arXiv right now by Scirate scites — a composite of paper count × community upvotes.", build:function(){ ctrl.appendChild(label('window')); ctrl.appendChild(winSeg()); renderTrending('month'); } },
-    problems:{ desc:"Open problems & research directions the field is chasing — each verified against 2024–2026 literature for whether it's still open. Filter by the kind of work that drives progress.", build:function(){ ctrl.appendChild(label('needs')); ctrl.appendChild(problemFilter()); renderProblems('all'); } }
+    problems:{ desc:"Open problems & research directions — search by paper title, DOI, author, or keyword to pull the open questions recent papers actually flag, or browse the curated, literature-verified list below.", build:function(){ ctrl.appendChild(problemQuery()); ctrl.appendChild(label('or curated:')); ctrl.appendChild(problemFilter()); renderProblems('all'); } }
   };
   function label(t){ var l=document.createElement('label'); l.className='lab'; l.textContent=t; return l; }
   function seg(){ var d=document.createElement('div'); d.className='seg'; ['continent','country'].forEach(function(x,i){ var b=document.createElement('button'); b.textContent=x; b.dataset.dim=x; if(i===0)b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; }; d.appendChild(b); }); return d; }
