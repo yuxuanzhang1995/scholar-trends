@@ -1,96 +1,108 @@
 {
- "generated": "2026-06-16 10:54Z",
+ "generated": "2026-06-17 10:26Z",
  "source": "scirate.com",
  "windows": {
   "today": {
    "papers": [
     {
-     "id": "2606.16425",
-     "title": "Worst-case depth hierarchy for shallow quantum circuits",
-     "scites": 28
+     "id": "2606.18188",
+     "title": "Learning Arbitrary Lindbladians with Quantum Error Correction",
+     "scites": 59
     },
     {
-     "id": "2606.16712",
-     "title": "Complete entanglement detection using polynomial invariants",
-     "scites": 26
+     "id": "2606.18145",
+     "title": "A polynomial-time approximation scheme for minimum-weight decoding of topological codes",
+     "scites": 38
     },
     {
-     "id": "2606.16199",
-     "title": "Efficient Magic State Factory Via Transversal Non-Clifford Gate",
-     "scites": 18
+     "id": "2606.18035",
+     "title": "Approximately Decoding the Colour Code",
+     "scites": 27
     },
     {
-     "id": "2606.16948",
-     "title": "The Optimal Rate Function in Covariant Quantum State Tomography",
-     "scites": 17
+     "id": "2606.17268",
+     "title": "Breaking the bicycle frame: Coset-based quantum LDPC codes",
+     "scites": 16
     },
     {
-     "id": "2606.16418",
-     "title": "A short proof of the modified Kretschmann-Schlingemann-Werner conjecture",
-     "scites": 17
-    },
-    {
-     "id": "2606.15190",
-     "title": "Lattice surgery for near-term experimental logical qubit entanglement creation in planar architectures",
+     "id": "2606.17158",
+     "title": "Fermionic Hamiltonian engineering with local control",
      "scites": 13
     },
     {
-     "id": "2606.15983",
-     "title": "Learning ground state observables from quantum computing experiments",
-     "scites": 10
+     "id": "2606.17140",
+     "title": "Projected logical ensembles in surface codes via the random-matrix theory of quantum dots",
+     "scites": 11
     },
     {
-     "id": "2606.14842",
-     "title": "Measuring Non-Stabilizerness in an SU(2) Lattice Gauge Theory",
+     "id": "2606.18240",
+     "title": "Impulse Decoding of Quantum LDPC Codes: Equivalence of Degeneracy and Code-Shortening",
      "scites": 9
     },
     {
-     "id": "2606.14873",
-     "title": "Finite-Element Matrix Product States for Continuum Models in One Dimension",
+     "id": "2606.18133",
+     "title": "Stochastic signal sensing with finite energy and dead time at the fundamental quantum limit",
      "scites": 8
     },
     {
-     "id": "2606.16288",
-     "title": "Reconstruction of detector error model for quantum error correction",
-     "scites": 7
+     "id": "2606.17709",
+     "title": "Optimizing bias-tailored quantum error correction beyond code-capacity noise",
+     "scites": 5
+    },
+    {
+     "id": "2606.17495",
+     "title": "Impact of Network Constraints on Fault-Tolerant Distributed Quantum Computing",
+     "scites": 5
     }
    ],
    "keywords": [
     {
-     "word": "quantum computing",
+     "word": "quantum error",
      "papers": 2,
-     "scites": 11,
+     "scites": 64,
      "score": 100
-    },
-    {
-     "word": "lattice gauge",
-     "papers": 2,
-     "scites": 10,
-     "score": 95
     },
     {
      "word": "error correction",
      "papers": 2,
-     "scites": 9,
-     "score": 91
+     "scites": 64,
+     "score": 100
     },
     {
-     "word": "quantum machine",
+     "word": "quantum ldpc",
      "papers": 2,
-     "scites": 5,
-     "score": 73
+     "scites": 25,
+     "score": 70
     },
     {
-     "word": "machine learning",
+     "word": "ldpc codes",
      "papers": 2,
-     "scites": 5,
-     "score": 73
+     "scites": 25,
+     "score": 70
     },
     {
-     "word": "quantum simulation",
+     "word": "quantum chip",
      "papers": 2,
-     "scites": 3,
-     "score": 64
+     "scites": 2,
+     "score": 52
+    },
+    {
+     "word": "cosmic noon",
+     "papers": 2,
+     "scites": 0,
+     "score": 50
+    },
+    {
+     "word": "noon jwst",
+     "papers": 2,
+     "scites": 0,
+     "score": 50
+    },
+    {
+     "word": "jwst miri",
+     "papers": 2,
+     "scites": 0,
+     "score": 50
     }
    ]
   },
@@ -99,12 +111,12 @@
     {
      "id": "2606.11484",
      "title": "Handbook of Error-Correcting Codes",
-     "scites": 183
+     "scites": 189
     },
     {
      "id": "2606.12363",
      "title": "Fermions are fundamentally more nonlocal than Bosons",
-     "scites": 101
+     "scites": 108
     },
     {
      "id": "2606.13638",
@@ -112,9 +124,9 @@
      "scites": 71
     },
     {
-     "id": "2606.10430",
-     "title": "Efficient Magic State Cultivation for $\\sqrt{T}$ Gates",
-     "scites": 64
+     "id": "2606.18188",
+     "title": "Learning Arbitrary Lindbladians with Quantum Error Correction",
+     "scites": 59
     },
     {
      "id": "2606.13521",
@@ -122,14 +134,19 @@
      "scites": 56
     },
     {
-     "id": "2606.13779",
-     "title": "Computational regimes in matrix-product-state-based quantum trajectory simulations",
-     "scites": 42
+     "id": "2606.16712",
+     "title": "Complete entanglement detection using polynomial invariants",
+     "scites": 54
     },
     {
-     "id": "2606.09988",
-     "title": "Absence of poor local minima in matrix product states",
-     "scites": 41
+     "id": "2606.13779",
+     "title": "Computational regimes in matrix-product-state-based quantum trajectory simulations",
+     "scites": 45
+    },
+    {
+     "id": "2606.16425",
+     "title": "Worst-case depth hierarchy for shallow quantum circuits",
+     "scites": 42
     },
     {
      "id": "2606.11496",
@@ -137,64 +154,59 @@
      "scites": 39
     },
     {
-     "id": "2606.12394",
-     "title": "Scaling-optimal purification of noisy qubit unitary channels",
+     "id": "2606.18145",
+     "title": "A polynomial-time approximation scheme for minimum-weight decoding of topological codes",
      "scites": 38
-    },
-    {
-     "id": "2606.12724",
-     "title": "Block algebra for morphing circuits",
-     "scites": 32
     }
    ],
    "keywords": [
     {
      "word": "quantum error",
-     "papers": 5,
-     "scites": 128,
+     "papers": 6,
+     "scites": 181,
      "score": 100
     },
     {
      "word": "error correction",
-     "papers": 4,
-     "scites": 72,
-     "score": 68
+     "papers": 5,
+     "scites": 125,
+     "score": 76
     },
     {
      "word": "unitary channels",
      "papers": 2,
      "scites": 109,
-     "score": 63
-    },
-    {
-     "word": "efficient magic",
-     "papers": 2,
-     "scites": 82,
-     "score": 52
-    },
-    {
-     "word": "magic state",
-     "papers": 2,
-     "scites": 82,
-     "score": 52
+     "score": 47
     },
     {
      "word": "heisenberg limit",
      "papers": 2,
      "scites": 80,
-     "score": 51
+     "score": 39
     },
     {
      "word": "quantum circuits",
      "papers": 2,
-     "scites": 55,
-     "score": 41
+     "scites": 69,
+     "score": 36
     },
     {
-     "word": "matrix product",
+     "word": "quantum computing",
      "papers": 2,
-     "scites": 49,
-     "score": 39
+     "scites": 41,
+     "score": 28
+    },
+    {
+     "word": "quantum ldpc",
+     "papers": 2,
+     "scites": 25,
+     "score": 24
+    },
+    {
+     "word": "ldpc codes",
+     "papers": 2,
+     "scites": 25,
+     "score": 24
     }
    ]
   },
@@ -203,7 +215,7 @@
     {
      "id": "2606.11484",
      "title": "Handbook of Error-Correcting Codes",
-     "scites": 183
+     "scites": 189
     },
     {
      "id": "2605.29137",
@@ -228,77 +240,77 @@
     {
      "id": "2605.30455",
      "title": "A Denser Planar Surface Code",
-     "scites": 108
+     "scites": 109
     },
     {
      "id": "2606.12363",
      "title": "Fermions are fundamentally more nonlocal than Bosons",
-     "scites": 101
-    },
-    {
-     "id": "2605.16195",
-     "title": "Efficient quantum algorithm for linear matrix differential equations and applications to open quantum systems",
-     "scites": 99
+     "scites": 108
     },
     {
      "id": "2605.31544",
      "title": "More efficient Clifford+T synthesis for small-angle rotations and application to Trotterization",
-     "scites": 99
+     "scites": 100
     },
     {
      "id": "2606.08349",
      "title": "Quantum algorithms for stochastic nonlinear differential equations",
+     "scites": 97
+    },
+    {
+     "id": "2605.21570",
+     "title": "Quantum Purity Amplification for Arbitrary Eigenstates and Multiple Outputs",
      "scites": 96
     }
    ],
    "keywords": [
     {
      "word": "quantum error",
-     "papers": 6,
-     "scites": 490,
+     "papers": 7,
+     "scites": 549,
      "score": 100
     },
     {
      "word": "error correction",
-     "papers": 5,
-     "scites": 434,
-     "score": 86
+     "papers": 6,
+     "scites": 493,
+     "score": 88
     },
     {
      "word": "fault tolerance",
      "papers": 2,
      "scites": 224,
-     "score": 40
+     "score": 35
     },
     {
      "word": "quantum ldpc",
      "papers": 2,
      "scites": 202,
-     "score": 37
+     "score": 33
     },
     {
      "word": "ldpc codes",
      "papers": 2,
      "scites": 202,
-     "score": 37
-    },
-    {
-     "word": "differential equations",
-     "papers": 2,
-     "scites": 195,
-     "score": 37
+     "score": 33
     },
     {
      "word": "quantum low-density",
      "papers": 2,
      "scites": 184,
-     "score": 35
+     "score": 31
     },
     {
      "word": "low-density parity-check",
      "papers": 2,
      "scites": 184,
-     "score": 35
+     "score": 31
+    },
+    {
+     "word": "parity-check codes",
+     "papers": 2,
+     "scites": 184,
+     "score": 31
     }
    ]
   },
@@ -307,7 +319,7 @@
     {
      "id": "2604.07639",
      "title": "Exponential quantum advantage in processing massive classical data",
-     "scites": 352
+     "scites": 353
     },
     {
      "id": "2603.28627",
@@ -359,7 +371,7 @@
     {
      "word": "quantum advantage",
      "papers": 6,
-     "scites": 1337,
+     "scites": 1338,
      "score": 100
     },
     {
@@ -367,18 +379,6 @@
      "papers": 3,
      "scites": 529,
      "score": 45
-    },
-    {
-     "word": "quantum computer",
-     "papers": 3,
-     "scites": 465,
-     "score": 42
-    },
-    {
-     "word": "fault-tolerant quantum",
-     "papers": 3,
-     "scites": 406,
-     "score": 40
     },
     {
      "word": "quantum ldpc",
@@ -403,6 +403,18 @@
      "papers": 2,
      "scites": 368,
      "score": 30
+    },
+    {
+     "word": "trapped-ion quantum",
+     "papers": 2,
+     "scites": 335,
+     "score": 29
+    },
+    {
+     "word": "quantum computer",
+     "papers": 2,
+     "scites": 335,
+     "score": 29
     }
    ]
   }
