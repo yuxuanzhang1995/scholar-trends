@@ -228,14 +228,13 @@
       options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top',labels:{color:txt,boxWidth:10,font:{size:11}}},tooltip:{callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw+'%';}}}}, scales:{x:{ticks:{color:txt},grid:{display:false}},y:{beginAtZero:true,ticks:{color:txt,callback:function(v){return v+'%';}},grid:{color:grid}}} } });
   }
   function sameSet(a,b){ if(a.length!==b.length) return false; var s={}; a.forEach(function(x){s[x]=1;}); return b.every(function(x){return s[x];}); }
-  function showTrendPapers(picked, kwf, win){
-    res.insertAdjacentHTML('beforeend','<div id="tpapers"><div class="hint" style="margin-top:14px">loading representative papers…</div></div>');
-    return Promise.all(picked.map(function(name){
-      var sid=JOURNALS[name];
-      return oa('works',{filter:'primary_location.source.id:'+sid+','+kwf+win, sort:'cited_by_count:desc', per_page:5, select:'id,title,publication_year,cited_by_count,authorships,doi'}).then(function(w){return {name:name, papers:w.results||[]};}, function(){return {name:name, papers:null};});
+  function paperBuckets(buckets, win, headline){
+    res.insertAdjacentHTML('beforeend','<div id="tpapers"><div class="hint" style="margin-top:14px">loading papers…</div></div>');
+    return Promise.all(buckets.map(function(b){
+      return oa('works',{filter:b.filter+win, sort:'cited_by_count:desc', per_page:5, select:'id,title,publication_year,cited_by_count,authorships,doi'}).then(function(w){return {name:b.name, papers:w.results||[]};}, function(){return {name:b.name, papers:null};});
     })).then(function(groups){
       var box=document.getElementById('tpapers'); if(!box) return;
-      var html='<div style="margin-top:16px;font-size:12px;color:var(--faint)">▾ most-cited papers behind the trend, per journal — filter by author or title:</div>'
+      var html='<div style="margin-top:16px;font-size:12px;color:var(--faint)">▾ '+(headline||'most-cited papers in each bucket')+' — filter by author or title:</div>'
         +'<input class="pf" placeholder="filter…" style="width:100%;font-size:13px;padding:7px 10px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);margin:6px 0 4px">';
       groups.forEach(function(g){
         html+='<div class="dg-grp">'+esc(g.name)+'</div>';
@@ -248,6 +247,9 @@
       box.innerHTML=html;
       var pf=box.querySelector('.pf'); if(pf) pf.addEventListener('input',function(){ var q=pf.value.toLowerCase().trim(); box.querySelectorAll('.dg-item').forEach(function(it){ it.style.display=(!q||(it.getAttribute('data-s')||'').indexOf(q)>=0)?'':'none'; }); });
     }, function(){ var box=document.getElementById('tpapers'); if(box) box.innerHTML='<div class="hint" style="margin-top:14px">(couldn’t load papers — OpenAlex search busy)</div>'; });
+  }
+  function showTrendPapers(picked, kwf, win){
+    return paperBuckets(picked.map(function(name){ return {name:name, filter:'primary_location.source.id:'+JOURNALS[name]+','+kwf}; }), win, 'most-cited papers behind the trend, per journal');
   }
   function runTrends(){
     var kw=ctrl.querySelector('input.kw').value.trim();
@@ -307,16 +309,31 @@
     }
     return textTopic();
   }
-  function stat(ids){ var f=ids.map(function(i){return 'concepts.id:'+i;}).join(',')+',from_publication_date:2019-01-01,to_publication_date:2022-12-31';
+  function topicFilter(t){ return 'title_and_abstract.search:'+t; }
+  function statSearch(terms, win){ var f=terms.map(topicFilter).join(',')+win;
     return oa('works',{filter:f,per_page:1,select:'id'}).then(function(c){ return oa('works',{filter:f,sample:50,seed:7,per_page:50,select:'cited_by_count'}).then(function(s){
-      var a=s.results.map(function(w){return w.cited_by_count||0;}); return {n:c.meta.count, mean:a.length?+(a.reduce(function(x,y){return x+y;},0)/a.length).toFixed(1):0}; }); }); }
+      var a=(s.results||[]).map(function(w){return w.cited_by_count||0;}); return {n:c.meta.count, mean:a.length?+(a.reduce(function(x,y){return x+y;},0)/a.length).toFixed(1):0}; }); }); }
+  function shortLabel(t){ return t.length>22?t.slice(0,20)+'…':t; }
+  function topicInputs(){
+    var d=document.createElement('div'); d.style.cssText='display:flex;flex-direction:column;gap:7px;width:100%';
+    function row(lab,val){ var r=document.createElement('div'); r.style.cssText='display:flex;gap:8px;align-items:center;flex-wrap:wrap'; var i=document.createElement('input'); i.className='tp'; i.type='text'; i.value=val; i.style.cssText='font-size:14px;padding:8px 11px;border-radius:9px;border:1px solid var(--line);min-width:220px;flex:1;background:var(--surface);color:var(--ink)'; r.appendChild(label(lab)); r.appendChild(i); return {row:r,inp:i}; }
+    var a=row('topic A','quantum error correction'), b=row('topic B','machine learning'), last=a.inp;
+    [a.inp,b.inp].forEach(function(i){ i.addEventListener('focus',function(){last=i;}); });
+    var chips=document.createElement('div'); chips.style.cssText='display:flex;gap:6px;flex-wrap:wrap';
+    ['quantum error correction','machine learning','tensor network','variational','superconducting qubit','topological order','neural network','quantum chemistry'].forEach(function(s){ var c=document.createElement('button'); c.type='button'; c.textContent=s; c.style.cssText='font-size:11px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer'; c.onclick=function(){ last.value=s; }; chips.appendChild(c); });
+    d.appendChild(a.row); d.appendChild(b.row); d.appendChild(chips); return d;
+  }
   function runImpact(){
-    var ss=ctrl.querySelectorAll('select'), an=ss[0].value, bn=ss[1].value;
-    return Promise.all([stat([TOPICS[an]]),stat([TOPICS[bn]]),stat([TOPICS[an],TOPICS[bn]])]).then(function(r){
-      drawChart({ type:'bar', data:{ labels:[an,bn,an+' × '+bn], datasets:[{data:[r[0].mean,r[1].mean,r[2].mean],backgroundColor:['#888780','#888780','#1d9e75'],borderRadius:4}] },
+    var inps=ctrl.querySelectorAll('input.tp'), A=(inps[0]||{}).value.trim(), B=(inps[1]||{}).value.trim();
+    if(!A||!B){ res.innerHTML='<div class="err">type two topics.</div>'; return Promise.resolve(); }
+    var years=rangeYears(), win=',from_publication_date:'+years[0]+'-01-01,to_publication_date:'+years[years.length-1]+'-12-31';
+    note.textContent='sampling citations for “'+A+'”, “'+B+'”, and their intersection…';
+    return Promise.all([statSearch([A],win),statSearch([B],win),statSearch([A,B],win)]).then(function(r){
+      drawChart({ type:'bar', data:{ labels:[shortLabel(A),shortLabel(B),'A ∩ B'], datasets:[{data:[r[0].mean,r[1].mean,r[2].mean],backgroundColor:['#888780','#888780','#1d9e75'],borderRadius:4}] },
         options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, layout:{padding:{right:30}}, plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw+' mean citations';}}}}, scales:{x:{beginAtZero:true,ticks:{color:txt},grid:{color:grid}},y:{ticks:{color:txt},grid:{display:false}}} } });
       var lift=r[2].mean&&Math.max(r[0].mean,r[1].mean)?(r[2].mean/Math.max(r[0].mean,r[1].mean)).toFixed(1):'—';
-      note.textContent='Mean citations, 2019–2022 sample (combo_impact). Intersection has '+r[2].n+' papers; lift vs best single part: '+lift+'×.';
+      note.textContent='Mean citations ('+years[0]+'–'+years[years.length-1]+' sample). “'+A+'”: '+r[0].n+' papers · “'+B+'”: '+r[1].n+' · ∩: '+r[2].n+' · lift vs best single part: '+lift+'× (text-match topics).';
+      return paperBuckets([{name:'“'+A+'”', filter:topicFilter(A)},{name:'“'+B+'”', filter:topicFilter(B)},{name:'“'+A+'”  ∩  “'+B+'”  (the intersection)', filter:topicFilter(A)+','+topicFilter(B)}], win, 'most-cited papers in each bucket');
     });
   }
   function runWho(){
@@ -514,7 +531,7 @@
   var DEMOS={
     trends:{ desc:'Track any keyword across journals over a chosen window — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(yearRange(2020,2025)); ctrl.appendChild(runBtn(runTrends)); runTrends(); } },
     topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over a chosen window.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(yearRange(2015,2025)); ctrl.appendChild(runBtn(runTopicTrend)); runTopicTrend(); } },
-    impact:{ desc:'Average citations of two topics and their intersection — spot synergy.', build:function(){ ctrl.appendChild(label('topic A')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(label('topic B')); var b=sel(Object.keys(TOPICS)); b.selectedIndex=1; ctrl.appendChild(b); ctrl.appendChild(runBtn(runImpact)); } },
+    impact:{ desc:'Mean citations of two topics and their intersection — define the topics yourself (free text), spot the synergy, and read the most-cited papers behind each bucket.', build:function(){ ctrl.appendChild(topicInputs()); ctrl.appendChild(label('window')); ctrl.appendChild(yearRange(2018,2025)); ctrl.appendChild(runBtn(runImpact)); runImpact(); } },
     who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
     venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } },
     trending:{ desc:"What's trending on arXiv right now by Scirate scites — a composite of paper count × community upvotes.", build:function(){ ctrl.appendChild(label('window')); ctrl.appendChild(winSeg()); renderTrending('month'); } },
