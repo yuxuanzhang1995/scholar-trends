@@ -310,9 +310,11 @@
     return textTopic();
   }
   function topicFilter(t){ return 'title_and_abstract.search:'+t; }
+  function median(a){ if(!a.length)return 0; var b=a.slice().sort(function(x,y){return x-y;}), m=Math.floor(b.length/2); return b.length%2?b[m]:(b[m-1]+b[m])/2; }
   function statSearch(terms, win){ var f=terms.map(topicFilter).join(',')+win;
-    return oa('works',{filter:f,per_page:1,select:'id'}).then(function(c){ return oa('works',{filter:f,sample:50,seed:7,per_page:50,select:'cited_by_count'}).then(function(s){
-      var a=(s.results||[]).map(function(w){return w.cited_by_count||0;}); return {n:c.meta.count, mean:a.length?+(a.reduce(function(x,y){return x+y;},0)/a.length).toFixed(1):0}; }); }); }
+    // 200-paper seeded sample => reproducible & far more stable than the old 50; report median too (mean is outlier-driven).
+    return oa('works',{filter:f,per_page:1,select:'id'}).then(function(c){ return oa('works',{filter:f,sample:200,seed:7,per_page:200,select:'cited_by_count'}).then(function(s){
+      var a=(s.results||[]).map(function(w){return w.cited_by_count||0;}); return {n:c.meta.count, mean:a.length?+(a.reduce(function(x,y){return x+y;},0)/a.length).toFixed(1):0, median:median(a)}; }); }); }
   function shortLabel(t){ return t.length>22?t.slice(0,20)+'…':t; }
   function topicInputs(){
     var d=document.createElement('div'); d.style.cssText='display:flex;flex-direction:column;gap:7px;width:100%';
@@ -332,7 +334,7 @@
       drawChart({ type:'bar', data:{ labels:[shortLabel(A),shortLabel(B),'A ∩ B'], datasets:[{data:[r[0].mean,r[1].mean,r[2].mean],backgroundColor:['#888780','#888780','#1d9e75'],borderRadius:4}] },
         options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, layout:{padding:{right:30}}, plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw+' mean citations';}}}}, scales:{x:{beginAtZero:true,ticks:{color:txt},grid:{color:grid}},y:{ticks:{color:txt},grid:{display:false}}} } });
       var lift=r[2].mean&&Math.max(r[0].mean,r[1].mean)?(r[2].mean/Math.max(r[0].mean,r[1].mean)).toFixed(1):'—';
-      note.textContent='Mean citations ('+years[0]+'–'+years[years.length-1]+' sample). “'+A+'”: '+r[0].n+' papers · “'+B+'”: '+r[1].n+' · ∩: '+r[2].n+' · lift vs best single part: '+lift+'× (text-match topics).';
+      note.textContent='Mean citations ('+years[0]+'–'+years[years.length-1]+', seeded 200-paper sample → reproducible). “'+A+'”: '+r[0].n+' papers (median '+r[0].median+') · “'+B+'”: '+r[1].n+' (median '+r[1].median+') · ∩: '+r[2].n+' (median '+r[2].median+') · lift vs best single part: '+lift+'×. Text-match topics; mean is outlier-sensitive — see medians.';
       return paperBuckets([{name:'“'+A+'”', filter:topicFilter(A)},{name:'“'+B+'”', filter:topicFilter(B)},{name:'“'+A+'”  ∩  “'+B+'”  (the intersection)', filter:topicFilter(A)+','+topicFilter(B)}], win, 'most-cited papers in each bucket');
     });
   }
@@ -531,7 +533,7 @@
   var DEMOS={
     trends:{ desc:'Track any keyword across journals over a chosen window — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(yearRange(2020,2025)); ctrl.appendChild(runBtn(runTrends)); runTrends(); } },
     topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over a chosen window.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(yearRange(2015,2025)); ctrl.appendChild(runBtn(runTopicTrend)); runTopicTrend(); } },
-    impact:{ desc:'Mean citations of two topics and their intersection — define the topics yourself (free text), spot the synergy, and read the most-cited papers behind each bucket.', build:function(){ ctrl.appendChild(topicInputs()); ctrl.appendChild(label('window')); ctrl.appendChild(yearRange(2018,2025)); ctrl.appendChild(runBtn(runImpact)); runImpact(); } },
+    impact:{ desc:'Mean citations of two topics and their intersection — define the topics yourself (free text), spot the synergy (or lack of it), and read the most-cited papers behind each bucket. Citation-mature window by default.', build:function(){ ctrl.appendChild(topicInputs()); ctrl.appendChild(label('window')); ctrl.appendChild(yearRange(2018,2023)); ctrl.appendChild(runBtn(runImpact)); runImpact(); } },
     who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
     venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } },
     trending:{ desc:"What's trending on arXiv right now by Scirate scites — a composite of paper count × community upvotes.", build:function(){ ctrl.appendChild(label('window')); ctrl.appendChild(winSeg()); renderTrending('month'); } },
