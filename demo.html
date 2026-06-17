@@ -51,6 +51,13 @@
   .tysec{ font-size:10.5px; color:var(--faint); margin-left:6px; }
   .prob .ask{ font-size:13.5px; color:var(--ink); font-weight:600; margin:3px 0 5px; line-height:1.45; }
   .grphead{ font-size:11px; font-weight:700; color:var(--faint); text-transform:uppercase; letter-spacing:.05em; width:100%; margin:7px 0 -3px; }
+  .dg-grp{ font-size:12.5px; font-weight:700; color:var(--teal); margin:15px 0 3px; }
+  .dg-item{ font-size:13px; padding:6px 0; border-bottom:1px solid var(--line); }
+  .dg-item .t{ color:var(--ink); font-weight:500; }
+  .dg-item .meta2{ font-size:11.5px; color:var(--muted); margin-top:2px; }
+  .dg-foll{ color:var(--teal); font-weight:700; }
+  .dg-disc{ background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:12px 15px; margin-top:18px; }
+  textarea.au{ width:100%; min-height:80px; font-size:13.5px; padding:9px 11px; border-radius:9px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-family:inherit; line-height:1.5; resize:vertical; }
   footer{ padding:26px 0 50px; margin-top:24px; border-top:1px solid var(--line); font-size:13px; color:var(--faint); }
   @media(max-width:680px){ .cards{ grid-template-columns:repeat(2,1fr); } }
 </style>
@@ -69,6 +76,7 @@
     <button class="tab" data-d="venue">venue stats</button>
     <button class="tab" data-d="trending">trending · Scirate</button>
     <button class="tab" data-d="problems">open problems</button>
+    <button class="tab" data-d="digest">following digest</button>
   </div>
 
   <div class="panel">
@@ -428,6 +436,59 @@
     d.appendChild(inp); d.appendChild(k); d.appendChild(find); d.appendChild(cur);
     return d;
   }
+  function authorBox(){
+    var d=document.createElement('div'); d.style.cssText='display:flex;flex-direction:column;gap:7px;width:100%';
+    var ta=document.createElement('textarea'); ta.className='au'; ta.placeholder='one author per line';
+    ta.value='John Preskill\nMikhail Lukin\nPeter Zoller';
+    d.appendChild(label('followed authors (one per line)')); d.appendChild(ta); return d;
+  }
+  function monthsSeg(){ var d=document.createElement('div'); d.className='seg'; [['3','last 3 mo'],['6','last 6 mo'],['12','last 12 mo']].forEach(function(x){ var b=document.createElement('button'); b.textContent=x[1]; b.dataset.mo=x[0]; if(x[0]==='6')b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; }; d.appendChild(b); }); return d; }
+  function normT(t){ return (t||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
+  function dgAuthors(w, idset){ var a=w.authorships||[]; var names=a.slice(0,4).map(function(x){ var id=((x.author||{}).id||'').split('/').pop(); var nm=esc((x.author||{}).display_name||'?'); return idset[id]?'<span class="dg-foll">'+nm+'</span>':nm; }); return names.join(', ')+(a.length>4?' +'+(a.length-4):''); }
+  function dgItem(w, idset){ var ven=((w.primary_location||{}).source||{}).display_name||''; return '<div class="dg-item"><a class="t" href="'+(w.doi||w.id)+'" target="_blank" rel="noopener">'+esc(w.title||'?')+'</a><div class="meta2">'+(w.publication_date||'')+(ven?' · '+esc(ven.slice(0,40)):'')+(w.cited_by_count?' · '+w.cited_by_count+' cites':'')+' · '+dgAuthors(w,idset)+'</div></div>'; }
+  function resolvedNote(ok, miss){ var s='<div class="note" style="margin-top:16px">resolved: '+ok.map(function(a){return esc(a.disp)+(a.topic?' <span style="opacity:.7">['+esc(a.topic.slice(0,26))+']</span>':'')+(a.inst?' <span style="opacity:.55">('+esc(a.inst.slice(0,22))+')</span>':'');}).join(' · '); if(miss.length)s+='<br><span style="color:#993c1d">unmatched: '+miss.map(function(a){return esc(a.name);}).join(', ')+'</span>'; s+='<br><span style="opacity:.6">Wrong person, or a common name? OpenAlex author matching is noisy — paste the OpenAlex author ID (e.g. A5066245772) or an ORCID on that line to pin it.</span>'; return s+'</div>'; }
+  function runDigest(){
+    var names=ctrl.querySelector('textarea.au').value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+    if(!names.length){ res.innerHTML='<div class="err">paste at least one author name.</div>'; return Promise.resolve(); }
+    if(names.length>30){ names=names.slice(0,30); }
+    var mo=+ctrl.querySelector('.seg button.on').dataset.mo;
+    var win=',from_publication_date:'+new Date(Date.now()-mo*30*864e5).toISOString().slice(0,10);
+    note.textContent='resolving '+names.length+' author(s)…'; res.innerHTML='<div class="hint">resolving authors & pulling recent papers…</div>';
+    function pickAuthor(nm){
+      var orc=(nm.match(/(\d{4}-\d{4}-\d{4}-\d{3}[\dxX])/)||[])[1];
+      var idm=(nm.match(/^A\d{6,}$/i)||[])[0];
+      var p = idm ? oa('authors/'+idm.toUpperCase(),{}).then(function(r){return {results:[r]};})
+            : orc ? oa('authors/orcid:'+orc,{}).then(function(r){return {results:[r]};})
+            : oa('authors',{search:nm,per_page:5});
+      return p.then(function(a){ var rs=(a.results||[]).filter(function(r){return r&&r.id;}); if(!rs.length) return {name:nm,id:null}; rs.sort(function(x,y){return (y.cited_by_count||0)-(x.cited_by_count||0);}); var r=rs[0]; return {name:nm,id:r.id.split('/').pop(),disp:r.display_name,inst:((r.last_known_institutions||[])[0]||{}).display_name||'',topic:((r.topics||[])[0]||{}).display_name||''}; }, function(){return {name:nm,id:null};});
+    }
+    return Promise.all(names.map(pickAuthor)).then(function(authors){
+      var ok=authors.filter(function(a){return a.id;}), miss=authors.filter(function(a){return !a.id;});
+      if(!ok.length){ note.textContent=''; res.innerHTML='<div class="err">couldn’t match any of those names on OpenAlex.</div>'+resolvedNote(ok,miss); return; }
+      var idset={}; ok.forEach(function(a){idset[a.id]=1;});
+      return Promise.all(ok.map(function(a){ return oa('works',{filter:'author.id:'+a.id+win,per_page:25,select:'id,title,publication_date,cited_by_count,primary_topic,authorships,primary_location,doi'}).then(function(w){return w.results||[];}); })).then(function(lists){
+        var byT={};
+        lists.forEach(function(ws){ ws.forEach(function(w){ var k=normT(w.title); if(!k)return; var cur=byT[k]; if(!cur){ byT[k]=w; } else { var curArx=/arxiv/i.test(((cur.primary_location||{}).source||{}).display_name||''); var newArx=/arxiv/i.test(((w.primary_location||{}).source||{}).display_name||''); if(curArx&&!newArx) byT[k]=w; } }); });
+        var items=Object.keys(byT).map(function(k){return byT[k];});
+        if(!items.length){ note.textContent=''; res.innerHTML='<div class="hint">no papers from those authors in the last '+mo+' months — widen the window.</div>'+resolvedNote(ok,miss); return; }
+        var clusters={}; items.forEach(function(w){ var t=((w.primary_topic||{}).display_name)||'Other'; (clusters[t]=clusters[t]||[]).push(w); });
+        var groups=Object.keys(clusters).sort(function(a,b){return clusters[b].length-clusters[a].length;});
+        groups.forEach(function(g){ clusters[g].sort(function(a,b){return (b.publication_date||'').localeCompare(a.publication_date||'');}); });
+        note.textContent='Last '+mo+' months · '+items.length+' papers from '+ok.length+' author(s), grouped by topic · deduped';
+        var html=groups.map(function(g){ return '<div class="dg-grp">'+esc(g)+' <span style="color:var(--faint);font-weight:400">('+clusters[g].length+')</span></div>'+clusters[g].map(function(w){return dgItem(w,idset);}).join(''); }).join('');
+        html+='<div id="discbox"><div class="hint" style="margin-top:16px">finding related work beyond your follows…</div></div>';
+        res.innerHTML=html+resolvedNote(ok,miss);
+        var tc={}; items.forEach(function(w){ var tid=((w.primary_topic||{}).id||'').split('/').pop(); if(tid)tc[tid]=(tc[tid]||0)+1; });
+        var top=Object.keys(tc).sort(function(a,b){return tc[b]-tc[a];}).slice(0,3); var seen={}; items.forEach(function(w){seen[normT(w.title)]=1;});
+        return Promise.all(top.map(function(tid){ return oa('works',{filter:'primary_topic.id:'+tid+win,sort:'cited_by_count:desc',per_page:10,select:'id,title,publication_date,cited_by_count,primary_topic,authorships,primary_location,doi'}).then(function(w){return w.results||[];}); })).then(function(dl){
+          var picked={}, out=[]; dl.forEach(function(ws){ws.forEach(function(w){ var k=normT(w.title); if(!k||seen[k]||picked[k])return; if((w.authorships||[]).some(function(x){return idset[((x.author||{}).id||'').split('/').pop()];}))return; picked[k]=1; out.push(w); });});
+          out.sort(function(a,b){return (b.cited_by_count||0)-(a.cited_by_count||0);}); out=out.slice(0,8);
+          var box=document.getElementById('discbox'); if(!box)return;
+          box.innerHTML = out.length ? ('<div class="dg-disc"><div class="dg-grp" style="margin-top:0">↗ related — top-cited recent work in your authors’ topics, NOT from your follows</div>'+out.map(function(w){return dgItem(w,idset);}).join('')+'</div>') : '';
+        });
+      });
+    }).catch(function(e){ note.textContent=''; res.innerHTML='<div class="err"><b>OpenAlex is congested right now.</b> Try again in a moment, or shorten the author list. ('+esc(e.message||'error')+')</div>'; });
+  }
   var DEMOS={
     trends:{ desc:'Track any keyword across journals over a chosen window — fuzzy text or synonym-aware concept.', build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(journalChecks(['PRX Quantum','npj Quantum Information','Quantum'])); ctrl.appendChild(yearRange(2020,2025)); ctrl.appendChild(runBtn(runTrends)); runTrends(); } },
     topic:{ desc:"A topic's rise or fade across all literature (arXiv + journals) over a chosen window.", build:function(){ ctrl.appendChild(kwInput()); ctrl.appendChild(modeSeg()); ctrl.appendChild(yearRange(2015,2025)); ctrl.appendChild(runBtn(runTopicTrend)); runTopicTrend(); } },
@@ -435,7 +496,8 @@
     who:{ desc:'Who produces the most work on a topic, by region or country.', build:function(){ ctrl.appendChild(label('topic')); ctrl.appendChild(sel(Object.keys(TOPICS))); ctrl.appendChild(seg()); ctrl.appendChild(runBtn(runWho)); } },
     venue:{ desc:'A venue’s tier, real impact factor and OpenAlex stats.', build:function(){ ctrl.appendChild(label('journal')); ctrl.appendChild(sel(Object.keys(JOURNALS))); ctrl.appendChild(runBtn(runVenue)); } },
     trending:{ desc:"What's trending on arXiv right now by Scirate scites — a composite of paper count × community upvotes.", build:function(){ ctrl.appendChild(label('window')); ctrl.appendChild(winSeg()); renderTrending('month'); } },
-    problems:{ desc:"Open problems & research directions — search by paper title, DOI, author, or keyword to pull the open questions recent papers actually flag, or browse the curated, literature-verified list below.", build:function(){ ctrl.appendChild(problemQuery()); ctrl.appendChild(label('or curated:')); ctrl.appendChild(problemFilter()); renderProblems('all'); } }
+    problems:{ desc:"Open problems & research directions — search by paper title, DOI, author, or keyword to pull the open questions recent papers actually flag, or browse the curated, literature-verified list below.", build:function(){ ctrl.appendChild(problemQuery()); ctrl.appendChild(label('or curated:')); ctrl.appendChild(problemFilter()); renderProblems('all'); } },
+    digest:{ desc:"Turn your Google-Scholar follows into one feed: paste the authors you follow → their recent papers, deduped and grouped by topic, plus related work you’re NOT following (the “related articles” a per-author email can’t give you). Live OpenAlex.", build:function(){ ctrl.appendChild(authorBox()); ctrl.appendChild(label('window')); ctrl.appendChild(monthsSeg()); ctrl.appendChild(runBtn(runDigest)); runDigest(); } }
   };
   function label(t){ var l=document.createElement('label'); l.className='lab'; l.textContent=t; return l; }
   function seg(){ var d=document.createElement('div'); d.className='seg'; ['continent','country'].forEach(function(x,i){ var b=document.createElement('button'); b.textContent=x; b.dataset.dim=x; if(i===0)b.className='on'; b.onclick=function(){ d.querySelectorAll('button').forEach(function(z){z.className='';}); b.className='on'; }; d.appendChild(b); }); return d; }
