@@ -228,6 +228,27 @@
       options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top',labels:{color:txt,boxWidth:10,font:{size:11}}},tooltip:{callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw+'%';}}}}, scales:{x:{ticks:{color:txt},grid:{display:false}},y:{beginAtZero:true,ticks:{color:txt,callback:function(v){return v+'%';}},grid:{color:grid}}} } });
   }
   function sameSet(a,b){ if(a.length!==b.length) return false; var s={}; a.forEach(function(x){s[x]=1;}); return b.every(function(x){return s[x];}); }
+  function showTrendPapers(picked, kwf, win){
+    res.insertAdjacentHTML('beforeend','<div id="tpapers"><div class="hint" style="margin-top:14px">loading representative papers…</div></div>');
+    return Promise.all(picked.map(function(name){
+      var sid=JOURNALS[name];
+      return oa('works',{filter:'primary_location.source.id:'+sid+','+kwf+win, sort:'cited_by_count:desc', per_page:5, select:'id,title,publication_year,cited_by_count,authorships,doi'}).then(function(w){return {name:name, papers:w.results||[]};}, function(){return {name:name, papers:null};});
+    })).then(function(groups){
+      var box=document.getElementById('tpapers'); if(!box) return;
+      var html='<div style="margin-top:16px;font-size:12px;color:var(--faint)">▾ most-cited papers behind the trend, per journal — filter by author or title:</div>'
+        +'<input class="pf" placeholder="filter…" style="width:100%;font-size:13px;padding:7px 10px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);margin:6px 0 4px">';
+      groups.forEach(function(g){
+        html+='<div class="dg-grp">'+esc(g.name)+'</div>';
+        if(g.papers===null){ html+='<div class="hint" style="font-size:12px">(couldn’t load — OpenAlex search busy; rerun)</div>'; return; }
+        if(!g.papers.length){ html+='<div class="hint" style="font-size:12px">(no matching papers in window)</div>'; return; }
+        g.papers.forEach(function(w){ var a=w.authorships||[]; var who=a.slice(0,3).map(function(x){return esc((x.author||{}).display_name||'?');}).join(', ')+(a.length>3?' +'+(a.length-3):'');
+          html+='<div class="dg-item" data-s="'+esc(((w.title||'')+' '+who).toLowerCase())+'"><a class="t" href="'+(w.doi||w.id)+'" target="_blank" rel="noopener">'+esc(w.title||'?')+'</a><div class="meta2">'+(w.publication_year||'')+(w.cited_by_count?' · '+w.cited_by_count+' cites':'')+' · '+who+'</div></div>';
+        });
+      });
+      box.innerHTML=html;
+      var pf=box.querySelector('.pf'); if(pf) pf.addEventListener('input',function(){ var q=pf.value.toLowerCase().trim(); box.querySelectorAll('.dg-item').forEach(function(it){ it.style.display=(!q||(it.getAttribute('data-s')||'').indexOf(q)>=0)?'':'none'; }); });
+    }, function(){ var box=document.getElementById('tpapers'); if(box) box.innerHTML='<div class="hint" style="margin-top:14px">(couldn’t load papers — OpenAlex search busy)</div>'; });
+  }
   function runTrends(){
     var kw=ctrl.querySelector('input.kw').value.trim();
     if(!kw){ res.innerHTML='<div class="err">type a keyword first.</div>'; return; }
@@ -235,11 +256,12 @@
     var picked=Array.prototype.slice.call(ctrl.querySelectorAll('input.jr:checked')).map(function(c){return c.value;});
     if(!picked.length){ res.innerHTML='<div class="err">pick at least one journal.</div>'; return; }
     var years=rangeYears(), yf=years[0], yt=years[years.length-1];
+    var win=',from_publication_date:'+yf+'-01-01,to_publication_date:'+yt+'-12-31';
+    function papersKwf(cid){ return (mode==='concept' && cid) ? 'concepts.id:'+cid : 'title_and_abstract.search:'+kw; }
     if(mode==='text' && kw.toLowerCase()===BAKED.kw && sameSet(picked, BAKED.journals) && yf===2020 && yt===2025){
       note.textContent='“error correction” across the three default quantum journals — saved snapshot, loads instantly. Edit any input (keyword, journals, or year range) and press run for a live OpenAlex query.';
-      drawTrends(BAKED.trends, YEARS); return Promise.resolve();
+      drawTrends(BAKED.trends, YEARS); return showTrendPapers(picked, papersKwf(null), win);
     }
-    var win=',from_publication_date:'+yf+'-01-01,to_publication_date:'+yt+'-12-31';
     function build(cid){
       var concept = mode==='concept' && cid;   // cid null => fall through to text match
       return Promise.all(picked.map(function(name){
@@ -249,7 +271,7 @@
           ? oa('works',{filter:base+',concepts.id:'+cid+win,group_by:'publication_year',per_page:200}).then(map)
           : countsByYear(base+',title_and_abstract.search:'+kw, years);
         return Promise.all([totP,kwP]).then(function(r){ var tot=r[0], km=r[1]; return {label:name, data:years.map(function(y){ return tot[y]?+(100*(km[y]||0)/tot[y]).toFixed(1):0; })}; });
-      })).then(function(ds){ drawTrends(ds, years); });
+      })).then(function(ds){ drawTrends(ds, years); return showTrendPapers(picked, papersKwf(cid), win); });
     }
     if(mode==='concept'){
       return oa('concepts',{search:kw,per_page:1},1,2).then(function(c){
