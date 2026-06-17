@@ -229,27 +229,46 @@
   }
   function sameSet(a,b){ if(a.length!==b.length) return false; var s={}; a.forEach(function(x){s[x]=1;}); return b.every(function(x){return s[x];}); }
   function paperBuckets(buckets, win, headline){
-    res.insertAdjacentHTML('beforeend','<div id="tpapers"><div class="hint" style="margin-top:14px">loading papers…</div></div>');
-    return Promise.all(buckets.map(function(b){
-      return oa('works',{filter:b.filter+win, sort:'cited_by_count:desc', per_page:5, select:'id,title,publication_year,cited_by_count,authorships,doi'}).then(function(w){return {name:b.name, papers:w.results||[]};}, function(){return {name:b.name, papers:null};});
-    })).then(function(groups){
-      var box=document.getElementById('tpapers'); if(!box) return;
-      var html='<div style="margin-top:16px;font-size:12px;color:var(--faint)">▾ '+(headline||'most-cited papers in each bucket')+' — filter by author or title:</div>'
-        +'<input class="pf" placeholder="filter…" style="width:100%;font-size:13px;padding:7px 10px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);margin:6px 0 4px">';
-      groups.forEach(function(g){
-        html+='<div class="dg-grp">'+esc(g.name)+'</div>';
-        if(g.papers===null){ html+='<div class="hint" style="font-size:12px">(couldn’t load — OpenAlex search busy; rerun)</div>'; return; }
-        if(!g.papers.length){ html+='<div class="hint" style="font-size:12px">(no matching papers in window)</div>'; return; }
-        g.papers.forEach(function(w){ var a=w.authorships||[]; var who=a.slice(0,3).map(function(x){return esc((x.author||{}).display_name||'?');}).join(', ')+(a.length>3?' +'+(a.length-3):'');
-          html+='<div class="dg-item" data-s="'+esc(((w.title||'')+' '+who).toLowerCase())+'"><a class="t" href="'+(w.doi||w.id)+'" target="_blank" rel="noopener">'+esc(w.title||'?')+'</a><div class="meta2">'+(w.publication_year||'')+(w.cited_by_count?' · '+w.cited_by_count+' cites':'')+' · '+who+'</div></div>';
-        });
-      });
-      box.innerHTML=html;
-      var pf=box.querySelector('.pf'); if(pf) pf.addEventListener('input',function(){ var q=pf.value.toLowerCase().trim(); box.querySelectorAll('.dg-item').forEach(function(it){ it.style.display=(!q||(it.getAttribute('data-s')||'').indexOf(q)>=0)?'':'none'; }); });
-    }, function(){ var box=document.getElementById('tpapers'); if(box) box.innerHTML='<div class="hint" style="margin-top:14px">(couldn’t load papers — OpenAlex search busy)</div>'; });
+    var seed={v:7};
+    res.insertAdjacentHTML('beforeend','<div id="tpapers">'
+      +'<div style="margin-top:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--faint)">'
+        +'<span>▾ '+(headline||'papers in each bucket')+'</span>'
+        +'<span class="seg" id="tpsort"><button type="button" data-o="cited" class="on">top-cited</button><button type="button" data-o="recent">recent</button><button type="button" data-o="random">random</button></span>'
+        +'<button type="button" id="tproll" title="shuffle a fresh random set" style="font-size:13px;padding:5px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer">🎲</button>'
+        +'<label style="display:flex;gap:4px;align-items:center;cursor:pointer"><input type="checkbox" id="tpoa"> open-access only</label>'
+      +'</div>'
+      +'<input class="pf" placeholder="filter these by author or title…" style="width:100%;font-size:13px;padding:7px 10px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);margin:6px 0 4px">'
+      +'<div id="tplist"><div class="hint">loading papers…</div></div></div>');
+    function applyFilter(){ var pf=document.querySelector('#tpapers .pf'); if(!pf)return; var q=pf.value.toLowerCase().trim(); document.querySelectorAll('#tplist .dg-item').forEach(function(it){ it.style.display=(!q||(it.getAttribute('data-s')||'').indexOf(q)>=0)?'':'none'; }); }
+    function render(){
+      var sb=document.querySelector('#tpsort button.on'), sort=sb?sb.dataset.o:'cited', oaOnly=(document.getElementById('tpoa')||{}).checked;
+      var list=document.getElementById('tplist'); if(!list) return Promise.resolve(); list.innerHTML='<div class="hint">loading papers…</div>';
+      return Promise.all(buckets.map(function(b){
+        var q={filter:b.filter+(oaOnly?',is_oa:true':'')+win, per_page:5, select:'id,title,publication_year,cited_by_count,authorships,doi,open_access'};
+        if(sort==='random'){ q.sample=5; q.seed=seed.v; } else { q.sort=(sort==='recent'?'publication_date:desc':'cited_by_count:desc'); }
+        return oa('works',q).then(function(w){return {name:b.name, papers:w.results||[]};}, function(){return {name:b.name, papers:null};});
+      })).then(function(groups){
+        var list=document.getElementById('tplist'); if(!list) return;
+        list.innerHTML=groups.map(function(g){
+          var h='<div class="dg-grp">'+esc(g.name)+'</div>';
+          if(g.papers===null) return h+'<div class="hint" style="font-size:12px">(couldn’t load — OpenAlex search busy; rerun)</div>';
+          if(!g.papers.length) return h+'<div class="hint" style="font-size:12px">(no matching papers)</div>';
+          return h+g.papers.map(function(w){ var a=w.authorships||[]; var who=a.slice(0,3).map(function(x){return esc((x.author||{}).display_name||'?');}).join(', ')+(a.length>3?' +'+(a.length-3):'');
+            var oab=(w.open_access&&w.open_access.is_oa)?' · <span style="color:var(--teal2)">OA</span>':'';
+            return '<div class="dg-item" data-s="'+esc(((w.title||'')+' '+who).toLowerCase())+'"><a class="t" href="'+(w.doi||w.id)+'" target="_blank" rel="noopener">'+esc(w.title||'?')+'</a><div class="meta2">'+(w.publication_year||'')+(w.cited_by_count?' · '+w.cited_by_count+' cites':'')+oab+' · '+who+'</div></div>';
+          }).join('');
+        }).join('');
+        applyFilter();
+      }, function(){ var list=document.getElementById('tplist'); if(list) list.innerHTML='<div class="hint">(couldn’t load papers — OpenAlex search busy)</div>'; });
+    }
+    document.querySelectorAll('#tpsort button').forEach(function(b){ b.onclick=function(){ document.querySelectorAll('#tpsort button').forEach(function(z){z.className='';}); b.className='on'; render(); }; });
+    var roll=document.getElementById('tproll'); if(roll) roll.onclick=function(){ seed.v=Math.floor(Math.random()*1e6); document.querySelectorAll('#tpsort button').forEach(function(z){z.className=(z.dataset.o==='random'?'on':'');}); render(); };
+    var oac=document.getElementById('tpoa'); if(oac) oac.onchange=render;
+    var pf0=document.querySelector('#tpapers .pf'); if(pf0) pf0.addEventListener('input',applyFilter);
+    return render();
   }
   function showTrendPapers(picked, kwf, win){
-    return paperBuckets(picked.map(function(name){ return {name:name, filter:'primary_location.source.id:'+JOURNALS[name]+','+kwf}; }), win, 'most-cited papers behind the trend, per journal');
+    return paperBuckets(picked.map(function(name){ return {name:name, filter:'primary_location.source.id:'+JOURNALS[name]+','+kwf}; }), win, 'papers behind the trend, per journal');
   }
   function runTrends(){
     var kw=ctrl.querySelector('input.kw').value.trim();
@@ -335,7 +354,7 @@
         options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, layout:{padding:{right:30}}, plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw+' mean citations';}}}}, scales:{x:{beginAtZero:true,ticks:{color:txt},grid:{color:grid}},y:{ticks:{color:txt},grid:{display:false}}} } });
       var lift=r[2].mean&&Math.max(r[0].mean,r[1].mean)?(r[2].mean/Math.max(r[0].mean,r[1].mean)).toFixed(1):'—';
       note.textContent='Mean citations ('+years[0]+'–'+years[years.length-1]+', seeded 200-paper sample → reproducible). “'+A+'”: '+r[0].n+' papers (median '+r[0].median+') · “'+B+'”: '+r[1].n+' (median '+r[1].median+') · ∩: '+r[2].n+' (median '+r[2].median+') · lift vs best single part: '+lift+'×. Text-match topics; mean is outlier-sensitive — see medians.';
-      return paperBuckets([{name:'“'+A+'”', filter:topicFilter(A)},{name:'“'+B+'”', filter:topicFilter(B)},{name:'“'+A+'”  ∩  “'+B+'”  (the intersection)', filter:topicFilter(A)+','+topicFilter(B)}], win, 'most-cited papers in each bucket');
+      return paperBuckets([{name:'“'+A+'”', filter:topicFilter(A)},{name:'“'+B+'”', filter:topicFilter(B)},{name:'“'+A+'”  ∩  “'+B+'”  (the intersection)', filter:topicFilter(A)+','+topicFilter(B)}], win, 'papers in each bucket');
     });
   }
   function runWho(){
