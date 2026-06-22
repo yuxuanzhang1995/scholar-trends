@@ -1,5 +1,5 @@
 {
- "generated": "2026-06-21 09:36Z",
+ "generated": "2026-06-22 11:35Z",
  "source": "scirate.com",
  "windows": {
   "today": {
@@ -7,89 +7,89 @@
     {
      "id": "2606.19482",
      "title": "Nearest-neighbour gates are all you need: High-rate quantum low-density parity-check codes on a planar grid",
-     "scites": 167
+     "scites": 197
     },
     {
      "id": "2606.20263",
      "title": "Vine Codes: Low-Overhead Quantum LDPC Codes on a Planar Square Grid",
-     "scites": 107
+     "scites": 134
     },
     {
      "id": "2606.19486",
      "title": "Optimal Ansatz-free Hamiltonian Learning In Situ",
-     "scites": 53
+     "scites": 58
     },
     {
      "id": "2606.20535",
      "title": "Near-Optimal Learning of Local Lindbladians",
-     "scites": 52
+     "scites": 57
     },
     {
      "id": "2606.20513",
      "title": "Approximating optimal decoding of quantum LDPC codes with narrow frontiers",
-     "scites": 47
-    },
-    {
-     "id": "2606.20472",
-     "title": "Many-body chirality of topological stabilizer states",
-     "scites": 28
+     "scites": 51
     },
     {
      "id": "2606.19438",
      "title": "Indefinite Quantum Causality",
-     "scites": 28
+     "scites": 35
+    },
+    {
+     "id": "2606.20472",
+     "title": "Many-body chirality of topological stabilizer states",
+     "scites": 31
     },
     {
      "id": "2606.20551",
      "title": "Benchmark of quantum algorithms for ground state preparation in the presence of noise",
-     "scites": 23
-    },
-    {
-     "id": "2606.19873",
-     "title": "Random Local Stabilizer Codes in Three Dimensions without String or Self-Similar Fractal Logical Operators",
-     "scites": 22
+     "scites": 28
     },
     {
      "id": "2606.19628",
      "title": "Subsystem Quantum Error Correction for Noisy Quantum Metrology",
-     "scites": 21
+     "scites": 26
+    },
+    {
+     "id": "2606.19873",
+     "title": "Random Local Stabilizer Codes in Three Dimensions without String or Self-Similar Fractal Logical Operators",
+     "scites": 23
     }
    ],
    "keywords": [
     {
      "word": "codes planar",
      "papers": 2,
-     "scites": 274,
+     "scites": 331,
      "score": 83
     },
     {
      "word": "quantum ldpc",
      "papers": 2,
-     "scites": 154,
+     "scites": 185,
      "score": 61
     },
     {
      "word": "ldpc codes",
      "papers": 2,
-     "scites": 154,
+     "scites": 185,
      "score": 61
     },
     {
      "word": "quantum algorithms",
      "papers": 3,
-     "scites": 44,
+     "scites": 52,
      "score": 58
     },
     {
      "word": "state preparation",
      "papers": 2,
-     "scites": 35,
-     "score": 40
+     "scites": 40,
+     "score": 39
     },
     {
      "word": "quantum computation",
      "papers": 2,
-     "scites": 8,
+     "scites": 9,
      "score": 35
     },
     {
@@ -105,102 +105,102 @@
     {
      "id": "2606.19482",
      "title": "Nearest-neighbour gates are all you need: High-rate quantum low-density parity-check codes on a planar grid",
-     "scites": 167
-    },
-    {
-     "id": "2606.18188",
-     "title": "Learning Arbitrary Lindbladians with Quantum Error Correction",
-     "scites": 113
+     "scites": 197
     },
     {
      "id": "2606.20263",
      "title": "Vine Codes: Low-Overhead Quantum LDPC Codes on a Planar Square Grid",
-     "scites": 107
+     "scites": 134
+    },
+    {
+     "id": "2606.18188",
+     "title": "Learning Arbitrary Lindbladians with Quantum Error Correction",
+     "scites": 116
     },
     {
      "id": "2606.18145",
      "title": "A polynomial-time approximation scheme for minimum-weight decoding of topological codes",
-     "scites": 72
+     "scites": 74
     },
     {
      "id": "2606.18515",
      "title": "Exponentially many initializations to avoid barren plateaus",
-     "scites": 64
+     "scites": 68
     },
     {
      "id": "2606.16712",
      "title": "Complete entanglement detection using polynomial invariants",
-     "scites": 64
+     "scites": 65
     },
     {
      "id": "2606.19486",
      "title": "Optimal Ansatz-free Hamiltonian Learning In Situ",
-     "scites": 53
+     "scites": 58
     },
     {
      "id": "2606.20535",
      "title": "Near-Optimal Learning of Local Lindbladians",
-     "scites": 52
+     "scites": 57
     },
     {
      "id": "2606.18035",
      "title": "Approximately Decoding the Colour Code",
-     "scites": 50
+     "scites": 52
     },
     {
-     "id": "2606.16425",
-     "title": "Worst-case depth hierarchy for shallow quantum circuits",
-     "scites": 50
+     "id": "2606.20513",
+     "title": "Approximating optimal decoding of quantum LDPC codes with narrow frontiers",
+     "scites": 51
     }
    ],
    "keywords": [
     {
      "word": "quantum ldpc",
      "papers": 4,
-     "scites": 209,
-     "score": 88
+     "scites": 240,
+     "score": 86
     },
     {
      "word": "ldpc codes",
      "papers": 4,
-     "scites": 209,
-     "score": 88
+     "scites": 240,
+     "score": 86
     },
     {
      "word": "quantum error",
      "papers": 4,
-     "scites": 172,
-     "score": 81
+     "scites": 182,
+     "score": 77
     },
     {
      "word": "error correction",
      "papers": 4,
-     "scites": 172,
-     "score": 81
+     "scites": 182,
+     "score": 77
     },
     {
      "word": "codes planar",
      "papers": 2,
-     "scites": 274,
+     "scites": 331,
      "score": 75
     },
     {
      "word": "quantum computing",
      "papers": 3,
-     "scites": 52,
-     "score": 47
+     "scites": 53,
+     "score": 46
     },
     {
      "word": "topological codes",
      "papers": 2,
-     "scites": 84,
-     "score": 40
+     "scites": 87,
+     "score": 38
     },
     {
      "word": "optimal decoding",
      "papers": 2,
-     "scites": 75,
-     "score": 39
+     "scites": 79,
+     "score": 37
     }
    ]
   },
@@ -209,32 +209,37 @@
     {
      "id": "2606.11484",
      "title": "Handbook of Error-Correcting Codes",
-     "scites": 195
-    },
-    {
-     "id": "2605.29137",
-     "title": "Quantum error correction and fault tolerance: A comprehensive tutorial",
-     "scites": 185
-    },
-    {
-     "id": "2605.21457",
-     "title": "An Exponential Sample-Complexity Advantage for Coherent Quantum Inference",
-     "scites": 182
+     "scites": 198
     },
     {
      "id": "2606.19482",
      "title": "Nearest-neighbour gates are all you need: High-rate quantum low-density parity-check codes on a planar grid",
-     "scites": 167
+     "scites": 197
+    },
+    {
+     "id": "2605.29137",
+     "title": "Quantum error correction and fault tolerance: A comprehensive tutorial",
+     "scites": 187
+    },
+    {
+     "id": "2605.21457",
+     "title": "An Exponential Sample-Complexity Advantage for Coherent Quantum Inference",
+     "scites": 183
+    },
+    {
+     "id": "2606.20263",
+     "title": "Vine Codes: Low-Overhead Quantum LDPC Codes on a Planar Square Grid",
+     "scites": 134
     },
     {
      "id": "2605.21898",
      "title": "Concatenating Algebraic Codes over High-Rate Quantum LDPC Codes",
-     "scites": 127
+     "scites": 128
     },
     {
      "id": "2606.06455",
      "title": "Breakeven demonstration of quantum low-density parity-check codes",
-     "scites": 122
+     "scites": 124
     },
     {
      "id": "2606.12363",
@@ -244,67 +249,62 @@
     {
      "id": "2606.18188",
      "title": "Learning Arbitrary Lindbladians with Quantum Error Correction",
-     "scites": 113
+     "scites": 116
     },
     {
      "id": "2605.30455",
      "title": "A Denser Planar Surface Code",
      "scites": 110
-    },
-    {
-     "id": "2606.20263",
-     "title": "Vine Codes: Low-Overhead Quantum LDPC Codes on a Planar Square Grid",
-     "scites": 107
     }
    ],
    "keywords": [
     {
      "word": "quantum error",
      "papers": 5,
-     "scites": 479,
+     "scites": 484,
      "score": 100
     },
     {
      "word": "quantum ldpc",
      "papers": 5,
-     "scites": 399,
-     "score": 92
+     "scites": 431,
+     "score": 95
     },
     {
      "word": "ldpc codes",
      "papers": 5,
-     "scites": 399,
-     "score": 92
+     "scites": 431,
+     "score": 95
     },
     {
      "word": "error correction",
      "papers": 4,
-     "scites": 420,
+     "scites": 425,
      "score": 84
     },
     {
      "word": "high-rate quantum",
      "papers": 2,
-     "scites": 294,
-     "score": 51
+     "scites": 325,
+     "score": 54
+    },
+    {
+     "word": "codes planar",
+     "papers": 2,
+     "scites": 331,
+     "score": 54
     },
     {
      "word": "quantum low-density",
      "papers": 2,
-     "scites": 289,
-     "score": 50
+     "scites": 321,
+     "score": 53
     },
     {
      "word": "low-density parity-check",
      "papers": 2,
-     "scites": 289,
-     "score": 50
-    },
-    {
-     "word": "parity-check codes",
-     "papers": 2,
-     "scites": 289,
-     "score": 50
+     "scites": 321,
+     "score": 53
     }
    ]
   },
@@ -313,7 +313,7 @@
     {
      "id": "2604.07639",
      "title": "Exponential quantum advantage in processing massive classical data",
-     "scites": 357
+     "scites": 356
     },
     {
      "id": "2603.28627",
@@ -353,7 +353,7 @@
     {
      "id": "2602.11457",
      "title": "The Pinnacle Architecture: Reducing the cost of breaking RSA-2048 to 100 000 physical qubits using quantum LDPC codes",
-     "scites": 207
+     "scites": 208
     },
     {
      "id": "2509.07255",
@@ -364,51 +364,51 @@
    "keywords": [
     {
      "word": "quantum advantage",
-     "papers": 6,
-     "scites": 1342,
+     "papers": 5,
+     "scites": 1210,
      "score": 100
     },
     {
      "word": "error correction",
      "papers": 3,
-     "scites": 533,
-     "score": 45
+     "scites": 535,
+     "score": 52
     },
     {
      "word": "quantum ldpc",
-     "papers": 2,
-     "scites": 394,
-     "score": 31
+     "papers": 3,
+     "scites": 529,
+     "score": 52
     },
     {
      "word": "ldpc codes",
-     "papers": 2,
-     "scites": 394,
-     "score": 31
-    },
-    {
-     "word": "fewer gates",
-     "papers": 2,
-     "scites": 350,
-     "score": 30
+     "papers": 3,
+     "scites": 529,
+     "score": 52
     },
     {
      "word": "logical qubits",
      "papers": 2,
      "scites": 370,
-     "score": 30
+     "score": 35
+    },
+    {
+     "word": "fewer gates",
+     "papers": 2,
+     "scites": 350,
+     "score": 34
+    },
+    {
+     "word": "codes planar",
+     "papers": 2,
+     "scites": 331,
+     "score": 34
     },
     {
      "word": "trapped-ion quantum",
      "papers": 2,
      "scites": 335,
-     "score": 29
-    },
-    {
-     "word": "quantum computer",
-     "papers": 2,
-     "scites": 335,
-     "score": 29
+     "score": 34
     }
    ]
   }
