@@ -1,5 +1,5 @@
 {
- "generated": "2026-06-26 08:50Z",
+ "generated": "2026-06-27 08:26Z",
  "source": "scirate.com",
  "windows": {
   "today": {
@@ -7,66 +7,72 @@
     {
      "id": "2606.27105",
      "title": "Witness expansion: A unified framework for analytical and measurable mixed-state resource detection",
-     "scites": 23
-    },
-    {
-     "id": "2606.27130",
-     "title": "Rate-2/3 Girth-8 (3,18)-Regular Quantum LDPC Codes from Two-Branch Finite-Field Bases and CPM Lifts",
-     "scites": 19
+     "scites": 54
     },
     {
      "id": "2606.27249",
      "title": "Quantum computer architecture with ions in tweezer arrays",
-     "scites": 18
+     "scites": 49
     },
     {
-     "id": "2606.27211",
-     "title": "Quantum group codes for non-Clifford logic: enhanced decoding, addressability and parallelizability",
-     "scites": 13
-    },
-    {
-     "id": "2606.27254",
-     "title": "Particle-preserving fermionic shadows with mode-independent sample complexity",
-     "scites": 12
+     "id": "2606.27130",
+     "title": "Rate-2/3 Girth-8 (3,18)-Regular Quantum LDPC Codes from Two-Branch Finite-Field Bases and CPM Lifts",
+     "scites": 38
     },
     {
      "id": "2606.26873",
      "title": "Scalable Message-Passing Quantum Graph Neural Networks in the Weisfeiler-Leman Hierarchy",
-     "scites": 12
+     "scites": 27
     },
     {
-     "id": "2606.27119",
-     "title": "Efficient foundation decoders for fault-tolerant quantum computing",
-     "scites": 9
+     "id": "2606.27211",
+     "title": "Quantum group codes for non-Clifford logic: enhanced decoding, addressability and parallelizability",
+     "scites": 26
     },
     {
      "id": "2606.27358",
      "title": "Cultivating logical catalysts for fault-tolerant dyadic phase rotations",
-     "scites": 7
+     "scites": 21
+    },
+    {
+     "id": "2606.27254",
+     "title": "Particle-preserving fermionic shadows with mode-independent sample complexity",
+     "scites": 21
+    },
+    {
+     "id": "2606.27119",
+     "title": "Efficient foundation decoders for fault-tolerant quantum computing",
+     "scites": 20
     },
     {
      "id": "2606.27224",
      "title": "A 0.651-approximation to quantum Max Cut via Rydberg atoms",
-     "scites": 4
+     "scites": 9
     },
     {
-     "id": "2606.27349",
-     "title": "All you need is log",
-     "scites": 3
+     "id": "2606.26354",
+     "title": "Equivalence of non-local computation tasks beyond Clifford operations",
+     "scites": 7
     }
    ],
    "keywords": [
     {
      "word": "sample complexity",
      "papers": 2,
-     "scites": 13,
+     "scites": 23,
      "score": 100
     },
     {
      "word": "bell tests",
      "papers": 2,
+     "scites": 3,
+     "score": 57
+    },
+    {
+     "word": "cosmological correlators",
+     "papers": 2,
      "scites": 2,
-     "score": 58
+     "score": 54
     },
     {
      "word": "attention visual",
@@ -87,102 +93,102 @@
     {
      "id": "2606.23592",
      "title": "Random dimension reduction and learning symmetric properties of quantum states",
-     "scites": 95
+     "scites": 99
     },
     {
      "id": "2606.26090",
      "title": "Fast mixing of all-to-all quantum systems at high temperatures",
+     "scites": 75
+    },
+    {
+     "id": "2606.25011",
+     "title": "Fast and Parallel High-Rate STAR Architecture for Megaquop Quantum Simulation",
      "scites": 67
     },
     {
      "id": "2606.23652",
      "title": "Robust Structure Learning of $k$-local Lindbladians",
-     "scites": 64
+     "scites": 65
     },
     {
-     "id": "2606.25011",
-     "title": "Fast and Parallel High-Rate STAR Architecture for Megaquop Quantum Simulation",
-     "scites": 62
+     "id": "2606.27105",
+     "title": "Witness expansion: A unified framework for analytical and measurable mixed-state resource detection",
+     "scites": 54
+    },
+    {
+     "id": "2606.27249",
+     "title": "Quantum computer architecture with ions in tweezer arrays",
+     "scites": 49
     },
     {
      "id": "2606.24469",
      "title": "When to Skip Syndrome Extraction in Surface-GKP Codes",
-     "scites": 42
+     "scites": 45
     },
     {
      "id": "2606.23194",
      "title": "Quantum Advantage in Tolerant Junta Testing",
-     "scites": 40
+     "scites": 44
     },
     {
-     "id": "2606.20805",
-     "title": "Distribution Complexity of Electronic Structure Simulations on Quantum Supercomputers",
-     "scites": 37
+     "id": "2606.27130",
+     "title": "Rate-2/3 Girth-8 (3,18)-Regular Quantum LDPC Codes from Two-Branch Finite-Field Bases and CPM Lifts",
+     "scites": 38
     },
     {
      "id": "2606.26034",
      "title": "Estimating Fidelity to a Reference Quantum State",
-     "scites": 36
-    },
-    {
-     "id": "2606.22853",
-     "title": "Bunny Codes: Broadening Superconducting Quantum Error Correction Capability through Advanced Control Engineering",
-     "scites": 33
-    },
-    {
-     "id": "2606.20706",
-     "title": "Efficient and SPAM-Robust Ansatz-Free Lindbladian Learning",
-     "scites": 29
+     "scites": 37
     }
    ],
    "keywords": [
     {
-     "word": "quantum states",
-     "papers": 2,
-     "scites": 104,
-     "score": 83
-    },
-    {
      "word": "quantum ldpc",
      "papers": 3,
-     "scites": 58,
-     "score": 78
+     "scites": 79,
+     "score": 87
     },
     {
      "word": "ldpc codes",
      "papers": 3,
-     "scites": 58,
-     "score": 78
+     "scites": 79,
+     "score": 87
+    },
+    {
+     "word": "quantum states",
+     "papers": 2,
+     "scites": 108,
+     "score": 83
     },
     {
      "word": "quantum error",
      "papers": 2,
      "scites": 58,
-     "score": 61
+     "score": 60
     },
     {
      "word": "error correction",
      "papers": 2,
      "scites": 58,
-     "score": 61
+     "score": 60
+    },
+    {
+     "word": "fault-tolerant quantum",
+     "papers": 2,
+     "scites": 36,
+     "score": 50
     },
     {
      "word": "matrix product",
      "papers": 2,
      "scites": 28,
-     "score": 47
+     "score": 46
     },
     {
      "word": "product states",
      "papers": 2,
      "scites": 28,
-     "score": 47
-    },
-    {
-     "word": "fault-tolerant quantum",
-     "papers": 2,
-     "scites": 24,
-     "score": 45
+     "score": 46
     }
    ]
   },
@@ -191,17 +197,17 @@
     {
      "id": "2606.19482",
      "title": "Nearest-neighbour gates are all you need: High-rate quantum low-density parity-check codes on a planar grid",
-     "scites": 228
+     "scites": 229
     },
     {
      "id": "2606.11484",
      "title": "Handbook of Error-Correcting Codes",
-     "scites": 202
+     "scites": 204
     },
     {
      "id": "2605.29137",
      "title": "Quantum error correction and fault tolerance: A comprehensive tutorial",
-     "scites": 190
+     "scites": 191
     },
     {
      "id": "2606.20263",
@@ -216,7 +222,7 @@
     {
      "id": "2606.18188",
      "title": "Learning Arbitrary Lindbladians with Quantum Error Correction",
-     "scites": 126
+     "scites": 127
     },
     {
      "id": "2606.12363",
@@ -231,50 +237,32 @@
     {
      "id": "2605.31544",
      "title": "More efficient Clifford+T synthesis for small-angle rotations and application to Trotterization",
-     "scites": 104
+     "scites": 106
     },
     {
      "id": "2606.08349",
      "title": "Quantum algorithms for stochastic nonlinear differential equations",
-     "scites": 100
+     "scites": 101
     }
    ],
    "keywords": [
     {
      "word": "quantum error",
      "papers": 5,
-     "scites": 500,
+     "scites": 503,
      "score": 100
     },
     {
      "word": "error correction",
      "papers": 4,
-     "scites": 440,
+     "scites": 443,
      "score": 84
     },
     {
      "word": "codes planar",
      "papers": 2,
-     "scites": 379,
+     "scites": 380,
      "score": 58
-    },
-    {
-     "word": "quantum low-density",
-     "papers": 2,
-     "scites": 355,
-     "score": 56
-    },
-    {
-     "word": "low-density parity-check",
-     "papers": 2,
-     "scites": 355,
-     "score": 56
-    },
-    {
-     "word": "parity-check codes",
-     "papers": 2,
-     "scites": 355,
-     "score": 56
     },
     {
      "word": "quantum ldpc",
@@ -287,6 +275,24 @@
      "papers": 3,
      "scites": 260,
      "score": 56
+    },
+    {
+     "word": "quantum low-density",
+     "papers": 2,
+     "scites": 356,
+     "score": 55
+    },
+    {
+     "word": "low-density parity-check",
+     "papers": 2,
+     "scites": 356,
+     "score": 55
+    },
+    {
+     "word": "parity-check codes",
+     "papers": 2,
+     "scites": 356,
+     "score": 55
     }
    ]
   },
@@ -305,7 +311,7 @@
     {
      "id": "2605.10943",
      "title": "A passive self-correcting quantum memory in three dimensions",
-     "scites": 279
+     "scites": 280
     },
     {
      "id": "2507.11536",
@@ -325,7 +331,7 @@
     {
      "id": "2606.19482",
      "title": "Nearest-neighbour gates are all you need: High-rate quantum low-density parity-check codes on a planar grid",
-     "scites": 228
+     "scites": 229
     },
     {
      "id": "2511.15806",
@@ -365,19 +371,19 @@
     {
      "word": "error correction",
      "papers": 3,
-     "scites": 538,
+     "scites": 539,
      "score": 45
     },
     {
      "word": "codes planar",
      "papers": 2,
-     "scites": 379,
+     "scites": 380,
      "score": 31
     },
     {
      "word": "high-rate quantum",
      "papers": 2,
-     "scites": 358,
+     "scites": 359,
      "score": 30
     },
     {
