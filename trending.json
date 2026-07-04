@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-03 08:49Z",
+ "generated": "2026-07-04 08:24Z",
  "source": "scirate.com",
  "windows": {
   "today": {
@@ -7,65 +7,65 @@
     {
      "id": "2607.02444",
      "title": "Optimal Stabilizer Testing and Learning with Limited Quantum Memory",
-     "scites": 28
+     "scites": 45
     },
     {
      "id": "2607.02482",
      "title": "Automated logical Clifford gadgets for heterogeneous architectures via chain maps",
-     "scites": 17
-    },
-    {
-     "id": "2607.02346",
-     "title": "Recovery Algorithm for Correlated Errors in Permutation-Invariant Quantum Codes",
-     "scites": 15
-    },
-    {
-     "id": "2607.02427",
-     "title": "Optimal stellar rank approximation of squeezed cat states with photon catalysis",
-     "scites": 14
-    },
-    {
-     "id": "2607.02481",
-     "title": "Symmetries of Pauli Noise from Lindbladian Dynamics",
-     "scites": 12
+     "scites": 35
     },
     {
      "id": "2607.01473",
      "title": "Surface code logical operations on a superconducting quantum processor",
-     "scites": 12
+     "scites": 25
     },
     {
-     "id": "2607.01887",
-     "title": "LUCI on IBM Hardware: Error Suppression with Almost Half Syndrome Density",
-     "scites": 11
+     "id": "2607.02481",
+     "title": "Symmetries of Pauli Noise from Lindbladian Dynamics",
+     "scites": 20
+    },
+    {
+     "id": "2607.02346",
+     "title": "Recovery Algorithm for Correlated Errors in Permutation-Invariant Quantum Codes",
+     "scites": 20
     },
     {
      "id": "2607.01712",
      "title": "Quantum Noncommutativity Uniquely Determines Relative Entropy",
-     "scites": 11
+     "scites": 19
+    },
+    {
+     "id": "2607.02427",
+     "title": "Optimal stellar rank approximation of squeezed cat states with photon catalysis",
+     "scites": 18
+    },
+    {
+     "id": "2607.01887",
+     "title": "LUCI on IBM Hardware: Error Suppression with Almost Half Syndrome Density",
+     "scites": 13
     },
     {
      "id": "2607.01843",
      "title": "Low-ancilla block encodings via Hamiltonian simulation",
-     "scites": 5
+     "scites": 13
     },
     {
      "id": "2607.01624",
      "title": "Shallow Unitary Circuits for Kramers-Wannier Dualities",
-     "scites": 5
+     "scites": 9
     }
    ],
    "keywords": [
     {
      "word": "error suppression",
      "papers": 2,
-     "scites": 15,
+     "scites": 20,
      "score": 100
     },
     {
      "word": "quantum states",
      "papers": 2,
-     "scites": 3,
+     "scites": 4,
      "score": 60
     }
    ]
@@ -75,7 +75,7 @@
     {
      "id": "2606.30358",
      "title": "Learning the structure of open quantum systems",
-     "scites": 111
+     "scites": 114
     },
     {
      "id": "2606.30281",
@@ -85,7 +85,12 @@
     {
      "id": "2606.28054",
      "title": "Static features from mixing in short- and long-range Lindbladians: Markov property and correlations",
-     "scites": 51
+     "scites": 52
+    },
+    {
+     "id": "2606.30396",
+     "title": "Provable Quantum Advantage for Dynamical Phase Transition",
+     "scites": 48
     },
     {
      "id": "2606.28518",
@@ -93,13 +98,13 @@
      "scites": 48
     },
     {
-     "id": "2606.30396",
-     "title": "Provable Quantum Advantage for Dynamical Phase Transition",
-     "scites": 46
-    },
-    {
      "id": "2606.31952",
      "title": "An efficient Pauli decomposition algorithm for structured matrices",
+     "scites": 47
+    },
+    {
+     "id": "2607.02444",
+     "title": "Optimal Stabilizer Testing and Learning with Limited Quantum Memory",
      "scites": 45
     },
     {
@@ -108,51 +113,34 @@
      "scites": 41
     },
     {
+     "id": "2607.02482",
+     "title": "Automated logical Clifford gadgets for heterogeneous architectures via chain maps",
+     "scites": 35
+    },
+    {
      "id": "2607.00365",
      "title": "When AI meets quantum information: A comprehensive review",
      "scites": 32
-    },
-    {
-     "id": "2607.02444",
-     "title": "Optimal Stabilizer Testing and Learning with Limited Quantum Memory",
-     "scites": 28
-    },
-    {
-     "id": "2606.29848",
-     "title": "Quantum Eigenvalue Transformation via Linear Combination of Hamiltonian Simulation: A Weyl Calculus Approach",
-     "scites": 28
     }
    ],
    "keywords": [
     {
      "word": "hamiltonian simulation",
-     "papers": 3,
-     "scites": 68,
+     "papers": 4,
+     "scites": 81,
      "score": 100
-    },
-    {
-     "word": "quantum machine",
-     "papers": 3,
-     "scites": 30,
-     "score": 72
-    },
-    {
-     "word": "machine learning",
-     "papers": 3,
-     "scites": 30,
-     "score": 72
     },
     {
      "word": "quantum information",
      "papers": 2,
      "scites": 51,
-     "score": 71
+     "score": 56
     },
     {
      "word": "trotter error",
      "papers": 2,
      "scites": 40,
-     "score": 63
+     "score": 50
     }
    ]
   },
@@ -166,7 +154,7 @@
     {
      "id": "2606.11484",
      "title": "Handbook of Error-Correcting Codes",
-     "scites": 209
+     "scites": 210
     },
     {
      "id": "2606.20263",
@@ -191,7 +179,7 @@
     {
      "id": "2606.30358",
      "title": "Learning the structure of open quantum systems",
-     "scites": 111
+     "scites": 114
     },
     {
      "id": "2606.23592",
@@ -201,7 +189,7 @@
     {
      "id": "2606.08349",
      "title": "Quantum algorithms for stochastic nonlinear differential equations",
-     "scites": 103
+     "scites": 104
     },
     {
      "id": "2606.06062",
@@ -265,7 +253,7 @@
     {
      "id": "2604.07639",
      "title": "Exponential quantum advantage in processing massive classical data",
-     "scites": 358
+     "scites": 359
     },
     {
      "id": "2603.28627",
@@ -310,14 +298,14 @@
     {
      "id": "2606.11484",
      "title": "Handbook of Error-Correcting Codes",
-     "scites": 209
+     "scites": 210
     }
    ],
    "keywords": [
     {
      "word": "quantum advantage",
      "papers": 6,
-     "scites": 1344,
+     "scites": 1345,
      "score": 100
     },
     {
