@@ -1,26 +1,374 @@
 {
- "generated": "2026-09-04 10:09Z",
+ "generated": "2026-09-05 09:38Z",
  "source": "scirate.com",
  "windows": {
   "today": {
-   "papers": [],
-   "keywords": [],
-   "error": "HTTP Error 403: Forbidden"
+   "papers": [
+    {
+     "id": "2609.04121",
+     "title": "Quantum thermalization achieves optimal approximate quantum error correction",
+     "scites": 88
+    },
+    {
+     "id": "2609.03944",
+     "title": "On the geometry and typicality of quantum magic",
+     "scites": 65
+    },
+    {
+     "id": "2609.02999",
+     "title": "Computing with qLDPC Codes by Climbing the Chain Map Hierarchy",
+     "scites": 61
+    },
+    {
+     "id": "2609.03021",
+     "title": "Quantum low-density lattice codes",
+     "scites": 54
+    },
+    {
+     "id": "2609.03065",
+     "title": "Distinctness threshold for pseudorandom unitaries",
+     "scites": 46
+    },
+    {
+     "id": "2609.03194",
+     "title": "Experimental validation of a compact fault-tolerant architecture for trapped ions",
+     "scites": 39
+    },
+    {
+     "id": "2609.04119",
+     "title": "Non-local Magic: closed-form solution and equivalence with magic of purification",
+     "scites": 30
+    },
+    {
+     "id": "2609.04165",
+     "title": "Parameterised graph theory for tensor networks: entanglement rerouting, structural simplification, and agnostic tomography",
+     "scites": 26
+    },
+    {
+     "id": "2609.03640",
+     "title": "Quantum Hamiltonian Evolution for Coherent Quantum Learning",
+     "scites": 26
+    },
+    {
+     "id": "2609.04182",
+     "title": "Quantum communication and Bell nonlocality require infinite classical communication to simulate",
+     "scites": 23
+    }
+   ],
+   "keywords": [
+    {
+     "word": "quantum error",
+     "papers": 3,
+     "scites": 106,
+     "score": 100
+    },
+    {
+     "word": "error correction",
+     "papers": 3,
+     "scites": 106,
+     "score": 100
+    }
+   ]
   },
   "week": {
-   "papers": [],
-   "keywords": [],
-   "error": "HTTP Error 403: Forbidden"
+   "papers": [
+    {
+     "id": "2608.28573",
+     "title": "Quantum Fourier transform toolbox",
+     "scites": 109
+    },
+    {
+     "id": "2609.04121",
+     "title": "Quantum thermalization achieves optimal approximate quantum error correction",
+     "scites": 88
+    },
+    {
+     "id": "2609.01605",
+     "title": "Depth-1 expanders on the unitary group and applications",
+     "scites": 85
+    },
+    {
+     "id": "2608.28569",
+     "title": "Quantum Fourier transform for the symmetric group",
+     "scites": 80
+    },
+    {
+     "id": "2609.01448",
+     "title": "Verifiable quantum advantage in extremely low depth",
+     "scites": 77
+    },
+    {
+     "id": "2609.02865",
+     "title": "A quantum oracle separation between QMA(2) and QMA",
+     "scites": 73
+    },
+    {
+     "id": "2609.03944",
+     "title": "On the geometry and typicality of quantum magic",
+     "scites": 65
+    },
+    {
+     "id": "2609.02999",
+     "title": "Computing with qLDPC Codes by Climbing the Chain Map Hierarchy",
+     "scites": 61
+    },
+    {
+     "id": "2609.03021",
+     "title": "Quantum low-density lattice codes",
+     "scites": 54
+    },
+    {
+     "id": "2608.30783",
+     "title": "Neutral atom quantum computing",
+     "scites": 52
+    }
+   ],
+   "keywords": [
+    {
+     "word": "quantum error",
+     "papers": 4,
+     "scites": 154,
+     "score": 91
+    },
+    {
+     "word": "error correction",
+     "papers": 4,
+     "scites": 154,
+     "score": 91
+    },
+    {
+     "word": "quantum fourier",
+     "papers": 2,
+     "scites": 189,
+     "score": 75
+    },
+    {
+     "word": "fourier transform",
+     "papers": 2,
+     "scites": 189,
+     "score": 75
+    },
+    {
+     "word": "approximate quantum",
+     "papers": 3,
+     "scites": 140,
+     "score": 75
+    },
+    {
+     "word": "tensor networks",
+     "papers": 2,
+     "scites": 72,
+     "score": 44
+    }
+   ]
   },
   "month": {
-   "papers": [],
-   "keywords": [],
-   "error": "HTTP Error 403: Forbidden"
+   "papers": [
+    {
+     "id": "2608.13521",
+     "title": "Exponential quantum advantage for learning signals with a single qubit",
+     "scites": 139
+    },
+    {
+     "id": "2608.26272",
+     "title": "Fault-tolerant quantum computation cannot be achieved with constant spacetime overhead",
+     "scites": 137
+    },
+    {
+     "id": "2608.16857",
+     "title": "Fault-Tolerant Quantum Computation with Adversarial Errors",
+     "scites": 128
+    },
+    {
+     "id": "2608.16860",
+     "title": "Classical Adversarial Fault-Tolerance and PCPs",
+     "scites": 117
+    },
+    {
+     "id": "2608.28573",
+     "title": "Quantum Fourier transform toolbox",
+     "scites": 109
+    },
+    {
+     "id": "2608.24000",
+     "title": "Improved Quantum Codes with Transversal T Gates",
+     "scites": 103
+    },
+    {
+     "id": "2608.09727",
+     "title": "Magic State Distillation via Codes over Binary Extension Fields",
+     "scites": 102
+    },
+    {
+     "id": "2608.19158",
+     "title": "Quantum Speedups Require Structure or Depth",
+     "scites": 97
+    },
+    {
+     "id": "2608.13491",
+     "title": "Strong unitary designs in optimal depth and space",
+     "scites": 95
+    },
+    {
+     "id": "2608.24493",
+     "title": "Optimal Lower Bound for Ground-State Energy Estimation with a Guiding State",
+     "scites": 93
+    }
+   ],
+   "keywords": [
+    {
+     "word": "quantum advantage",
+     "papers": 5,
+     "scites": 371,
+     "score": 100
+    },
+    {
+     "word": "quantum codes",
+     "papers": 3,
+     "scites": 233,
+     "score": 61
+    },
+    {
+     "word": "fault-tolerant quantum",
+     "papers": 2,
+     "scites": 265,
+     "score": 56
+    },
+    {
+     "word": "quantum computation",
+     "papers": 2,
+     "scites": 265,
+     "score": 56
+    },
+    {
+     "word": "quantum fourier",
+     "papers": 2,
+     "scites": 189,
+     "score": 45
+    },
+    {
+     "word": "fourier transform",
+     "papers": 2,
+     "scites": 189,
+     "score": 45
+    },
+    {
+     "word": "ground-state energy",
+     "papers": 2,
+     "scites": 181,
+     "score": 44
+    },
+    {
+     "word": "energy estimation",
+     "papers": 2,
+     "scites": 181,
+     "score": 44
+    }
+   ]
   },
   "year": {
-   "papers": [],
-   "keywords": [],
-   "error": "HTTP Error 403: Forbidden"
+   "papers": [
+    {
+     "id": "2604.07639",
+     "title": "Exponential quantum advantage in processing massive classical data",
+     "scites": 366
+    },
+    {
+     "id": "2603.28627",
+     "title": "Shor's algorithm is possible with as few as 10,000 reconfigurable atomic qubits",
+     "scites": 361
+    },
+    {
+     "id": "2605.10943",
+     "title": "A passive self-correcting quantum memory in three dimensions",
+     "scites": 284
+    },
+    {
+     "id": "2510.19928",
+     "title": "Mind the gaps: The fraught road to quantum advantage",
+     "scites": 243
+    },
+    {
+     "id": "2606.19482",
+     "title": "Nearest-neighbour gates are all you need: High-rate quantum low-density parity-check codes on a planar grid",
+     "scites": 241
+    },
+    {
+     "id": "2511.15806",
+     "title": "Mixed state tomography reduces to pure state tomography",
+     "scites": 224
+    },
+    {
+     "id": "2606.11484",
+     "title": "Handbook of Error-Correcting Codes",
+     "scites": 223
+    },
+    {
+     "id": "2510.05262",
+     "title": "Peaked quantum advantage using error correction",
+     "scites": 215
+    },
+    {
+     "id": "2602.11457",
+     "title": "The Pinnacle Architecture: Reducing the cost of breaking RSA-2048 to 100 000 physical qubits using quantum LDPC codes",
+     "scites": 209
+    },
+    {
+     "id": "2509.07255",
+     "title": "Demonstrating an unconditional separation between quantum and classical information resources",
+     "scites": 205
+    }
+   ],
+   "keywords": [
+    {
+     "word": "quantum advantage",
+     "papers": 6,
+     "scites": 1262,
+     "score": 100
+    },
+    {
+     "word": "error correction",
+     "papers": 5,
+     "scites": 826,
+     "score": 74
+    },
+    {
+     "word": "quantum ldpc",
+     "papers": 4,
+     "scites": 692,
+     "score": 61
+    },
+    {
+     "word": "ldpc codes",
+     "papers": 4,
+     "scites": 692,
+     "score": 61
+    },
+    {
+     "word": "quantum error",
+     "papers": 4,
+     "scites": 611,
+     "score": 58
+    },
+    {
+     "word": "fault-tolerant quantum",
+     "papers": 3,
+     "scites": 416,
+     "score": 41
+    },
+    {
+     "word": "exponential quantum",
+     "papers": 2,
+     "scites": 505,
+     "score": 37
+    },
+    {
+     "word": "codes planar",
+     "papers": 2,
+     "scites": 403,
+     "score": 33
+    }
+   ]
   }
  }
 }
