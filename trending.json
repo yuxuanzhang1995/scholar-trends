@@ -1,164 +1,139 @@
 {
- "generated": "2026-09-06 09:54Z",
+ "generated": "2026-09-07 11:02Z",
  "source": "scirate.com",
  "windows": {
   "today": {
    "papers": [
     {
-     "id": "2609.04121",
-     "title": "Quantum thermalization achieves optimal approximate quantum error correction",
-     "scites": 94
+     "id": "2609.05201",
+     "title": "Optimal inequalities for completely bounded polynomials and the limitations of quantum query algorithms",
+     "scites": 23
     },
     {
-     "id": "2609.03944",
-     "title": "On the geometry and typicality of quantum magic",
-     "scites": 68
+     "id": "2609.05316",
+     "title": "Compiling the 2D Fermi-Hubbard ground-state energy estimation algorithm for active volume quantum architectures",
+     "scites": 16
     },
     {
-     "id": "2609.02999",
-     "title": "Computing with qLDPC Codes by Climbing the Chain Map Hierarchy",
-     "scites": 66
+     "id": "2609.05225",
+     "title": "The marginal is pretty good",
+     "scites": 14
     },
     {
-     "id": "2609.03021",
-     "title": "Quantum low-density lattice codes",
-     "scites": 58
+     "id": "2609.04997",
+     "title": "Learning unknown stabilizer codes using product measurements",
+     "scites": 12
     },
     {
-     "id": "2609.03065",
-     "title": "Distinctness threshold for pseudorandom unitaries",
-     "scites": 49
+     "id": "2609.05355",
+     "title": "Fundamental Limits of Quantum Metrology Beyond Fixed Causal Order",
+     "scites": 8
     },
     {
-     "id": "2609.03194",
-     "title": "Experimental validation of a compact fault-tolerant architecture for trapped ions",
-     "scites": 41
+     "id": "2609.05153",
+     "title": "Fanout Complexity of Symmetric Boolean Functions in $\\mathsf{QAC}^0$",
+     "scites": 7
     },
     {
-     "id": "2609.04119",
-     "title": "Non-local Magic: closed-form solution and equivalence with magic of purification",
-     "scites": 31
+     "id": "2609.05024",
+     "title": "Lindblad Multiproduct Formulas",
+     "scites": 4
     },
     {
-     "id": "2609.04165",
-     "title": "Parameterised graph theory for tensor networks: entanglement rerouting, structural simplification, and agnostic tomography",
-     "scites": 28
+     "id": "2609.04319",
+     "title": "Exact quantum spin liquids with topological order on maple-leaf and trellis lattices",
+     "scites": 3
     },
     {
-     "id": "2609.04182",
-     "title": "Quantum communication and Bell nonlocality require infinite classical communication to simulate",
-     "scites": 27
+     "id": "2609.05387",
+     "title": "A photonic source with half-a-GHz single-photon flux",
+     "scites": 2
     },
     {
-     "id": "2609.03640",
-     "title": "Quantum Hamiltonian Evolution for Coherent Quantum Learning",
-     "scites": 27
+     "id": "2609.05379",
+     "title": "Coincidence-based spectral engineering for spectral matching in cascaded downconversion",
+     "scites": 2
     }
    ],
-   "keywords": [
-    {
-     "word": "quantum error",
-     "papers": 3,
-     "scites": 113,
-     "score": 100
-    },
-    {
-     "word": "error correction",
-     "papers": 3,
-     "scites": 113,
-     "score": 100
-    }
-   ]
+   "keywords": []
   },
   "week": {
    "papers": [
     {
-     "id": "2608.28573",
-     "title": "Quantum Fourier transform toolbox",
-     "scites": 110
-    },
-    {
      "id": "2609.04121",
      "title": "Quantum thermalization achieves optimal approximate quantum error correction",
-     "scites": 94
+     "scites": 99
     },
     {
      "id": "2609.01605",
      "title": "Depth-1 expanders on the unitary group and applications",
-     "scites": 86
-    },
-    {
-     "id": "2608.28569",
-     "title": "Quantum Fourier transform for the symmetric group",
-     "scites": 81
+     "scites": 88
     },
     {
      "id": "2609.01448",
      "title": "Verifiable quantum advantage in extremely low depth",
-     "scites": 80
+     "scites": 82
     },
     {
      "id": "2609.02865",
      "title": "A quantum oracle separation between QMA(2) and QMA",
-     "scites": 75
+     "scites": 79
     },
     {
      "id": "2609.03944",
      "title": "On the geometry and typicality of quantum magic",
-     "scites": 68
+     "scites": 70
     },
     {
      "id": "2609.02999",
      "title": "Computing with qLDPC Codes by Climbing the Chain Map Hierarchy",
-     "scites": 66
+     "scites": 68
     },
     {
      "id": "2609.03021",
      "title": "Quantum low-density lattice codes",
-     "scites": 58
+     "scites": 63
+    },
+    {
+     "id": "2609.03065",
+     "title": "Distinctness threshold for pseudorandom unitaries",
+     "scites": 53
     },
     {
      "id": "2608.30783",
      "title": "Neutral atom quantum computing",
      "scites": 52
+    },
+    {
+     "id": "2609.00169",
+     "title": "Exact learning of quantum noise with tensor networks",
+     "scites": 48
     }
    ],
    "keywords": [
     {
      "word": "quantum error",
      "papers": 4,
-     "scites": 161,
-     "score": 92
+     "scites": 168,
+     "score": 100
     },
     {
      "word": "error correction",
      "papers": 4,
-     "scites": 161,
-     "score": 92
+     "scites": 168,
+     "score": 100
     },
     {
      "word": "approximate quantum",
      "papers": 3,
-     "scites": 146,
-     "score": 76
-    },
-    {
-     "word": "quantum fourier",
-     "papers": 2,
-     "scites": 191,
-     "score": 75
-    },
-    {
-     "word": "fourier transform",
-     "papers": 2,
-     "scites": 191,
-     "score": 75
+     "scites": 153,
+     "score": 83
     },
     {
      "word": "tensor networks",
      "papers": 2,
-     "scites": 74,
-     "score": 44
+     "scites": 78,
+     "score": 48
     }
    ]
   },
@@ -167,7 +142,7 @@
     {
      "id": "2608.26272",
      "title": "Fault-tolerant quantum computation cannot be achieved with constant spacetime overhead",
-     "scites": 138
+     "scites": 139
     },
     {
      "id": "2608.13521",
@@ -187,7 +162,12 @@
     {
      "id": "2608.28573",
      "title": "Quantum Fourier transform toolbox",
-     "scites": 110
+     "scites": 112
+    },
+    {
+     "id": "2608.09727",
+     "title": "Magic State Distillation via Codes over Binary Extension Fields",
+     "scites": 103
     },
     {
      "id": "2608.24000",
@@ -195,9 +175,9 @@
      "scites": 103
     },
     {
-     "id": "2608.09727",
-     "title": "Magic State Distillation via Codes over Binary Extension Fields",
-     "scites": 102
+     "id": "2609.04121",
+     "title": "Quantum thermalization achieves optimal approximate quantum error correction",
+     "scites": 99
     },
     {
      "id": "2608.19158",
@@ -208,18 +188,13 @@
      "id": "2608.13491",
      "title": "Strong unitary designs in optimal depth and space",
      "scites": 95
-    },
-    {
-     "id": "2609.04121",
-     "title": "Quantum thermalization achieves optimal approximate quantum error correction",
-     "scites": 94
     }
    ],
    "keywords": [
     {
      "word": "quantum advantage",
      "papers": 5,
-     "scites": 372,
+     "scites": 374,
      "score": 100
     },
     {
@@ -231,25 +206,25 @@
     {
      "word": "fault-tolerant quantum",
      "papers": 2,
-     "scites": 266,
+     "scites": 267,
      "score": 56
     },
     {
      "word": "quantum computation",
      "papers": 2,
-     "scites": 266,
+     "scites": 267,
      "score": 56
     },
     {
      "word": "quantum fourier",
      "papers": 2,
-     "scites": 191,
+     "scites": 193,
      "score": 46
     },
     {
      "word": "fourier transform",
      "papers": 2,
-     "scites": 191,
+     "scites": 193,
      "score": 46
     },
     {
@@ -353,7 +328,7 @@
     {
      "word": "fault-tolerant quantum",
      "papers": 3,
-     "scites": 417,
+     "scites": 418,
      "score": 42
     },
     {
