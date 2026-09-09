@@ -1,72 +1,108 @@
 {
- "generated": "2026-09-08 10:16Z",
+ "generated": "2026-09-09 10:23Z",
  "source": "scirate.com",
  "windows": {
   "today": {
    "papers": [
     {
-     "id": "2609.05201",
-     "title": "Optimal inequalities for completely bounded polynomials and the limitations of quantum query algorithms",
+     "id": "2609.05679",
+     "title": "Quantum lower bounds for convex optimization and real matrix-vector query problems",
      "scites": 43
     },
     {
-     "id": "2609.05316",
-     "title": "Compiling the 2D Fermi-Hubbard ground-state energy estimation algorithm for active volume quantum architectures",
-     "scites": 34
+     "id": "2609.08998",
+     "title": "No information transmission through quantum channels above capacity",
+     "scites": 31
     },
     {
-     "id": "2609.05225",
-     "title": "The marginal is pretty good",
-     "scites": 32
+     "id": "2609.06528",
+     "title": "Low-Depth Random Unitaries without Ancillae",
+     "scites": 26
     },
     {
-     "id": "2609.04997",
-     "title": "Learning unknown stabilizer codes using product measurements",
+     "id": "2609.08058",
+     "title": "From Bits to Qubits: The Theory and Practice of Quantum Data Encoding",
      "scites": 25
     },
     {
-     "id": "2609.05153",
-     "title": "Fanout Complexity of Symmetric Boolean Functions in $\\mathsf{QAC}^0$",
-     "scites": 19
+     "id": "2609.05625",
+     "title": "Computing 256-bit elliptic curve discrete logarithms in 26 days on a fault-tolerant trapped-ion quantum computer with 20,000 qubits",
+     "scites": 23
     },
     {
-     "id": "2609.05355",
-     "title": "Fundamental Limits of Quantum Metrology Beyond Fixed Causal Order",
-     "scites": 12
+     "id": "2609.05598",
+     "title": "Matrix Product Belief Propagation",
+     "scites": 18
     },
     {
-     "id": "2609.05024",
-     "title": "Lindblad Multiproduct Formulas",
-     "scites": 8
+     "id": "2609.08908",
+     "title": "A Platform-aware Compilation Framework for Fault-tolerant Quantum Computation",
+     "scites": 15
     },
     {
-     "id": "2609.04459",
-     "title": "Efficient Quantum Error Correction from Three Dimensional Qubit Control",
-     "scites": 7
+     "id": "2609.05718",
+     "title": "Tight Lower Bounds for State Tomography with Limited Entanglement",
+     "scites": 15
     },
     {
-     "id": "2609.04319",
-     "title": "Exact quantum spin liquids with topological order on maple-leaf and trellis lattices",
-     "scites": 6
+     "id": "2609.07702",
+     "title": "Subsystem self-correction of the GKP qubit",
+     "scites": 10
     },
     {
-     "id": "2609.04431",
-     "title": "SIC dimension towers via cyclotomic polynomials",
-     "scites": 5
+     "id": "2609.07380",
+     "title": "Multi-copy and Catalytic Superactivation of Genuine Multipartite Nonlocality",
+     "scites": 9
     }
    ],
    "keywords": [
     {
-     "word": "open quantum",
-     "papers": 2,
-     "scites": 2,
+     "word": "lower bounds",
+     "papers": 3,
+     "scites": 61,
      "score": 100
     },
     {
-     "word": "quantum systems",
+     "word": "convex optimization",
+     "papers": 3,
+     "scites": 54,
+     "score": 94
+    },
+    {
+     "word": "quantum lower",
      "papers": 2,
-     "scites": 2,
-     "score": 100
+     "scites": 46,
+     "score": 71
+    },
+    {
+     "word": "bounds convex",
+     "papers": 2,
+     "scites": 46,
+     "score": 71
+    },
+    {
+     "word": "fault-tolerant quantum",
+     "papers": 2,
+     "scites": 16,
+     "score": 46
+    },
+    {
+     "word": "testing quantum",
+     "papers": 2,
+     "scites": 10,
+     "score": 42
+    },
+    {
+     "word": "algorithms quantum",
+     "papers": 2,
+     "scites": 10,
+     "score": 42
+    },
+    {
+     "word": "quantum error",
+     "papers": 2,
+     "scites": 6,
+     "score": 38
     }
    ]
   },
@@ -75,78 +111,90 @@
     {
      "id": "2609.04121",
      "title": "Quantum thermalization achieves optimal approximate quantum error correction",
-     "scites": 111
-    },
-    {
-     "id": "2609.01605",
-     "title": "Depth-1 expanders on the unitary group and applications",
-     "scites": 91
+     "scites": 113
     },
     {
      "id": "2609.02865",
      "title": "A quantum oracle separation between QMA(2) and QMA",
-     "scites": 85
-    },
-    {
-     "id": "2609.01448",
-     "title": "Verifiable quantum advantage in extremely low depth",
-     "scites": 85
+     "scites": 88
     },
     {
      "id": "2609.03944",
      "title": "On the geometry and typicality of quantum magic",
-     "scites": 73
+     "scites": 75
     },
     {
      "id": "2609.02999",
      "title": "Computing with qLDPC Codes by Climbing the Chain Map Hierarchy",
-     "scites": 71
+     "scites": 73
     },
     {
      "id": "2609.03021",
      "title": "Quantum low-density lattice codes",
-     "scites": 67
+     "scites": 69
     },
     {
      "id": "2609.03065",
      "title": "Distinctness threshold for pseudorandom unitaries",
-     "scites": 55
+     "scites": 57
     },
     {
-     "id": "2608.30783",
-     "title": "Neutral atom quantum computing",
-     "scites": 53
+     "id": "2609.05201",
+     "title": "Optimal inequalities for completely bounded polynomials and the limitations of quantum query algorithms",
+     "scites": 47
     },
     {
-     "id": "2609.00169",
-     "title": "Exact learning of quantum noise with tensor networks",
-     "scites": 48
+     "id": "2609.03194",
+     "title": "Experimental validation of a compact fault-tolerant architecture for trapped ions",
+     "scites": 45
+    },
+    {
+     "id": "2609.05679",
+     "title": "Quantum lower bounds for convex optimization and real matrix-vector query problems",
+     "scites": 43
+    },
+    {
+     "id": "2609.05316",
+     "title": "Compiling the 2D Fermi-Hubbard ground-state energy estimation algorithm for active volume quantum architectures",
+     "scites": 43
     }
    ],
    "keywords": [
     {
      "word": "quantum error",
-     "papers": 4,
-     "scites": 180,
+     "papers": 3,
+     "scites": 139,
      "score": 100
     },
     {
      "word": "error correction",
-     "papers": 4,
-     "scites": 180,
+     "papers": 3,
+     "scites": 139,
      "score": 100
     },
     {
-     "word": "approximate quantum",
-     "papers": 3,
-     "scites": 165,
-     "score": 83
+     "word": "lower bounds",
+     "papers": 2,
+     "scites": 58,
+     "score": 54
     },
     {
-     "word": "tensor networks",
+     "word": "convex optimization",
      "papers": 2,
-     "scites": 79,
-     "score": 47
+     "scites": 51,
+     "score": 52
+    },
+    {
+     "word": "quantum computation",
+     "papers": 2,
+     "scites": 48,
+     "score": 51
+    },
+    {
+     "word": "belief propagation",
+     "papers": 2,
+     "scites": 32,
+     "score": 45
     }
    ]
   },
@@ -155,7 +203,7 @@
     {
      "id": "2608.26272",
      "title": "Fault-tolerant quantum computation cannot be achieved with constant spacetime overhead",
-     "scites": 139
+     "scites": 141
     },
     {
      "id": "2608.13521",
@@ -165,7 +213,7 @@
     {
      "id": "2608.16857",
      "title": "Fault-Tolerant Quantum Computation with Adversarial Errors",
-     "scites": 128
+     "scites": 129
     },
     {
      "id": "2608.16860",
@@ -175,12 +223,12 @@
     {
      "id": "2608.28573",
      "title": "Quantum Fourier transform toolbox",
-     "scites": 113
+     "scites": 115
     },
     {
      "id": "2609.04121",
      "title": "Quantum thermalization achieves optimal approximate quantum error correction",
-     "scites": 111
+     "scites": 113
     },
     {
      "id": "2608.24000",
@@ -195,7 +243,7 @@
     {
      "id": "2608.19158",
      "title": "Quantum Speedups Require Structure or Depth",
-     "scites": 97
+     "scites": 98
     },
     {
      "id": "2608.13491",
@@ -207,7 +255,7 @@
     {
      "word": "quantum advantage",
      "papers": 5,
-     "scites": 377,
+     "scites": 378,
      "score": 100
     },
     {
@@ -217,40 +265,40 @@
      "score": 61
     },
     {
+     "word": "ground-state energy",
+     "papers": 3,
+     "scites": 224,
+     "score": 60
+    },
+    {
+     "word": "energy estimation",
+     "papers": 3,
+     "scites": 224,
+     "score": 60
+    },
+    {
      "word": "fault-tolerant quantum",
      "papers": 2,
-     "scites": 267,
-     "score": 55
+     "scites": 270,
+     "score": 56
     },
     {
      "word": "quantum computation",
      "papers": 2,
-     "scites": 267,
-     "score": 55
+     "scites": 270,
+     "score": 56
     },
     {
      "word": "quantum fourier",
      "papers": 2,
-     "scites": 195,
+     "scites": 197,
      "score": 46
     },
     {
      "word": "fourier transform",
      "papers": 2,
-     "scites": 195,
+     "scites": 197,
      "score": 46
-    },
-    {
-     "word": "quantum error",
-     "papers": 2,
-     "scites": 184,
-     "score": 44
-    },
-    {
-     "word": "error correction",
-     "papers": 2,
-     "scites": 184,
-     "score": 44
     }
    ]
   },
@@ -341,7 +389,7 @@
     {
      "word": "fault-tolerant quantum",
      "papers": 3,
-     "scites": 418,
+     "scites": 420,
      "score": 42
     },
     {
