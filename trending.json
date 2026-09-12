@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-11 10:13Z",
+ "generated": "2026-09-12 09:47Z",
  "source": "scirate.com",
  "windows": {
   "today": {
@@ -7,72 +7,66 @@
     {
      "id": "2609.11723",
      "title": "Lifted surgery: Fast processing with QLDPC codes",
-     "scites": 43
+     "scites": 73
     },
     {
      "id": "2609.10974",
      "title": "Sample-optimal learning of stabilizer states",
-     "scites": 40
-    },
-    {
-     "id": "2609.11771",
-     "title": "Strong Converse for Quantum Capacity via a Fully Quantum Blowing-Up Lemma",
-     "scites": 19
+     "scites": 63
     },
     {
      "id": "2609.11457",
      "title": "Local decoders for fault-tolerant quantum computation and translation-invariant stabilizer codes",
-     "scites": 19
+     "scites": 39
+    },
+    {
+     "id": "2609.11771",
+     "title": "Strong Converse for Quantum Capacity via a Fully Quantum Blowing-Up Lemma",
+     "scites": 30
     },
     {
      "id": "2609.11664",
      "title": "A Near-Quartic Separation Between Certificate Complexity and Quantum Query Complexity",
-     "scites": 13
+     "scites": 26
     },
     {
-     "id": "2609.11930",
-     "title": "Hierarchy of R\u00e9nyi Coherent Information in Stabilizer Codes",
-     "scites": 12
+     "id": "2609.10666",
+     "title": "Walking Floquet code circuits for zero-overhead leakage reduction",
+     "scites": 23
     },
     {
      "id": "2609.10808",
      "title": "Tight Time-Space Lower Bounds for Collision Finding and Element Distinctness under Label Symmetry",
-     "scites": 12
+     "scites": 22
     },
     {
      "id": "2609.11903",
      "title": "The generalised semi-Clifford conjecture is false",
-     "scites": 11
+     "scites": 19
     },
     {
-     "id": "2609.11830",
-     "title": "Oracle Separations in the Fourier Hierarchy",
-     "scites": 8
+     "id": "2609.11930",
+     "title": "Hierarchy of R\u00e9nyi Coherent Information in Stabilizer Codes",
+     "scites": 17
     },
     {
-     "id": "2609.11926",
-     "title": "Quantifying Symmetry Breaking",
-     "scites": 7
+     "id": "2609.11847",
+     "title": "The cost of simulating classically tractable quantum circuits and dynamics",
+     "scites": 17
     }
    ],
    "keywords": [
     {
      "word": "stabilizer codes",
      "papers": 2,
-     "scites": 31,
+     "scites": 56,
      "score": 100
     },
     {
      "word": "oracle separations",
      "papers": 2,
-     "scites": 10,
-     "score": 66
-    },
-    {
-     "word": "quantum computing",
-     "papers": 2,
-     "scites": 5,
-     "score": 58
+     "scites": 22,
+     "score": 70
     }
    ]
   },
@@ -81,12 +75,22 @@
     {
      "id": "2609.05679",
      "title": "Quantum lower bounds for convex optimization and real matrix-vector query problems",
-     "scites": 90
+     "scites": 98
     },
     {
      "id": "2609.05625",
      "title": "Computing 256-bit elliptic curve discrete logarithms in 26 days on a fault-tolerant trapped-ion quantum computer with 20,000 qubits",
-     "scites": 80
+     "scites": 83
+    },
+    {
+     "id": "2609.11723",
+     "title": "Lifted surgery: Fast processing with QLDPC codes",
+     "scites": 73
+    },
+    {
+     "id": "2609.10974",
+     "title": "Sample-optimal learning of stabilizer states",
+     "scites": 63
     },
     {
      "id": "2609.05201",
@@ -96,7 +100,17 @@
     {
      "id": "2609.08998",
      "title": "No information transmission through quantum channels above capacity",
-     "scites": 47
+     "scites": 48
+    },
+    {
+     "id": "2609.06528",
+     "title": "Low-Depth Random Unitaries without Ancillae",
+     "scites": 46
+    },
+    {
+     "id": "2609.09035",
+     "title": "Near-Optimal Quantum Lower Bounds for Convex Optimization via Fourier Rank",
+     "scites": 45
     },
     {
      "id": "2609.05316",
@@ -104,79 +118,59 @@
      "scites": 45
     },
     {
-     "id": "2609.06528",
-     "title": "Low-Depth Random Unitaries without Ancillae",
-     "scites": 44
-    },
-    {
-     "id": "2609.09035",
-     "title": "Near-Optimal Quantum Lower Bounds for Convex Optimization via Fourier Rank",
-     "scites": 43
-    },
-    {
-     "id": "2609.11723",
-     "title": "Lifted surgery: Fast processing with QLDPC codes",
-     "scites": 43
-    },
-    {
-     "id": "2609.10974",
-     "title": "Sample-optimal learning of stabilizer states",
-     "scites": 40
-    },
-    {
      "id": "2609.08058",
      "title": "From Bits to Qubits: The Theory and Practice of Quantum Data Encoding",
-     "scites": 40
+     "scites": 41
     }
    ],
    "keywords": [
     {
      "word": "lower bounds",
      "papers": 4,
-     "scites": 170,
+     "scites": 190,
      "score": 100
     },
     {
      "word": "convex optimization",
      "papers": 3,
-     "scites": 147,
-     "score": 81
-    },
-    {
-     "word": "quantum lower",
-     "papers": 2,
-     "scites": 133,
-     "score": 64
-    },
-    {
-     "word": "bounds convex",
-     "papers": 2,
-     "scites": 133,
-     "score": 64
-    },
-    {
-     "word": "quantum channels",
-     "papers": 3,
-     "scites": 91,
-     "score": 64
+     "scites": 157,
+     "score": 79
     },
     {
      "word": "fault-tolerant quantum",
      "papers": 3,
-     "scites": 78,
-     "score": 60
+     "scites": 101,
+     "score": 64
+    },
+    {
+     "word": "quantum lower",
+     "papers": 2,
+     "scites": 143,
+     "score": 63
+    },
+    {
+     "word": "bounds convex",
+     "papers": 2,
+     "scites": 143,
+     "score": 63
+    },
+    {
+     "word": "quantum channels",
+     "papers": 3,
+     "scites": 93,
+     "score": 62
     },
     {
      "word": "stabilizer codes",
      "papers": 3,
-     "scites": 60,
-     "score": 55
+     "scites": 85,
+     "score": 60
     },
     {
      "word": "quantum query",
      "papers": 2,
-     "scites": 62,
-     "score": 43
+     "scites": 75,
+     "score": 45
     }
    ]
   },
@@ -200,16 +194,16 @@
     {
      "id": "2608.16860",
      "title": "Classical Adversarial Fault-Tolerance and PCPs",
-     "scites": 117
-    },
-    {
-     "id": "2609.04121",
-     "title": "Quantum thermalization achieves optimal approximate quantum error correction",
-     "scites": 115
+     "scites": 118
     },
     {
      "id": "2608.28573",
      "title": "Quantum Fourier transform toolbox",
+     "scites": 116
+    },
+    {
+     "id": "2609.04121",
+     "title": "Quantum thermalization achieves optimal approximate quantum error correction",
      "scites": 115
     },
     {
@@ -220,17 +214,17 @@
     {
      "id": "2608.19158",
      "title": "Quantum Speedups Require Structure or Depth",
+     "scites": 99
+    },
+    {
+     "id": "2609.05679",
+     "title": "Quantum lower bounds for convex optimization and real matrix-vector query problems",
      "scites": 98
     },
     {
      "id": "2609.01605",
      "title": "Depth-1 expanders on the unitary group and applications",
-     "scites": 95
-    },
-    {
-     "id": "2608.13491",
-     "title": "Strong unitary designs in optimal depth and space",
-     "scites": 95
+     "scites": 96
     }
    ],
    "keywords": [
@@ -239,12 +233,6 @@
      "papers": 5,
      "scites": 378,
      "score": 100
-    },
-    {
-     "word": "quantum codes",
-     "papers": 3,
-     "scites": 236,
-     "score": 61
     },
     {
      "word": "ground-state energy",
@@ -273,13 +261,19 @@
     {
      "word": "quantum fourier",
      "papers": 2,
-     "scites": 197,
+     "scites": 198,
      "score": 46
     },
     {
      "word": "fourier transform",
      "papers": 2,
-     "scites": 197,
+     "scites": 198,
+     "score": 46
+    },
+    {
+     "word": "quantum codes",
+     "papers": 2,
+     "scites": 194,
      "score": 46
     }
    ]
