@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-12 09:47Z",
+ "generated": "2026-09-13 10:47Z",
  "source": "scirate.com",
  "windows": {
   "today": {
@@ -7,32 +7,32 @@
     {
      "id": "2609.11723",
      "title": "Lifted surgery: Fast processing with QLDPC codes",
-     "scites": 73
+     "scites": 79
     },
     {
      "id": "2609.10974",
      "title": "Sample-optimal learning of stabilizer states",
-     "scites": 63
+     "scites": 65
     },
     {
      "id": "2609.11457",
      "title": "Local decoders for fault-tolerant quantum computation and translation-invariant stabilizer codes",
-     "scites": 39
+     "scites": 40
     },
     {
      "id": "2609.11771",
      "title": "Strong Converse for Quantum Capacity via a Fully Quantum Blowing-Up Lemma",
-     "scites": 30
+     "scites": 33
     },
     {
      "id": "2609.11664",
      "title": "A Near-Quartic Separation Between Certificate Complexity and Quantum Query Complexity",
-     "scites": 26
+     "scites": 28
     },
     {
      "id": "2609.10666",
      "title": "Walking Floquet code circuits for zero-overhead leakage reduction",
-     "scites": 23
+     "scites": 25
     },
     {
      "id": "2609.10808",
@@ -42,31 +42,31 @@
     {
      "id": "2609.11903",
      "title": "The generalised semi-Clifford conjecture is false",
-     "scites": 19
-    },
-    {
-     "id": "2609.11930",
-     "title": "Hierarchy of R\u00e9nyi Coherent Information in Stabilizer Codes",
-     "scites": 17
+     "scites": 20
     },
     {
      "id": "2609.11847",
      "title": "The cost of simulating classically tractable quantum circuits and dynamics",
-     "scites": 17
+     "scites": 19
+    },
+    {
+     "id": "2609.11830",
+     "title": "Oracle Separations in the Fourier Hierarchy",
+     "scites": 19
     }
    ],
    "keywords": [
     {
      "word": "stabilizer codes",
      "papers": 2,
-     "scites": 56,
+     "scites": 58,
      "score": 100
     },
     {
      "word": "oracle separations",
      "papers": 2,
-     "scites": 22,
-     "score": 70
+     "scites": 26,
+     "score": 72
     }
    ]
   },
@@ -75,7 +75,7 @@
     {
      "id": "2609.05679",
      "title": "Quantum lower bounds for convex optimization and real matrix-vector query problems",
-     "scites": 98
+     "scites": 99
     },
     {
      "id": "2609.05625",
@@ -85,12 +85,17 @@
     {
      "id": "2609.11723",
      "title": "Lifted surgery: Fast processing with QLDPC codes",
-     "scites": 73
+     "scites": 79
     },
     {
      "id": "2609.10974",
      "title": "Sample-optimal learning of stabilizer states",
-     "scites": 63
+     "scites": 65
+    },
+    {
+     "id": "2609.08998",
+     "title": "No information transmission through quantum channels above capacity",
+     "scites": 49
     },
     {
      "id": "2609.05201",
@@ -98,14 +103,9 @@
      "scites": 49
     },
     {
-     "id": "2609.08998",
-     "title": "No information transmission through quantum channels above capacity",
-     "scites": 48
-    },
-    {
      "id": "2609.06528",
      "title": "Low-Depth Random Unitaries without Ancillae",
-     "scites": 46
+     "scites": 47
     },
     {
      "id": "2609.09035",
@@ -120,56 +120,56 @@
     {
      "id": "2609.08058",
      "title": "From Bits to Qubits: The Theory and Practice of Quantum Data Encoding",
-     "scites": 41
+     "scites": 42
     }
    ],
    "keywords": [
     {
      "word": "lower bounds",
      "papers": 4,
-     "scites": 190,
+     "scites": 191,
      "score": 100
     },
     {
      "word": "convex optimization",
      "papers": 3,
-     "scites": 157,
+     "scites": 158,
      "score": 79
     },
     {
      "word": "fault-tolerant quantum",
      "papers": 3,
-     "scites": 101,
+     "scites": 102,
      "score": 64
     },
     {
      "word": "quantum lower",
      "papers": 2,
-     "scites": 143,
+     "scites": 144,
      "score": 63
     },
     {
      "word": "bounds convex",
      "papers": 2,
-     "scites": 143,
+     "scites": 144,
      "score": 63
     },
     {
      "word": "quantum channels",
      "papers": 3,
-     "scites": 93,
+     "scites": 94,
      "score": 62
     },
     {
      "word": "stabilizer codes",
      "papers": 3,
-     "scites": 85,
+     "scites": 87,
      "score": 60
     },
     {
      "word": "quantum query",
      "papers": 2,
-     "scites": 75,
+     "scites": 77,
      "score": 45
     }
    ]
@@ -212,14 +212,14 @@
      "scites": 105
     },
     {
-     "id": "2608.19158",
-     "title": "Quantum Speedups Require Structure or Depth",
+     "id": "2609.05679",
+     "title": "Quantum lower bounds for convex optimization and real matrix-vector query problems",
      "scites": 99
     },
     {
-     "id": "2609.05679",
-     "title": "Quantum lower bounds for convex optimization and real matrix-vector query problems",
-     "scites": 98
+     "id": "2608.19158",
+     "title": "Quantum Speedups Require Structure or Depth",
+     "scites": 99
     },
     {
      "id": "2609.01605",
