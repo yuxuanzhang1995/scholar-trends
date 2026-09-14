@@ -1,72 +1,66 @@
 {
- "generated": "2026-09-13 10:47Z",
+ "generated": "2026-09-14 11:14Z",
  "source": "scirate.com",
  "windows": {
   "today": {
    "papers": [
     {
-     "id": "2609.11723",
-     "title": "Lifted surgery: Fast processing with QLDPC codes",
-     "scites": 79
+     "id": "2609.13032",
+     "title": "QMA has perfect completeness",
+     "scites": 76
     },
     {
-     "id": "2609.10974",
-     "title": "Sample-optimal learning of stabilizer states",
-     "scites": 65
+     "id": "2609.12146",
+     "title": "Benchmarking the computational power of quantum computers",
+     "scites": 36
     },
     {
-     "id": "2609.11457",
-     "title": "Local decoders for fault-tolerant quantum computation and translation-invariant stabilizer codes",
-     "scites": 40
+     "id": "2609.12219",
+     "title": "Learning Sparse Quantum States",
+     "scites": 32
     },
     {
-     "id": "2609.11771",
-     "title": "Strong Converse for Quantum Capacity via a Fully Quantum Blowing-Up Lemma",
-     "scites": 33
+     "id": "2609.12262",
+     "title": "Sparse-Blossom Decoding in $o(1)$ Time",
+     "scites": 24
     },
     {
-     "id": "2609.11664",
-     "title": "A Near-Quartic Separation Between Certificate Complexity and Quantum Query Complexity",
-     "scites": 28
-    },
-    {
-     "id": "2609.10666",
-     "title": "Walking Floquet code circuits for zero-overhead leakage reduction",
-     "scites": 25
-    },
-    {
-     "id": "2609.10808",
-     "title": "Tight Time-Space Lower Bounds for Collision Finding and Element Distinctness under Label Symmetry",
-     "scites": 22
-    },
-    {
-     "id": "2609.11903",
-     "title": "The generalised semi-Clifford conjecture is false",
-     "scites": 20
-    },
-    {
-     "id": "2609.11847",
-     "title": "The cost of simulating classically tractable quantum circuits and dynamics",
+     "id": "2609.13087",
+     "title": "Composing Detector Error Models",
      "scites": 19
     },
     {
-     "id": "2609.11830",
-     "title": "Oracle Separations in the Fourier Hierarchy",
+     "id": "2609.13065",
+     "title": "Error Correction in a Distributed Quantum Computer",
      "scites": 19
+    },
+    {
+     "id": "2609.12689",
+     "title": "Emergent universality in Kraus maps of quantum chaotic many-body dynamics",
+     "scites": 16
+    },
+    {
+     "id": "2609.12698",
+     "title": "Extremely Low-Cost Magic State Preparation toward Fault-Tolerant Quantum Computing",
+     "scites": 15
+    },
+    {
+     "id": "2609.12284",
+     "title": "A Simple Quantum Linear-System Solver via Dissipation",
+     "scites": 14
+    },
+    {
+     "id": "2609.13108",
+     "title": "Spacetime mitigation of logical errors",
+     "scites": 12
     }
    ],
    "keywords": [
     {
-     "word": "stabilizer codes",
+     "word": "quantum computers",
      "papers": 2,
-     "scites": 58,
+     "scites": 40,
      "score": 100
-    },
-    {
-     "word": "oracle separations",
-     "papers": 2,
-     "scites": 26,
-     "score": 72
     }
    ]
   },
@@ -75,31 +69,36 @@
     {
      "id": "2609.05679",
      "title": "Quantum lower bounds for convex optimization and real matrix-vector query problems",
-     "scites": 99
+     "scites": 103
     },
     {
      "id": "2609.05625",
      "title": "Computing 256-bit elliptic curve discrete logarithms in 26 days on a fault-tolerant trapped-ion quantum computer with 20,000 qubits",
-     "scites": 83
+     "scites": 86
     },
     {
      "id": "2609.11723",
      "title": "Lifted surgery: Fast processing with QLDPC codes",
-     "scites": 79
+     "scites": 83
+    },
+    {
+     "id": "2609.13032",
+     "title": "QMA has perfect completeness",
+     "scites": 76
     },
     {
      "id": "2609.10974",
      "title": "Sample-optimal learning of stabilizer states",
-     "scites": 65
+     "scites": 66
+    },
+    {
+     "id": "2609.09035",
+     "title": "Near-Optimal Quantum Lower Bounds for Convex Optimization via Fourier Rank",
+     "scites": 49
     },
     {
      "id": "2609.08998",
      "title": "No information transmission through quantum channels above capacity",
-     "scites": 49
-    },
-    {
-     "id": "2609.05201",
-     "title": "Optimal inequalities for completely bounded polynomials and the limitations of quantum query algorithms",
      "scites": 49
     },
     {
@@ -108,69 +107,64 @@
      "scites": 47
     },
     {
-     "id": "2609.09035",
-     "title": "Near-Optimal Quantum Lower Bounds for Convex Optimization via Fourier Rank",
-     "scites": 45
-    },
-    {
-     "id": "2609.05316",
-     "title": "Compiling the 2D Fermi-Hubbard ground-state energy estimation algorithm for active volume quantum architectures",
-     "scites": 45
+     "id": "2609.11457",
+     "title": "Local decoders for fault-tolerant quantum computation and translation-invariant stabilizer codes",
+     "scites": 43
     },
     {
      "id": "2609.08058",
      "title": "From Bits to Qubits: The Theory and Practice of Quantum Data Encoding",
-     "scites": 42
+     "scites": 43
     }
    ],
    "keywords": [
     {
      "word": "lower bounds",
      "papers": 4,
-     "scites": 191,
+     "scites": 199,
      "score": 100
+    },
+    {
+     "word": "fault-tolerant quantum",
+     "papers": 4,
+     "scites": 121,
+     "score": 80
     },
     {
      "word": "convex optimization",
      "papers": 3,
-     "scites": 158,
+     "scites": 166,
      "score": 79
-    },
-    {
-     "word": "fault-tolerant quantum",
-     "papers": 3,
-     "scites": 102,
-     "score": 64
     },
     {
      "word": "quantum lower",
      "papers": 2,
-     "scites": 144,
+     "scites": 152,
      "score": 63
     },
     {
      "word": "bounds convex",
      "papers": 2,
-     "scites": 144,
+     "scites": 152,
      "score": 63
     },
     {
      "word": "quantum channels",
      "papers": 3,
-     "scites": 94,
-     "score": 62
+     "scites": 95,
+     "score": 61
     },
     {
-     "word": "stabilizer codes",
+     "word": "quantum computing",
      "papers": 3,
-     "scites": 87,
-     "score": 60
+     "scites": 68,
+     "score": 55
     },
     {
-     "word": "quantum query",
+     "word": "quantum computer",
      "papers": 2,
-     "scites": 77,
-     "score": 45
+     "scites": 105,
+     "score": 51
     }
    ]
   },
@@ -179,17 +173,17 @@
     {
      "id": "2608.26272",
      "title": "Fault-tolerant quantum computation cannot be achieved with constant spacetime overhead",
-     "scites": 142
-    },
-    {
-     "id": "2608.13521",
-     "title": "Exponential quantum advantage for learning signals with a single qubit",
-     "scites": 137
+     "scites": 143
     },
     {
      "id": "2608.16857",
      "title": "Fault-Tolerant Quantum Computation with Adversarial Errors",
      "scites": 129
+    },
+    {
+     "id": "2609.04121",
+     "title": "Quantum thermalization achieves optimal approximate quantum error correction",
+     "scites": 118
     },
     {
      "id": "2608.16860",
@@ -199,12 +193,7 @@
     {
      "id": "2608.28573",
      "title": "Quantum Fourier transform toolbox",
-     "scites": 116
-    },
-    {
-     "id": "2609.04121",
-     "title": "Quantum thermalization achieves optimal approximate quantum error correction",
-     "scites": 115
+     "scites": 117
     },
     {
      "id": "2608.24000",
@@ -214,7 +203,7 @@
     {
      "id": "2609.05679",
      "title": "Quantum lower bounds for convex optimization and real matrix-vector query problems",
-     "scites": 99
+     "scites": 103
     },
     {
      "id": "2608.19158",
@@ -225,56 +214,61 @@
      "id": "2609.01605",
      "title": "Depth-1 expanders on the unitary group and applications",
      "scites": 96
+    },
+    {
+     "id": "2608.24493",
+     "title": "Optimal Lower Bound for Ground-State Energy Estimation with a Guiding State",
+     "scites": 93
     }
    ],
    "keywords": [
     {
+     "word": "fault-tolerant quantum",
+     "papers": 3,
+     "scites": 315,
+     "score": 88
+    },
+    {
+     "word": "quantum computation",
+     "papers": 3,
+     "scites": 315,
+     "score": 88
+    },
+    {
      "word": "quantum advantage",
-     "papers": 5,
-     "scites": 378,
-     "score": 100
+     "papers": 4,
+     "scites": 241,
+     "score": 88
     },
     {
      "word": "ground-state energy",
      "papers": 3,
      "scites": 226,
-     "score": 60
+     "score": 73
     },
     {
      "word": "energy estimation",
      "papers": 3,
      "scites": 226,
-     "score": 60
-    },
-    {
-     "word": "fault-tolerant quantum",
-     "papers": 2,
-     "scites": 271,
-     "score": 56
-    },
-    {
-     "word": "quantum computation",
-     "papers": 2,
-     "scites": 271,
-     "score": 56
+     "score": 73
     },
     {
      "word": "quantum fourier",
      "papers": 2,
-     "scites": 198,
-     "score": 46
+     "scites": 199,
+     "score": 57
     },
     {
      "word": "fourier transform",
      "papers": 2,
-     "scites": 198,
-     "score": 46
+     "scites": 199,
+     "score": 57
     },
     {
      "word": "quantum codes",
      "papers": 2,
      "scites": 194,
-     "score": 46
+     "score": 56
     }
    ]
   },
@@ -334,51 +328,51 @@
    "keywords": [
     {
      "word": "quantum advantage",
-     "papers": 6,
-     "scites": 1261,
+     "papers": 5,
+     "scites": 1098,
      "score": 100
     },
     {
      "word": "error correction",
      "papers": 5,
      "scites": 826,
-     "score": 74
+     "score": 88
     },
     {
      "word": "quantum ldpc",
      "papers": 4,
      "scites": 693,
-     "score": 61
+     "score": 72
     },
     {
      "word": "ldpc codes",
      "papers": 4,
      "scites": 693,
-     "score": 61
+     "score": 72
     },
     {
      "word": "quantum error",
      "papers": 4,
      "scites": 611,
-     "score": 58
+     "score": 68
+    },
+    {
+     "word": "logical qubits",
+     "papers": 3,
+     "scites": 501,
+     "score": 53
     },
     {
      "word": "fault-tolerant quantum",
      "papers": 3,
-     "scites": 421,
-     "score": 42
+     "scites": 422,
+     "score": 49
     },
     {
      "word": "exponential quantum",
      "papers": 2,
      "scites": 504,
-     "score": 37
-    },
-    {
-     "word": "codes planar",
-     "papers": 2,
-     "scites": 405,
-     "score": 33
+     "score": 43
     }
    ]
   }
